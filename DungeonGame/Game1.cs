@@ -2,20 +2,15 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Dungeon
+namespace DungeonGame
 {
     public enum GameState
     {
         Menu,
-        Scoreboard,
+        Leaderboard,
         Fighting,
-        Chosing
-    }
-    public enum ButtonState
-    {
-        Hover,
-        Up,
-        Down
+        Doors,
+        Exit
     }
 
     /// <summary>
@@ -25,7 +20,9 @@ namespace Dungeon
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private GameState _gameState;//
+        public static GameState _gameState;
+
+        MainMenu mainMenu = new MainMenu();
 
         public Game1()
         {
@@ -42,7 +39,7 @@ namespace Dungeon
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -56,6 +53,7 @@ namespace Dungeon
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
 
+            mainMenu.Load(Content);
         }
 
         /// <summary>
@@ -76,7 +74,8 @@ namespace Dungeon
         {
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Escape)) Exit();
-
+            MouseState mouseState = Mouse.GetState();
+            mainMenu.Update(mouseState);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -92,9 +91,9 @@ namespace Dungeon
             // TODO: Add your drawing code here
             if (_gameState == GameState.Menu)
             {
-
+                mainMenu.Draw(spriteBatch);
             }
-            else if (_gameState == GameState.Chosing)
+            else if (_gameState == GameState.Doors)
             {
 
             }
@@ -102,9 +101,13 @@ namespace Dungeon
             {
 
             }
-            else if (_gameState == GameState.Scoreboard)
+            else if (_gameState == GameState.Leaderboard)
             {
 
+            }
+            else if (_gameState == GameState.Exit)
+            {
+                Exit();
             }
            
             base.Draw(gameTime);
