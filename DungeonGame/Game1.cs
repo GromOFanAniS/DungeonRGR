@@ -2,8 +2,22 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace DungeonGame
+namespace Dungeon
 {
+    public enum GameState
+    {
+        Menu,
+        Scoreboard,
+        Fighting,
+        Chosing
+    }
+    public enum ButtonState
+    {
+        Hover,
+        Up,
+        Down
+    }
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -11,7 +25,8 @@ namespace DungeonGame
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+        private GameState _gameState;//
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -39,8 +54,8 @@ namespace DungeonGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
+
         }
 
         /// <summary>
@@ -59,8 +74,8 @@ namespace DungeonGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Escape)) Exit();
 
             // TODO: Add your update logic here
 
@@ -74,9 +89,24 @@ namespace DungeonGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // TODO: Add your drawing code here
+            if (_gameState == GameState.Menu)
+            {
 
+            }
+            else if (_gameState == GameState.Chosing)
+            {
+
+            }
+            else if (_gameState == GameState.Fighting)
+            {
+
+            }
+            else if (_gameState == GameState.Scoreboard)
+            {
+
+            }
+           
             base.Draw(gameTime);
         }
     }
