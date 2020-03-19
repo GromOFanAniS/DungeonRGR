@@ -10,6 +10,7 @@ namespace DungeonGame
         Leaderboard,
         Fighting,
         Doors,
+        DoorChosen,
         Exit
     }
 
@@ -21,8 +22,10 @@ namespace DungeonGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static GameState _gameState;
+        Camera _camera;
 
-        MainMenu mainMenu = new MainMenu();
+        MainMenu mainMenu;
+        DoorScene doorScene;
 
         public Game1()
         {
@@ -40,6 +43,10 @@ namespace DungeonGame
         {
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
+            _camera = new Camera(GraphicsDevice.Viewport);
+            mainMenu = new MainMenu();
+            doorScene = new DoorScene();
+            doorScene.DoNewGenerate = true;
             base.Initialize();
         }
 
@@ -54,6 +61,7 @@ namespace DungeonGame
             // TODO: use this.Content to load your game content here
 
             mainMenu.Load(Content);
+            doorScene.Load(Content);
         }
 
         /// <summary>
@@ -75,7 +83,19 @@ namespace DungeonGame
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Escape)) Exit();
             MouseState mouseState = Mouse.GetState();
-            mainMenu.Update(mouseState);
+            
+            if (_gameState == GameState.Menu)
+            {
+                mainMenu.Update(mouseState);
+            }
+            else if (_gameState == GameState.Doors)
+            {
+                doorScene.Generate();
+                doorScene.Update(mouseState);
+                if (doorScene.DoNewGenerate)
+                    doorScene.DoNewGenerate = false;
+            }
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -89,13 +109,15 @@ namespace DungeonGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
+            var viewMatrix = _camera.GetViewMatrix();
+            spriteBatch.Begin(transformMatrix: viewMatrix);
             if (_gameState == GameState.Menu)
             {
                 mainMenu.Draw(spriteBatch);
             }
             else if (_gameState == GameState.Doors)
             {
-
+                doorScene.Draw(spriteBatch);
             }
             else if (_gameState == GameState.Fighting)
             {
@@ -109,6 +131,7 @@ namespace DungeonGame
             {
                 Exit();
             }
+            spriteBatch.End();
            
             base.Draw(gameTime);
         }

@@ -19,8 +19,6 @@ namespace DungeonGame
         public Vector2 Position;
         Rectangle Hitbox;
 
-        Texture2D closedDoorTexture;
-        Texture2D openedDoorTexture;
         public Door(int x, int y, Texture2D closedTexture, Texture2D openedTexture)
         {
             _textures = new Dictionary<StateDoor, Texture2D>
@@ -44,22 +42,13 @@ namespace DungeonGame
             }
             else
             {
-                _state = StateDoor.Opened;
+                _state = StateDoor.Closed;
             }
-        }
-
-        public void Load(ContentManager content)
-        {
-            closedDoorTexture = content.Load<Texture2D>("Door/DoorClosed");
-            openedDoorTexture = content.Load<Texture2D>("Door/DoorOpened");
-
         }
 
         public void Draw(SpriteBatch s)
         {
-            s.Begin();
             s.Draw(_textures[_state], Position);
-            s.End();
         }
 
     }

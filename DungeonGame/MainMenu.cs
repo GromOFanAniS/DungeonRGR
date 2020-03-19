@@ -65,11 +65,8 @@ namespace DungeonGame
         }
         public void Draw(SpriteBatch s)
         {
-
-            s.Begin();
             foreach (var button in _buttons)
                 button.Value.Draw(s);
-            s.End();
         }
     }
 }
