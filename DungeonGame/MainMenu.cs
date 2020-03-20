@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace DungeonGame
 {
@@ -19,11 +21,18 @@ namespace DungeonGame
         Texture2D exitButtonNone;
         Texture2D exitButtonHover;
         Texture2D exitButtonPress;
+        
+        Song song;
 
         private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
 
         public void Load(ContentManager Content)
         {
+            song = Content.Load<Song>("Music/MainMenu");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.5f;
+            MediaPlayer.Play(song);
+
             startButtonNone = Content.Load<Texture2D>("Buttons/StartButton");
             startButtonHover = Content.Load<Texture2D>("Buttons/StartButtonHover");
             startButtonPress = Content.Load<Texture2D>("Buttons/StartButtonHover");

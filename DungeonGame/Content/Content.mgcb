@@ -109,3 +109,9 @@
 /processorParam:TextureFormat=Color
 /build:Door/DoorOpened.png
 
+#begin Music/MainMenu.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/MainMenu.wav
+
