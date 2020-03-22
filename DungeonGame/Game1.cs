@@ -7,11 +7,11 @@ namespace DungeonGame
 {
     public enum GameState
     {
-        Menu,
-        Leaderboard,
-        Fighting,
-        Doors,
-        DoorChosen,
+        MenuScene,
+        LeaderboardScene,
+        FightingScene,
+        DoorScene,
+        GoldScene,
         Exit
     }
 
@@ -23,10 +23,12 @@ namespace DungeonGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static GameState _gameState;
-        Camera _camera;
+        public static Camera _camera;
 
         MainMenu mainMenu;
         DoorScene doorScene;
+
+        public static Player player;
 
         public Game1()
         {
@@ -48,6 +50,7 @@ namespace DungeonGame
             mainMenu = new MainMenu();
             doorScene = new DoorScene();
             doorScene.DoNewGenerate = true;
+            player = new Player(new Vector2(0, 0));
             base.Initialize();
         }
 
@@ -63,6 +66,7 @@ namespace DungeonGame
 
             mainMenu.Load(Content);
             doorScene.Load(Content);
+            player.Load(Content);
         }
 
         /// <summary>
@@ -81,18 +85,22 @@ namespace DungeonGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Escape)) Exit();
+            KeyboardState kstate = Keyboard.GetState();
+            if (kstate.IsKeyDown(Keys.Escape)) Exit();
             MouseState mouseState = Mouse.GetState();
-            
-            if (_gameState == GameState.Menu)
+
+            if (kstate.IsKeyDown(Keys.W)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (kstate.IsKeyDown(Keys.S)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+
+            if (_gameState == GameState.MenuScene)
             {
                 mainMenu.Update(mouseState);
             }
-            else if (_gameState == GameState.Doors)
+            else if (_gameState == GameState.DoorScene)
             {
                 doorScene.Generate();
-                doorScene.Update(mouseState);
+                doorScene.Update(mouseState, gameTime);
                 if (doorScene.DoNewGenerate)
                     doorScene.DoNewGenerate = false;
             }
@@ -112,19 +120,24 @@ namespace DungeonGame
             // TODO: Add your drawing code here
             var viewMatrix = _camera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: viewMatrix);
-            if (_gameState == GameState.Menu)
+            if (_gameState == GameState.MenuScene)
             {
                 mainMenu.Draw(spriteBatch);
             }
-            else if (_gameState == GameState.Doors)
+            else if (_gameState == GameState.DoorScene)
             {
                 doorScene.Draw(spriteBatch);
+                player.Draw(gameTime, spriteBatch);
             }
-            else if (_gameState == GameState.Fighting)
+            else if (_gameState == GameState.GoldScene)
             {
 
             }
-            else if (_gameState == GameState.Leaderboard)
+            else if (_gameState == GameState.FightingScene)
+            {
+
+            }
+            else if (_gameState == GameState.LeaderboardScene)
             {
 
             }

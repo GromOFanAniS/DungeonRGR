@@ -14,10 +14,11 @@ namespace DungeonGame
     class Door
     {
         private StateDoor _state;
-        public StateDoor state { get { return _state; } }
         private Dictionary<StateDoor, Texture2D> _textures;
-        public Vector2 Position;
-        Rectangle Hitbox;
+        private Vector2 _position;
+        private Rectangle _hitbox;
+
+        public StateDoor state { get { return _state; } }
 
         public Door(int x, int y, Texture2D closedTexture, Texture2D openedTexture)
         {
@@ -26,19 +27,15 @@ namespace DungeonGame
                 { StateDoor.Closed, closedTexture },
                 { StateDoor.Opened, openedTexture }
             };
-            Hitbox = new Rectangle(x, y, closedTexture.Width, closedTexture.Height);
-            this.Position = new Vector2(x, y);
+            _hitbox = new Rectangle(x, y, closedTexture.Width, closedTexture.Height);
+            this._position = new Vector2(x, y);
         }
 
-        public void Update(MouseState mouseState)
+        public void Update(MouseState mouseState, GameTime gameTime)
         {
-            if (Hitbox.Contains(mouseState.X, mouseState.Y))
+            if (_hitbox.Contains(mouseState.X, mouseState.Y))
             {
                 _state = StateDoor.Opened;
-                if (mouseState.LeftButton == ButtonState.Pressed)
-                {
-                    
-                }
             }
             else
             {
@@ -48,7 +45,7 @@ namespace DungeonGame
 
         public void Draw(SpriteBatch s)
         {
-            s.Draw(_textures[_state], Position);
+            s.Draw(_textures[_state], _position);
         }
 
     }

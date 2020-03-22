@@ -10,43 +10,43 @@ namespace DungeonGame
 {
     class MainMenu
     {
-        Texture2D startButtonNone;
-        Texture2D startButtonHover;
-        Texture2D startButtonPress;
+        private Texture2D startButtonNone;
+        private Texture2D startButtonHover;
+        private Texture2D startButtonPress;
 
-        Texture2D leaderboardButtonNone;
-        Texture2D leaderboardButtonHover;
-        Texture2D leaderboardButtonPress;
+        private Texture2D leaderboardButtonNone;
+        private Texture2D leaderboardButtonHover;
+        private Texture2D leaderboardButtonPress;
 
-        Texture2D exitButtonNone;
-        Texture2D exitButtonHover;
-        Texture2D exitButtonPress;
-        
-        Song song;
+        private Texture2D exitButtonNone;
+        private Texture2D exitButtonHover;
+        private Texture2D exitButtonPress;
+
+        private Song _song;
 
         private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
 
         public void Load(ContentManager Content)
         {
-            song = Content.Load<Song>("Music/MainMenu");
+            _song = Content.Load<Song>("Music/MainMenu");
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.5f;
-            MediaPlayer.Play(song);
-
+            MediaPlayer.Volume = 0.33f;
+            MediaPlayer.Play(_song);
+            
             startButtonNone = Content.Load<Texture2D>("Buttons/StartButton");
             startButtonHover = Content.Load<Texture2D>("Buttons/StartButtonHover");
             startButtonPress = Content.Load<Texture2D>("Buttons/StartButtonHover");
-            _buttons.Add("Start", new Button(20, 100, startButtonNone, startButtonHover, startButtonPress));
+            _buttons.Add("Start", new Button(20, (int)(startButtonNone.Height * 1.5f), startButtonNone, startButtonHover, startButtonPress));
 
             leaderboardButtonNone = Content.Load<Texture2D>("Buttons/LeaderboardButton");
             leaderboardButtonHover = Content.Load<Texture2D>("Buttons/LeaderboardButtonHover");
             leaderboardButtonPress = Content.Load<Texture2D>("Buttons/LeaderboardButtonHover");
-            _buttons.Add("Leaderboard", new Button(20, 200, leaderboardButtonNone, leaderboardButtonHover, leaderboardButtonPress));
+            _buttons.Add("Leaderboard", new Button(20, (int)(startButtonNone.Height * 3), leaderboardButtonNone, leaderboardButtonHover, leaderboardButtonPress));
 
             exitButtonNone = Content.Load<Texture2D>("Buttons/ExitButton");
             exitButtonHover = Content.Load<Texture2D>("Buttons/ExitButtonHover");
             exitButtonPress = Content.Load<Texture2D>("Buttons/ExitButtonHover");
-            _buttons.Add("Exit", new Button(20, 300, exitButtonNone, exitButtonHover, exitButtonPress));
+            _buttons.Add("Exit", new Button(20, (int)(startButtonNone.Height * 4.5f), exitButtonNone, exitButtonHover, exitButtonPress));
         }
         public void Update(MouseState mouseState)
         {
@@ -58,11 +58,12 @@ namespace DungeonGame
                     switch (button.Key)
                     {
                         case "Start":
-                            Game1._gameState = GameState.Doors;
+                            Game1._gameState = GameState.DoorScene;
+                            Game1.player.Reset(new Vector2(0, 0));
                             break;
 
                         case "Leaderboard":
-                            Game1._gameState = GameState.Leaderboard;
+                            Game1._gameState = GameState.LeaderboardScene;
                             break;
 
                         case "Exit":

@@ -8,8 +8,8 @@ namespace DungeonGame
 {
     class DoorScene
     {
-        Texture2D closedDoorTexture;
-        Texture2D openedDoorTexture;
+        private Texture2D closedDoorTexture;
+        private Texture2D openedDoorTexture;
 
         private List<Door> _doors = new List<Door>();
         public bool DoNewGenerate { get; set; }
@@ -18,8 +18,8 @@ namespace DungeonGame
         {
             if (DoNewGenerate)
             {
-                _doors.Add(new Door(100, 100, closedDoorTexture, openedDoorTexture));
-                _doors.Add(new Door(200, 100, closedDoorTexture, openedDoorTexture));
+                _doors.Add(new Door(closedDoorTexture.Width / 2 + 50, closedDoorTexture.Height / 2, closedDoorTexture, openedDoorTexture));
+                _doors.Add(new Door(closedDoorTexture.Width * 3 - 50, closedDoorTexture.Height / 2, closedDoorTexture, openedDoorTexture));
             }
         }
 
@@ -29,11 +29,11 @@ namespace DungeonGame
             openedDoorTexture = content.Load<Texture2D>("Door/DoorOpened");
         }
 
-        public void Update(MouseState mouseState)
+        public void Update(MouseState mouseState, GameTime gameTime)
         {
             foreach (var door in _doors)
             {
-                door.Update(mouseState);
+                door.Update(mouseState, gameTime);
             }
         }
 
