@@ -13,6 +13,11 @@ namespace DungeonGame
         private Vector2 _position;
         private Vector2 _origin;
 
+        public Viewport Viewport
+        {
+            get { return _viewport; }
+        }
+
         public Vector2 Origin
         {
             get { return _origin; }
@@ -31,6 +36,11 @@ namespace DungeonGame
         {
             get { return _position.X; }
             set { _position.X = value; }
+        }
+        public float Y
+        {
+            get { return _position.Y; }
+            set { _position.Y = value; }
         }
 
         public Camera(Viewport viewport)

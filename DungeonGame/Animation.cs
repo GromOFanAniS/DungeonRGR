@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -6,46 +8,77 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DungeonGame
 {
-    class Animation
+    public class Animation
     {
-        private Texture2D _texture;
-        public Texture2D Texture
+        List<AnimationFrame> frames = new List<AnimationFrame>();
+        TimeSpan timeIntoAnimation;
+
+        TimeSpan Duration
         {
-            get { return _texture; }
+            get
+            {
+                double totalSeconds = 0;
+                foreach (var frame in frames)
+                {
+                    totalSeconds += frame.Duration.TotalSeconds;
+                }
+                return TimeSpan.FromSeconds(totalSeconds);
+            }
         }
 
-        private float _frameTime;
-        public float FrameTime
+        public void AddFrame(Rectangle rectangle, TimeSpan duration)
         {
-            get { return _frameTime; }
+            AnimationFrame newFrame = new AnimationFrame()
+            {
+                SourceRectangle = rectangle,
+                Duration = duration
+            };
+
+            frames.Add(newFrame);
         }
 
-        private bool _isLooping;
-        public bool IsLooping
+        public Rectangle CurrentRectangle
         {
-            get { return _isLooping; }
+            get
+            {
+                AnimationFrame currentFrame = null;
+
+                TimeSpan accumulatedTime = new TimeSpan();
+
+                foreach (var frame in frames)
+                {
+                    if (accumulatedTime + frame.Duration >= timeIntoAnimation)
+                    {
+                        currentFrame = frame;
+                        break;
+                    }
+                    else
+                    {
+                        accumulatedTime += frame.Duration;
+                    }
+                }
+
+                if (currentFrame == null)
+                {
+                    currentFrame = frames.LastOrDefault();
+                }
+                if (currentFrame != null)
+                {
+                    return currentFrame.SourceRectangle;
+                }
+                else
+                {
+                    return Rectangle.Empty;
+                }
+            }
         }
 
-        public int FrameCount
+        public void Update(GameTime gameTime)
         {
-            get { return Texture.Width / FrameWidth; }
-        }
+            double secondsIntoAnimation = timeIntoAnimation.TotalSeconds + gameTime.ElapsedGameTime.TotalSeconds;
+            double remainder = secondsIntoAnimation % Duration.TotalSeconds;
 
-        public int FrameWidth
-        {
-            get { return Texture.Width; }
-        }
-
-        public int FrameHeight
-        {
-            get { return Texture.Height; }
-        }
-
-        public Animation(Texture2D texture, float frameTime, bool isLooping)
-        {
-            _texture = texture;
-            _frameTime = frameTime;
-            _isLooping = isLooping;
+            timeIntoAnimation = TimeSpan.FromSeconds(remainder);
         }
     }
 }

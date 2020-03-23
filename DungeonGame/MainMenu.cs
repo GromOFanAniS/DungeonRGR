@@ -59,7 +59,6 @@ namespace DungeonGame
                     {
                         case "Start":
                             Game1._gameState = GameState.DoorScene;
-                            Game1.player.Reset(new Vector2(0, 0));
                             break;
 
                         case "Leaderboard":

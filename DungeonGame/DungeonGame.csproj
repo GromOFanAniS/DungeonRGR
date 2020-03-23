@@ -43,7 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
-    <Compile Include="AnimationPlayer.cs" />
+    <Compile Include="AnimationFrame.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Door.cs" />

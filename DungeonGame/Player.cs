@@ -9,77 +9,83 @@ namespace DungeonGame
 {
     public class Player
     {
-        private Animation _idleAnimation;
-        private Animation _walkAnimation;
-        private SpriteEffects flip = SpriteEffects.None;
-        private AnimationPlayer sprite;
+        Animation idle;
+        Animation walk;
+        Animation currentAnimation;
+        static Texture2D playerSheetTexture;
+        GraphicsDevice graphicsDevice;
+        SpriteEffects flip = SpriteEffects.None;
 
-        private bool _isAlive;
-        public bool IsAlive
+        public float X { get; set; }
+        public float Y { get; set; }
+
+        public Player(GraphicsDevice graphicsDevice)
         {
-            get { return _isAlive; }
-        }
-
-        private Vector2 _position;
-        public Vector2 Position
-        {
-            get { return _position; }
-            set { _position = value; }
-        }
-
-        private bool _isOnGround;
-        public bool IsOnGround
-        {
-            get { return _isOnGround; }
-        }
-
-        private float _movement;
-
-        private Rectangle _localBounds;
-
-        public Rectangle BoundingRectangle
-        {
-            get
+            this.graphicsDevice = graphicsDevice;
+            if (playerSheetTexture == null)
             {
-                int left = (int)Math.Round(Position.X - sprite.Origin.X) + _localBounds.X;
-                int top = (int)Math.Round(Position.Y - sprite.Origin.Y) + _localBounds.Y;
+                using (var stream = TitleContainer.OpenStream("Content/Player/PlayerSheet.png"))
+                {
+                    playerSheetTexture = Texture2D.FromStream(this.graphicsDevice, stream);
+                }
+            }
 
-                return new Rectangle(left, top, _localBounds.Width, _localBounds.Height);
+            idle = new Animation();
+                idle.AddFrame(new Rectangle(0, 0, 96, 184), TimeSpan.FromSeconds(1));
+            currentAnimation = idle;
+
+            walk = new Animation();
+            for (int i = 1; i < 8; i++)
+                walk.AddFrame(new Rectangle(96*i, 0, 96, 184), TimeSpan.FromSeconds(.25));
+            
+        }
+
+        public void Position(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
+
+        public void Load()
+        {
+            using (var stream = TitleContainer.OpenStream("Content/Player/PlayerSheet.png"))
+            {
+                playerSheetTexture = Texture2D.FromStream(this.graphicsDevice, stream);
             }
         }
 
-        public Player(Vector2 position)
+        public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
-            Reset(position);
+            this.currentAnimation = idle;
+            if (keyboardState.IsKeyDown(Keys.W)) 
+            {
+                this.Y -= 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (keyboardState.IsKeyDown(Keys.A))
+            {
+                this.X -= 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.currentAnimation = walk;
+                flip = SpriteEffects.FlipHorizontally;
+            }
+            if (keyboardState.IsKeyDown(Keys.S)) 
+            {
+                this.Y += 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (keyboardState.IsKeyDown(Keys.D)) 
+            {
+                this.X += 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.currentAnimation = walk;
+                flip = SpriteEffects.None;
+            }
+            currentAnimation.Update(gameTime);
         }
 
-        public void Reset(Vector2 position)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            _position = position;
-            _isAlive = true;
-            sprite.PlayAnimation(_idleAnimation);
-        }
-
-        public void Load(ContentManager content)
-        {
-            _idleAnimation = new Animation(content.Load<Texture2D>("Player/Idle"), 0.1f, true);
-            _walkAnimation = new Animation(content.Load<Texture2D>("Player/Walk"), -0.1f, true);
-
-            int width = _idleAnimation.FrameWidth;
-            int left = (_idleAnimation.FrameWidth - width) / 2;
-            int height = _idleAnimation.FrameHeight;
-            int top = _idleAnimation.FrameHeight - height;
-            _localBounds = new Rectangle(left, top, width, height);
-        }
-
-        public void Update(GameTime gameTime, KeyboardState keyboardState, DisplayOrientation orientation)
-        {
-
-        }
-
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            sprite.Draw(gameTime, spriteBatch, Position, flip);
+            Vector2 topLeftOfSprite = new Vector2(this.X, this.Y);
+            Color color = Color.White;
+            var sourceRectangle = currentAnimation.CurrentRectangle;
+            spriteBatch.Draw(playerSheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, Color.White, flip);
         }
     }
 }

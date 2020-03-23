@@ -33,6 +33,7 @@ namespace DungeonGame
 
         public void Update(MouseState mouseState, GameTime gameTime)
         {
+            //new Vector2(Game1.player.Position.X, Game1.player.Position.Y-1)
             if (_hitbox.Contains(mouseState.X, mouseState.Y))
             {
                 _state = StateDoor.Opened;

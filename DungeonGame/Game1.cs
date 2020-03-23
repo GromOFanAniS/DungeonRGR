@@ -25,10 +25,9 @@ namespace DungeonGame
         public static GameState _gameState;
         public static Camera _camera;
 
+        Player player;
         MainMenu mainMenu;
         DoorScene doorScene;
-
-        public static Player player;
 
         public Game1()
         {
@@ -49,8 +48,8 @@ namespace DungeonGame
             _camera = new Camera(GraphicsDevice.Viewport);
             mainMenu = new MainMenu();
             doorScene = new DoorScene();
+            player = new Player(GraphicsDevice);
             doorScene.DoNewGenerate = true;
-            player = new Player(new Vector2(0, 0));
             base.Initialize();
         }
 
@@ -66,7 +65,7 @@ namespace DungeonGame
 
             mainMenu.Load(Content);
             doorScene.Load(Content);
-            player.Load(Content);
+            player.Load();
         }
 
         /// <summary>
@@ -89,9 +88,10 @@ namespace DungeonGame
             if (kstate.IsKeyDown(Keys.Escape)) Exit();
             MouseState mouseState = Mouse.GetState();
 
-            if (kstate.IsKeyDown(Keys.W)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (kstate.IsKeyDown(Keys.S)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (kstate.IsKeyDown(Keys.Up)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (kstate.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            
 
             if (_gameState == GameState.MenuScene)
             {
@@ -102,7 +102,11 @@ namespace DungeonGame
                 doorScene.Generate();
                 doorScene.Update(mouseState, gameTime);
                 if (doorScene.DoNewGenerate)
+                {
+                    player.Position(0, 0);
                     doorScene.DoNewGenerate = false;
+                }
+                player.Update(gameTime, kstate);
             }
 
             // TODO: Add your update logic here
@@ -127,7 +131,7 @@ namespace DungeonGame
             else if (_gameState == GameState.DoorScene)
             {
                 doorScene.Draw(spriteBatch);
-                player.Draw(gameTime, spriteBatch);
+                player.Draw(spriteBatch);
             }
             else if (_gameState == GameState.GoldScene)
             {
