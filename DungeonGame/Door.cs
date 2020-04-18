@@ -31,10 +31,10 @@ namespace DungeonGame
             this._position = new Vector2(x, y);
         }
 
-        public void Update(MouseState mouseState, GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            //new Vector2(Game1.player.Position.X, Game1.player.Position.Y-1)
-            if (_hitbox.Contains(mouseState.X, mouseState.Y))
+            Rectangle playerPosition = new Rectangle((int)Game1.player.X, (int)Game1.player.Y - 1, Game1.player.Width, Game1.player.Height);
+            if (_hitbox.Intersects(playerPosition))
             {
                 _state = StateDoor.Opened;
             }

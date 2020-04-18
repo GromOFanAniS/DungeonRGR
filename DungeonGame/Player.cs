@@ -16,6 +16,9 @@ namespace DungeonGame
         GraphicsDevice graphicsDevice;
         SpriteEffects flip = SpriteEffects.None;
 
+        public int Width { get { return idle.CurrentRectangle.Width; } }
+        public int Height { get { return idle.CurrentRectangle.Height; } }
+
         public float X { get; set; }
         public float Y { get; set; }
 
@@ -36,7 +39,7 @@ namespace DungeonGame
 
             walk = new Animation();
             for (int i = 1; i < 8; i++)
-                walk.AddFrame(new Rectangle(96*i, 0, 96, 184), TimeSpan.FromSeconds(.25));
+                walk.AddFrame(new Rectangle(96*i, 0, 95, 184), TimeSpan.FromSeconds(.25));
             
         }
 
@@ -57,20 +60,20 @@ namespace DungeonGame
         public void Update(GameTime gameTime, KeyboardState keyboardState)
         {
             this.currentAnimation = idle;
-            if (keyboardState.IsKeyDown(Keys.W)) 
-            {
-                this.Y -= 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
+            //if (keyboardState.IsKeyDown(Keys.W)) 
+            //{
+            //    this.Y -= 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //}
             if (keyboardState.IsKeyDown(Keys.A))
             {
                 this.X -= 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 this.currentAnimation = walk;
                 flip = SpriteEffects.FlipHorizontally;
             }
-            if (keyboardState.IsKeyDown(Keys.S)) 
-            {
-                this.Y += 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
+            //if (keyboardState.IsKeyDown(Keys.S)) 
+            //{
+            //    this.Y += 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //}
             if (keyboardState.IsKeyDown(Keys.D)) 
             {
                 this.X += 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -85,7 +88,7 @@ namespace DungeonGame
             Vector2 topLeftOfSprite = new Vector2(this.X, this.Y);
             Color color = Color.White;
             var sourceRectangle = currentAnimation.CurrentRectangle;
-            spriteBatch.Draw(playerSheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, Color.White, flip);
+            spriteBatch.Draw(playerSheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, color, flip);
         }
     }
 }

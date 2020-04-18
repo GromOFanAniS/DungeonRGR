@@ -9,6 +9,7 @@ namespace DungeonGame
     {
         MenuScene,
         LeaderboardScene,
+        EnemyScene,
         FightingScene,
         DoorScene,
         GoldScene,
@@ -25,7 +26,7 @@ namespace DungeonGame
         public static GameState _gameState;
         public static Camera _camera;
 
-        Player player;
+        public static Player player;
         MainMenu mainMenu;
         DoorScene doorScene;
 
@@ -100,10 +101,10 @@ namespace DungeonGame
             else if (_gameState == GameState.DoorScene)
             {
                 doorScene.Generate();
-                doorScene.Update(mouseState, gameTime);
+                doorScene.Update(gameTime);
                 if (doorScene.DoNewGenerate)
                 {
-                    player.Position(0, 0);
+                    player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
                     doorScene.DoNewGenerate = false;
                 }
                 player.Update(gameTime, kstate);
@@ -134,6 +135,10 @@ namespace DungeonGame
                 player.Draw(spriteBatch);
             }
             else if (_gameState == GameState.GoldScene)
+            {
+
+            }
+            else if (_gameState == GameState.EnemyScene)
             {
 
             }

@@ -29,11 +29,11 @@ namespace DungeonGame
             openedDoorTexture = content.Load<Texture2D>("Door/DoorOpened");
         }
 
-        public void Update(MouseState mouseState, GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             foreach (var door in _doors)
             {
-                door.Update(mouseState, gameTime);
+                door.Update(gameTime);
             }
         }
 
