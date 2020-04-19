@@ -32,11 +32,11 @@ namespace DungeonGame
             this.Position = new Vector2(x, y);
         }
 
-        public void Update(MouseState mouseState)
+        public void Update()
         {
-            if (Hitbox.Contains(mouseState.X, mouseState.Y))
+            if (Hitbox.Contains(Game1.mouseState.X, Game1.mouseState.Y))
             {
-                if (mouseState.LeftButton == ButtonState.Pressed)
+                if (Game1.mouseState.LeftButton == ButtonState.Pressed)
                 {
                     _state = StateButton.Press;
                 }

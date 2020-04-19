@@ -31,7 +31,7 @@ namespace DungeonGame
             this._position = new Vector2(x, y);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             Rectangle playerPosition = new Rectangle((int)Game1.player.X, (int)Game1.player.Y - 1, Game1.player.Width, Game1.player.Height);
             if (_hitbox.Intersects(playerPosition))

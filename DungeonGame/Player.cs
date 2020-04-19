@@ -34,7 +34,7 @@ namespace DungeonGame
             }
 
             idle = new Animation();
-                idle.AddFrame(new Rectangle(0, 0, 96, 184), TimeSpan.FromSeconds(1));
+                idle.AddFrame(new Rectangle(0, 0, 95, 184), TimeSpan.FromSeconds(1));
             currentAnimation = idle;
 
             walk = new Animation();
@@ -57,14 +57,14 @@ namespace DungeonGame
             }
         }
 
-        public void Update(GameTime gameTime, KeyboardState keyboardState)
+        public void Update(GameTime gameTime)
         {
             this.currentAnimation = idle;
             //if (keyboardState.IsKeyDown(Keys.W)) 
             //{
             //    this.Y -= 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             //}
-            if (keyboardState.IsKeyDown(Keys.A))
+            if (Game1.keyboardState.IsKeyDown(Keys.A))
             {
                 this.X -= 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 this.currentAnimation = walk;
@@ -74,7 +74,7 @@ namespace DungeonGame
             //{
             //    this.Y += 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             //}
-            if (keyboardState.IsKeyDown(Keys.D)) 
+            if (Game1.keyboardState.IsKeyDown(Keys.D)) 
             {
                 this.X += 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 this.currentAnimation = walk;

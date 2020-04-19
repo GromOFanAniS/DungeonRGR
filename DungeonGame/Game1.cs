@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -21,6 +22,10 @@ namespace DungeonGame
     /// </summary>
     public class Game1 : Game
     {
+        public static Random random = new Random();
+
+        public static GameWindow gameWindow;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static GameState _gameState;
@@ -46,6 +51,7 @@ namespace DungeonGame
         {
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
+            gameWindow = Window;
             _camera = new Camera(GraphicsDevice.Viewport);
             mainMenu = new MainMenu();
             doorScene = new DoorScene();
@@ -78,6 +84,8 @@ namespace DungeonGame
             // TODO: Unload any non ContentManager content here
         }
 
+        public static KeyboardState keyboardState;
+        public static MouseState mouseState;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -85,29 +93,28 @@ namespace DungeonGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState kstate = Keyboard.GetState();
-            if (kstate.IsKeyDown(Keys.Escape)) Exit();
-            MouseState mouseState = Mouse.GetState();
-
-            if (kstate.IsKeyDown(Keys.Up)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (kstate.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+            keyboardState = Keyboard.GetState();
+            mouseState = Mouse.GetState();
+            //if (keyboardState.IsKeyDown(Keys.Escape)) Exit();
             
+            if (keyboardState.IsKeyDown(Keys.Up)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (keyboardState.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
 
             if (_gameState == GameState.MenuScene)
             {
-                mainMenu.Update(mouseState);
+                mainMenu.Update();
             }
             else if (_gameState == GameState.DoorScene)
             {
                 doorScene.Generate();
-                doorScene.Update(gameTime);
+                doorScene.Update();
                 if (doorScene.DoNewGenerate)
                 {
                     player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
                     doorScene.DoNewGenerate = false;
                 }
-                player.Update(gameTime, kstate);
+                player.Update(gameTime);
             }
 
             // TODO: Add your update logic here

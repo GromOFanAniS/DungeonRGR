@@ -24,10 +24,14 @@ namespace DungeonGame
 
         private Song _song;
 
+        private TextBox playerName;
+
         private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
 
         public void Load(ContentManager Content)
         {
+            playerName = new TextBox(200, 200, 50, 25, "Fonts/MainMenuFont", Content);
+
             _song = Content.Load<Song>("Music/MainMenu");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.33f;
@@ -48,11 +52,12 @@ namespace DungeonGame
             exitButtonPress = Content.Load<Texture2D>("Buttons/ExitButtonHover");
             _buttons.Add("Exit", new Button(20, (int)(startButtonNone.Height * 4.5f), exitButtonNone, exitButtonHover, exitButtonPress));
         }
-        public void Update(MouseState mouseState)
+        public void Update()
         {
+            playerName.CheckClick();
             foreach (var button in _buttons)
             {
-                button.Value.Update(mouseState);
+                button.Value.Update();
                 if (button.Value.state == StateButton.Press)
                 {
                     switch (button.Key)
@@ -74,6 +79,7 @@ namespace DungeonGame
         }
         public void Draw(SpriteBatch s)
         {
+            playerName.Draw(s);
             foreach (var button in _buttons)
                 button.Value.Draw(s);
         }
