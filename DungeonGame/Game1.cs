@@ -25,7 +25,7 @@ namespace DungeonGame
         public static Random random = new Random();
 
         public static GameWindow gameWindow;
-
+        
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static GameState _gameState;

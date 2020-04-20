@@ -45,7 +45,7 @@ namespace DungeonGame
                         _text.Remove(_text.Length - 1, 1);
                     else return;
                 }
-                else _text.Append(c);
+                else if (_text.Length < 25) _text.Append(c);
             }
         }
 
@@ -67,7 +67,7 @@ namespace DungeonGame
 
         public void Draw(SpriteBatch s)
         {
-            s.DrawString(_font, "Vvedite Imya Personazha", new Vector2(_position.X, _position.Y-15), Color.Yellow);
+            s.DrawString(_font, "Персонажа зовут", new Vector2(_position.X, _position.Y-25), Color.Yellow);
             s.DrawString(_font, _text, _position, Color.Black);
         }
     }

@@ -30,7 +30,7 @@ namespace DungeonGame
 
         public void Load(ContentManager Content)
         {
-            playerName = new TextBox(200, 200, 50, 25, "Fonts/MainMenuFont", Content);
+            playerName = new TextBox(200, 200, 100, 250, "Fonts/MainMenuFont", Content);
 
             _song = Content.Load<Song>("Music/MainMenu");
             MediaPlayer.IsRepeating = true;
