@@ -22,8 +22,6 @@ namespace DungeonGame
     /// </summary>
     public class Game1 : Game
     {
-        public static Random random = new Random();
-
         public static GameWindow gameWindow;
         
         GraphicsDeviceManager graphics;
@@ -56,7 +54,6 @@ namespace DungeonGame
             mainMenu = new MainMenu();
             doorScene = new DoorScene();
             player = new Player(GraphicsDevice);
-            doorScene.DoNewGenerate = true;
             base.Initialize();
         }
 
@@ -96,7 +93,7 @@ namespace DungeonGame
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
             //if (keyboardState.IsKeyDown(Keys.Escape)) Exit();
-            
+            if (keyboardState.IsKeyDown(Keys.T)) Console.WriteLine(player.Name);
             if (keyboardState.IsKeyDown(Keys.Up)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (keyboardState.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -107,14 +104,29 @@ namespace DungeonGame
             }
             else if (_gameState == GameState.DoorScene)
             {
-                doorScene.Generate();
-                doorScene.Update();
                 if (doorScene.DoNewGenerate)
                 {
                     player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
-                    doorScene.DoNewGenerate = false;
+                    doorScene.Generate();
                 }
+                doorScene.Update();
                 player.Update(gameTime);
+            }
+            else if (_gameState == GameState.GoldScene)
+            {
+
+            }
+            else if (_gameState == GameState.EnemyScene)
+            {
+
+            }
+            else if (_gameState == GameState.FightingScene)
+            {
+
+            }
+            else if (_gameState == GameState.LeaderboardScene)
+            {
+
             }
 
             // TODO: Add your update logic here

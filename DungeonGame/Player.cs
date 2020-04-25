@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +10,8 @@ namespace DungeonGame
 {
     public class Player
     {
+        public StringBuilder Name { get; set; }
+
         Animation idle;
         Animation walk;
         Animation currentAnimation;
@@ -19,11 +22,12 @@ namespace DungeonGame
         public int Width { get { return idle.CurrentRectangle.Width; } }
         public int Height { get { return idle.CurrentRectangle.Height; } }
 
-        public float X { get; set; }
+        public float X { get; set; } = -100;
         public float Y { get; set; }
 
         public Player(GraphicsDevice graphicsDevice)
         {
+            Name = new StringBuilder();
             this.graphicsDevice = graphicsDevice;
             if (playerSheetTexture == null)
             {

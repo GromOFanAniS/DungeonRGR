@@ -9,7 +9,9 @@ namespace DungeonGame
 {
     class TextBox
     {
-        bool isFocused = false;
+        public StringBuilder Text { get { return _text; } }
+
+        public bool isFocused = false;
         StringBuilder _text = new StringBuilder();
         Vector2 _position;
         Rectangle _hitbox;
@@ -38,7 +40,7 @@ namespace DungeonGame
             {
                 var k = e.Key;
                 var c = e.Character;
-                if (((c < 32 && c > 126) || (c < 1040 && c > 1103)) && c != 8) return;
+                if (((c < 32 && c > 126) || (c < 1040 && c > 1103) || k == Keys.Escape) && c != 8) return;
                 if (k == Keys.Back)
                 {
                     if (_text.Length > 0)
@@ -67,7 +69,7 @@ namespace DungeonGame
 
         public void Draw(SpriteBatch s)
         {
-            s.DrawString(_font, "Персонажа зовут", new Vector2(_position.X, _position.Y-25), Color.Yellow);
+            s.DrawString(_font, "Персонажа зовут", new Vector2(_position.X, _position.Y-45), Color.Yellow);
             s.DrawString(_font, _text, _position, Color.Black);
         }
     }

@@ -40,7 +40,7 @@ namespace DungeonGame
             startButtonNone = Content.Load<Texture2D>("Buttons/StartButton");
             startButtonHover = Content.Load<Texture2D>("Buttons/StartButtonHover");
             startButtonPress = Content.Load<Texture2D>("Buttons/StartButtonHover");
-            _buttons.Add("Start", new Button(20, (int)(startButtonNone.Height * 1.5f), startButtonNone, startButtonHover, startButtonPress));
+            _buttons.Add("Start", new Button(20, (int)(startButtonNone.Height * 1.5f), startButtonNone, startButtonHover, startButtonPress, false));
 
             leaderboardButtonNone = Content.Load<Texture2D>("Buttons/LeaderboardButton");
             leaderboardButtonHover = Content.Load<Texture2D>("Buttons/LeaderboardButtonHover");
@@ -55,6 +55,7 @@ namespace DungeonGame
         public void Update()
         {
             playerName.CheckClick();
+            if (playerName.Text.Length != 0) _buttons["Start"].isActive = true;
             foreach (var button in _buttons)
             {
                 button.Value.Update();
@@ -64,10 +65,13 @@ namespace DungeonGame
                     {
                         case "Start":
                             Game1._gameState = GameState.DoorScene;
+                            Game1.player.Name = playerName.Text;
+                            playerName.isFocused = false;
                             break;
 
                         case "Leaderboard":
                             Game1._gameState = GameState.LeaderboardScene;
+                            playerName.isFocused = false;
                             break;
 
                         case "Exit":

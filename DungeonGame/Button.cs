@@ -18,10 +18,12 @@ namespace DungeonGame
         private Dictionary<StateButton, Texture2D> _textures;
         public Vector2 Position;
         Rectangle Hitbox;
+        public bool isActive { get; set; }
 
 
-        public Button(int x, int y, Texture2D noneTexture, Texture2D hoverTexture, Texture2D pressedTexture)
+        public Button(int x, int y, Texture2D noneTexture, Texture2D hoverTexture, Texture2D pressedTexture, bool isActive = true)
         {
+            this.isActive = isActive;
             _textures = new Dictionary<StateButton, Texture2D>
             {
                 { StateButton.None, noneTexture },
@@ -34,6 +36,11 @@ namespace DungeonGame
 
         public void Update()
         {
+            if (!isActive)
+            {
+                _state = StateButton.Hover;
+                return;
+            }
             if (Hitbox.Contains(Game1.mouseState.X, Game1.mouseState.Y))
             {
                 if (Game1.mouseState.LeftButton == ButtonState.Pressed)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -37,6 +38,7 @@ namespace DungeonGame
             if (_hitbox.Intersects(playerPosition))
             {
                 _state = StateDoor.Opened;
+                if (Game1.keyboardState.IsKeyDown(Keys.Space)) OpenDoor();
             }
             else
             {
@@ -49,5 +51,20 @@ namespace DungeonGame
             s.Draw(_textures[_state], _position);
         }
 
+
+        private static void OpenDoor()
+        {
+            Random random = new Random();
+            if (random.Next(100) <= 50)
+            {
+                Game1._gameState = GameState.EnemyScene;
+                Console.WriteLine("Enemy");
+            }
+            else
+            {
+                Game1._gameState = GameState.GoldScene;
+                Console.WriteLine("Gold");
+            }
+        }
     }
 }
