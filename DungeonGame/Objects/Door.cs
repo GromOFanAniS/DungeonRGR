@@ -54,16 +54,18 @@ namespace DungeonGame
 
         private static void OpenDoor()
         {
-            Random random = new Random();
-            if (random.Next(100) <= 50)
+            if (Game1._gameState == GameState.DoorScene)
             {
-                Game1._gameState = GameState.EnemyScene;
-                Console.WriteLine("Enemy");
-            }
-            else
-            {
-                Game1._gameState = GameState.GoldScene;
-                Console.WriteLine("Gold");
+                if (Game1.random.Next(100) <= 50)
+                {
+                    Game1._gameState = GameState.EnemyScene;
+                    Console.WriteLine("Enemy");
+                }
+                else
+                {
+                    Game1._gameState = GameState.GoldScene;
+                    Console.WriteLine("Gold");
+                }
             }
         }
     }

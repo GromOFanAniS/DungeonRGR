@@ -22,6 +22,8 @@ namespace DungeonGame
     /// </summary>
     public class Game1 : Game
     {
+        public static Random random = new Random();
+
         public static GameWindow gameWindow;
         
         GraphicsDeviceManager graphics;
