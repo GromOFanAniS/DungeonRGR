@@ -14,6 +14,8 @@ namespace DungeonGame
     }
     class Door
     {
+        public static Texture2D closedTexture;
+        public static Texture2D openedTexture;
         private StateDoor _state;
         private Dictionary<StateDoor, Texture2D> _textures;
         private Vector2 _position;
@@ -21,7 +23,7 @@ namespace DungeonGame
 
         public StateDoor state { get { return _state; } }
 
-        public Door(int x, int y, Texture2D closedTexture, Texture2D openedTexture)
+        public Door(int x, int y)
         {
             _textures = new Dictionary<StateDoor, Texture2D>
             {
@@ -30,6 +32,12 @@ namespace DungeonGame
             };
             _hitbox = new Rectangle(x, y, closedTexture.Width, closedTexture.Height);
             this._position = new Vector2(x, y);
+        }
+
+        public static void Load(ContentManager content)
+        {
+            closedTexture = content.Load<Texture2D>("Door/DoorClosed");
+            openedTexture = content.Load<Texture2D>("Door/DoorOpened");
         }
 
         public void Update()
@@ -58,7 +66,7 @@ namespace DungeonGame
             {
                 if (Game1.random.Next(100) <= 50)
                 {
-                    Game1._gameState = GameState.EnemyScene;
+                    Game1._gameState = GameState.GoldScene;
                     Console.WriteLine("Enemy");
                 }
                 else
@@ -66,6 +74,12 @@ namespace DungeonGame
                     Game1._gameState = GameState.GoldScene;
                     Console.WriteLine("Gold");
                 }
+                Scene.DoNewGenerate = true;
+            }
+            else if (Game1._gameState == GameState.EnemyScene || Game1._gameState == GameState.GoldScene)
+            {
+                Game1._gameState = GameState.DoorScene;
+                Scene.DoNewGenerate = true;
             }
         }
     }

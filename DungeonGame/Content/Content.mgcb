@@ -122,6 +122,9 @@
 /processorParam:Quality=Best
 /build:Music/MainMenu.wav
 
+#begin Objects/GoldPile.png
+/copy:Objects/GoldPile.png
+
 #begin Player/PlayerSheet.png
 /copy:Player/PlayerSheet.png
 

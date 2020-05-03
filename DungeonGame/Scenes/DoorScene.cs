@@ -6,35 +6,19 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DungeonGame
 {
-    class DoorScene
+    class DoorScene : Scene
     {
-        private Texture2D closedDoorTexture;
-        private Texture2D openedDoorTexture;
+        private List<Door> _doors = new List<Door>() { null, null };
+        //public static bool DoNewGenerate = true;
 
-        private List<Door> _doors = new List<Door>();
-        public bool DoNewGenerate { get; private set; } = true;
-
-        public void Generate()
+        public DoorScene()
         {
-            DoNewGenerate = true;
-            if (DoNewGenerate)
-            {
-                DoNewGenerate = !DoNewGenerate;
-                _doors[0] = new Door(closedDoorTexture.Width / 2 + 50, closedDoorTexture.Height / 2, closedDoorTexture, openedDoorTexture);
-                _doors[1] = new Door(closedDoorTexture.Width * 3 - 50, closedDoorTexture.Height / 2, closedDoorTexture, openedDoorTexture);
-            }
+            DoNewGenerate = false;
+            _doors[0] = new Door(50, Door.closedTexture.Height / 2);
+            _doors[1] = new Door(Game1.gameWindow.ClientBounds.Width - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
         }
 
-        public void Load(ContentManager content)
-        {
-            closedDoorTexture = content.Load<Texture2D>("Door/DoorClosed");
-            openedDoorTexture = content.Load<Texture2D>("Door/DoorOpened");
-
-            _doors.Add(new Door(closedDoorTexture.Width / 2 + 50, closedDoorTexture.Height / 2, closedDoorTexture, openedDoorTexture));
-            _doors.Add(new Door(closedDoorTexture.Width * 3 - 50, closedDoorTexture.Height / 2, closedDoorTexture, openedDoorTexture));
-        }
-
-        public void Update()
+        public override void Update(GameTime gameTime)
         {
             foreach (var door in _doors)
             {
@@ -42,10 +26,10 @@ namespace DungeonGame
             }
         }
 
-        public void Draw(SpriteBatch s)
+        public override void Draw(SpriteBatch s)
         {
             foreach (var door in _doors)
-                door.Draw(s);
+                door?.Draw(s);
         }
     }
 }

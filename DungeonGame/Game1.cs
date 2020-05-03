@@ -33,7 +33,7 @@ namespace DungeonGame
 
         public static Player player;
         MainMenu mainMenu;
-        DoorScene doorScene;
+        Scene scene;
 
         public Game1()
         {
@@ -54,8 +54,7 @@ namespace DungeonGame
             gameWindow = Window;
             _camera = new Camera(GraphicsDevice.Viewport);
             mainMenu = new MainMenu();
-            doorScene = new DoorScene();
-            player = new Player(GraphicsDevice);
+            player = new Player();
             base.Initialize();
         }
 
@@ -70,8 +69,9 @@ namespace DungeonGame
             // TODO: use this.Content to load your game content here
 
             mainMenu.Load(Content);
-            doorScene.Load(Content);
-            player.Load();
+            Door.Load(Content);
+            Gold.Load(GraphicsDevice);
+            Player.Load(GraphicsDevice);
         }
 
         /// <summary>
@@ -100,39 +100,38 @@ namespace DungeonGame
             if (keyboardState.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 
-            if (_gameState == GameState.MenuScene)
+            switch (_gameState)
             {
-                mainMenu.Update();
-            }
-            else if (_gameState == GameState.DoorScene)
-            {
-                if (doorScene.DoNewGenerate)
-                {
-                    player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
-                    doorScene.Generate();
-                }
-                doorScene.Update();
-                player.Update(gameTime);
-            }
-            else if (_gameState == GameState.GoldScene)
-            {
+                case GameState.MenuScene:
+                    mainMenu.Update();
+                    break;
+                case GameState.DoorScene:
+                    if (DoorScene.DoNewGenerate)
+                    {
+                        player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
+                        scene = new DoorScene();
+                    }
 
-            }
-            else if (_gameState == GameState.EnemyScene)
-            {
+                    scene.Update(gameTime);
+                    player.Update(gameTime);
+                    break;
+                case GameState.GoldScene:
+                    if (GoldScene.DoNewGenerate)
+                        scene = new GoldScene();
 
-            }
-            else if (_gameState == GameState.FightingScene)
-            {
-
-            }
-            else if (_gameState == GameState.LeaderboardScene)
-            {
-
+                    scene.Update(gameTime);
+                    player.Update(gameTime);
+                    break;
+                case GameState.EnemyScene:
+                    break;
+                case GameState.FightingScene:
+                    break;
+                case GameState.LeaderboardScene:
+                    break;
             }
 
             // TODO: Add your update logic here
-
+            
             base.Update(gameTime);
         }
 
@@ -146,34 +145,28 @@ namespace DungeonGame
             // TODO: Add your drawing code here
             var viewMatrix = _camera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: viewMatrix);
-            if (_gameState == GameState.MenuScene)
+            switch (_gameState)
             {
-                mainMenu.Draw(spriteBatch);
-            }
-            else if (_gameState == GameState.DoorScene)
-            {
-                doorScene.Draw(spriteBatch);
-                player.Draw(spriteBatch);
-            }
-            else if (_gameState == GameState.GoldScene)
-            {
-
-            }
-            else if (_gameState == GameState.EnemyScene)
-            {
-
-            }
-            else if (_gameState == GameState.FightingScene)
-            {
-
-            }
-            else if (_gameState == GameState.LeaderboardScene)
-            {
-
-            }
-            else if (_gameState == GameState.Exit)
-            {
-                Exit();
+                case GameState.MenuScene:
+                    mainMenu.Draw(spriteBatch);
+                    break;
+                case GameState.DoorScene:
+                    scene?.Draw(spriteBatch);
+                    player.Draw(spriteBatch);
+                    break;
+                case GameState.GoldScene:
+                    scene?.Draw(spriteBatch);
+                    player.Draw(spriteBatch);
+                    break;
+                case GameState.EnemyScene:
+                    break;
+                case GameState.FightingScene:
+                    break;
+                case GameState.LeaderboardScene:
+                    break;
+                case GameState.Exit:
+                    Exit();
+                    break;
             }
             spriteBatch.End();
            

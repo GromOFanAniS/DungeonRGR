@@ -21,14 +21,13 @@ namespace DungeonGame
         public bool isActive { get; set; }
 
 
-        public Button(int x, int y, Texture2D noneTexture, Texture2D hoverTexture, Texture2D pressedTexture, bool isActive = true)
+        public Button(int x, int y, Texture2D noneTexture, Texture2D hoverTexture, bool isActive = true)
         {
             this.isActive = isActive;
             _textures = new Dictionary<StateButton, Texture2D>
             {
                 { StateButton.None, noneTexture },
-                { StateButton.Hover, hoverTexture },
-                { StateButton.Press, pressedTexture }
+                { StateButton.Hover, hoverTexture }
             };
             Hitbox = new Rectangle(x, y, noneTexture.Width, noneTexture.Height);
             this.Position = new Vector2(x, y);
