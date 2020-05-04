@@ -10,8 +10,15 @@ using Microsoft.Xna.Framework.Media;
 
 namespace DungeonGame
 {
-    abstract class Enemy
+    abstract class Enemy : Character
     {
-        protected Texture2D idleTexture;
+        public static Enemy Generate()
+        {
+            switch (Game1.random.Next(0, 10))
+            {
+                case 0: return new Slime();
+                default: return new Slime();
+            }
+        }
     }
 }

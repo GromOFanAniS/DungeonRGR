@@ -8,22 +8,15 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DungeonGame
 {
-    public class Player
+    public class Player : Character
     {
         public StringBuilder Name { get; set; }
         public int gold = 0;
-
+        
         Animation idle;
         Animation walk;
-        Animation currentAnimation;
         static Texture2D playerSheetTexture;
         SpriteEffects flip = SpriteEffects.None;
-
-        public int Width { get { return idle.CurrentRectangle.Width; } }
-        public int Height { get { return idle.CurrentRectangle.Height; } }
-
-        public float X { get; set; } = -100;
-        public float Y { get; set; }
 
         public Player()
         {
@@ -31,7 +24,7 @@ namespace DungeonGame
 
             idle = new Animation();
                 idle.AddFrame(new Rectangle(0, 0, 95, 184), TimeSpan.FromSeconds(1));
-            currentAnimation = idle;
+            _animation = idle;
 
             walk = new Animation();
             for (int i = 1; i < 8; i++)
@@ -39,31 +32,22 @@ namespace DungeonGame
             
         }
 
-        public void Position(int x, int y)
+        public static void Load(ContentManager content)
         {
-            this.X = x;
-            this.Y = y;
-        }
-
-        public static void Load(GraphicsDevice graphicsDevice)
-        {
-            using (var stream = TitleContainer.OpenStream("Content/Player/PlayerSheet.png"))
-            {
-                playerSheetTexture = Texture2D.FromStream(graphicsDevice, stream);
-            }
+            playerSheetTexture = content.Load<Texture2D>("Player/PlayerSheet");
         }
 
         private float velocity = 250f;
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            this.currentAnimation = idle;
+            _animation = idle;
             //if (keyboardState.IsKeyDown(Keys.W)) 
             //{
             //    this.Y -= 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             //}
             if (Game1.keyboardState.IsKeyDown(Keys.A))
             {
-                this.currentAnimation = walk;
+                _animation = walk;
                 flip = SpriteEffects.FlipHorizontally;
                 if ((this.X - velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0) return;
                 this.X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -74,20 +58,20 @@ namespace DungeonGame
             //}
             if (Game1.keyboardState.IsKeyDown(Keys.D)) 
             {
-                this.currentAnimation = walk;
+                _animation = walk;
                 flip = SpriteEffects.None;
                 if ((this.X + velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) >= (Game1.gameWindow.ClientBounds.Width - Width)) return;
                 this.X += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            currentAnimation.Update(gameTime);
+            _animation.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch s)
         {
             Vector2 topLeftOfSprite = new Vector2(this.X, this.Y);
             Color color = Color.White;
-            var sourceRectangle = currentAnimation.CurrentRectangle;
-            spriteBatch.Draw(playerSheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, color, flip);
+            var sourceRectangle = _animation.CurrentRectangle;
+            s.Draw(playerSheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, color, flip);
         }
     }
 }

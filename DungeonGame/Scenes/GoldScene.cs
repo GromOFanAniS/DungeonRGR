@@ -10,10 +10,8 @@ namespace DungeonGame
 {
     class GoldScene : Scene
     {
-        private Gold gold = null;
-        private Door door = null;
-
-        //public static bool DoNewGenerate = true;
+        private Gold gold;
+        private Door door;
 
         public GoldScene()
         {

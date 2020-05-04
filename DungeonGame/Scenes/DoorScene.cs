@@ -9,7 +9,6 @@ namespace DungeonGame
     class DoorScene : Scene
     {
         private List<Door> _doors = new List<Door>() { null, null };
-        //public static bool DoNewGenerate = true;
 
         public DoorScene()
         {

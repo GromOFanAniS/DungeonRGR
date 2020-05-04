@@ -66,7 +66,7 @@ namespace DungeonGame
             {
                 if (Game1.random.Next(100) <= 50)
                 {
-                    Game1._gameState = GameState.GoldScene;
+                    Game1._gameState = GameState.EnemyScene;
                     Console.WriteLine("Enemy");
                 }
                 else

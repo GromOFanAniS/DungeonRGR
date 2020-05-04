@@ -34,12 +34,9 @@ namespace DungeonGame
             _hitbox = new Rectangle(X, Y, _width, _height);
         }
 
-        public static void Load(GraphicsDevice graphicsDevice)
+        public static void Load(ContentManager content)
         {
-            using (var stream = TitleContainer.OpenStream("Content/Objects/GoldPile.png"))
-            {
-                _sheetTexture = Texture2D.FromStream(graphicsDevice, stream);
-            }
+            _sheetTexture = content.Load<Texture2D>("Objects/GoldPile");
             _animation = new Animation();
             _animation.AddFrame(new Rectangle(0, 0, 250, 95), TimeSpan.FromSeconds(0.25));
             _animation.AddFrame(new Rectangle(0, 96, 250, 95), TimeSpan.FromSeconds(0.25));

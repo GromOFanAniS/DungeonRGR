@@ -70,8 +70,8 @@ namespace DungeonGame
 
             mainMenu.Load(Content);
             Door.Load(Content);
-            Gold.Load(GraphicsDevice);
-            Player.Load(GraphicsDevice);
+            Gold.Load(Content);
+            Character.LoadCharacters(Content);
         }
 
         /// <summary>
@@ -106,23 +106,28 @@ namespace DungeonGame
                     mainMenu.Update();
                     break;
                 case GameState.DoorScene:
-                    if (DoorScene.DoNewGenerate)
+                    if (Scene.DoNewGenerate)
                     {
                         player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
                         scene = new DoorScene();
                     }
-
+                    
                     scene.Update(gameTime);
                     player.Update(gameTime);
                     break;
                 case GameState.GoldScene:
-                    if (GoldScene.DoNewGenerate)
+                    if (Scene.DoNewGenerate)
                         scene = new GoldScene();
 
                     scene.Update(gameTime);
                     player.Update(gameTime);
                     break;
                 case GameState.EnemyScene:
+                    if (Scene.DoNewGenerate)
+                        scene = new EnemyScene();
+
+                    scene.Update(gameTime);
+                    player.Update(gameTime);
                     break;
                 case GameState.FightingScene:
                     break;
@@ -159,6 +164,8 @@ namespace DungeonGame
                     player.Draw(spriteBatch);
                     break;
                 case GameState.EnemyScene:
+                    scene?.Draw(spriteBatch);
+                    player.Draw(spriteBatch);
                     break;
                 case GameState.FightingScene:
                     break;

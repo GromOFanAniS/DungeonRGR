@@ -109,6 +109,18 @@
 /processorParam:TextureFormat=Color
 /build:Door/DoorOpened.png
 
+#begin Enemies/Slime.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Enemies/Slime.png
+
 #begin Fonts/MainMenuFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -123,8 +135,12 @@
 /build:Music/MainMenu.wav
 
 #begin Objects/GoldPile.png
-/copy:Objects/GoldPile.png
+/importer:
+/processor:
+/build:Objects/GoldPile.png
 
 #begin Player/PlayerSheet.png
-/copy:Player/PlayerSheet.png
+/importer:
+/processor:
+/build:Player/PlayerSheet.png
 
