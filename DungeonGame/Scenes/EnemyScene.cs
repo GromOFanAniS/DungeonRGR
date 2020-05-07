@@ -8,10 +8,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DungeonGame
 {
+    enum FightingState
+    {
+        None,
+        Player,
+        Enemy
+    }
     class EnemyScene : Scene
     {
         private Enemy enemy;
         private Door door;
+        public FightingState fightingState;
         public EnemyScene()
         {
             DoNewGenerate = false;

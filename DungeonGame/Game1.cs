@@ -11,7 +11,6 @@ namespace DungeonGame
         MenuScene,
         LeaderboardScene,
         EnemyScene,
-        FightingScene,
         DoorScene,
         GoldScene,
         Exit
@@ -129,8 +128,6 @@ namespace DungeonGame
                     scene.Update(gameTime);
                     player.Update(gameTime);
                     break;
-                case GameState.FightingScene:
-                    break;
                 case GameState.LeaderboardScene:
                     break;
             }
@@ -166,8 +163,6 @@ namespace DungeonGame
                 case GameState.EnemyScene:
                     scene?.Draw(spriteBatch);
                     player.Draw(spriteBatch);
-                    break;
-                case GameState.FightingScene:
                     break;
                 case GameState.LeaderboardScene:
                     break;

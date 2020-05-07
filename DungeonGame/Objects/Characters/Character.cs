@@ -17,6 +17,13 @@ namespace DungeonGame
         Ranged,
         Special
     }
+    public enum AttackSpots
+    {
+        Head,
+        Body,
+        Hands,
+        Legs
+    }
     public abstract class Character
     {
         public class Attack
@@ -25,13 +32,25 @@ namespace DungeonGame
             private int _baseDamage;
             private int _baseChance;
             private int _successChance;
-            private AttackTypes _attackType;
+            private AttackTypes _type;
+            private AttackSpots _spot;
 
-            public int Damage { get => _damage; set => _damage = value; }
+            public int Damage { get => _damage; }
             public int BaseDamage { get => _baseDamage; }
             public int BaseChance { get => _baseChance; }
             public int SuccessChance { get => _successChance; }
-            public AttackTypes AttackType { get => _attackType; }
+            public AttackTypes Type { get => _type; }
+            public AttackSpots Spot { get => _spot; }
+
+            public Attack(int damage = 0, int baseDamage = 0, int baseChance = 0, int successChance = 0, AttackTypes type = AttackTypes.None, AttackSpots spot = AttackSpots.Body)
+            {
+                _damage = damage;
+                _baseDamage = baseDamage;
+                _baseChance = baseChance;
+                _successChance = successChance;
+                _type = type;
+                _spot = spot;
+            }
         }
 
         protected int _health;
@@ -42,6 +61,7 @@ namespace DungeonGame
         protected Animation _animation;
 
         protected List<Attack> _attacks;
+        protected List<AttackSpots> _weakSpots;
 
         protected int Health
         {
@@ -78,7 +98,34 @@ namespace DungeonGame
 
         public void DoAttack(Character target, Attack attack)
         {
-            target.Health -= attack.Damage;
+            if (Game1.random.Next(0, 100) <= attack.SuccessChance)
+            {
+                int dmg = attack.Damage;
+                if (attack.Type != AttackTypes.Special)
+                {
+                    if (target._weakSpots.Contains(attack.Spot))
+                    {
+                        dmg = (int)(dmg * 1.5);
+                    }
+                    if (attack.Type == target._weakness)
+                    {
+                        dmg = (int)(dmg * 1.5);
+                    }
+                    else if (attack.Type == target._resistance)
+                    {
+                        dmg = (int)(dmg / 1.5);
+                    }
+                    if (Game1.random.Next(0, 100) < 10)
+                    {
+                        dmg *= 2;
+                    }
+                }
+                target.Health -= dmg;
+            }
+            else
+            {
+                //промазал
+            }
         }
     }
 }

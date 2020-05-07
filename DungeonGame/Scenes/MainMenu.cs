@@ -11,15 +11,6 @@ namespace DungeonGame
 {
     class MainMenu
     {
-        private Texture2D startButtonNone;
-        private Texture2D startButtonHover;
-
-        private Texture2D leaderboardButtonNone;
-        private Texture2D leaderboardButtonHover;
-
-        private Texture2D exitButtonNone;
-        private Texture2D exitButtonHover;
-
         private Song _song;
 
         private TextBox playerName;
@@ -34,23 +25,18 @@ namespace DungeonGame
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.33f;
             MediaPlayer.Play(_song);
-            
-            startButtonNone = Content.Load<Texture2D>("Buttons/StartButton");
-            startButtonHover = Content.Load<Texture2D>("Buttons/StartButtonHover");
-            _buttons.Add("Start", new Button(20, (int)(startButtonNone.Height * 1.5f), startButtonNone, startButtonHover, false));
 
-            leaderboardButtonNone = Content.Load<Texture2D>("Buttons/LeaderboardButton");
-            leaderboardButtonHover = Content.Load<Texture2D>("Buttons/LeaderboardButtonHover");
-            _buttons.Add("Leaderboard", new Button(20, (int)(startButtonNone.Height * 3), leaderboardButtonNone, leaderboardButtonHover));
+            Button.Load(Content);
 
-            exitButtonNone = Content.Load<Texture2D>("Buttons/ExitButton");
-            exitButtonHover = Content.Load<Texture2D>("Buttons/ExitButtonHover");
-            _buttons.Add("Exit", new Button(20, (int)(startButtonNone.Height * 4.5f), exitButtonNone, exitButtonHover));
+            _buttons.Add("Start", new Button(20, 100, "Start", false));
+            _buttons.Add("Leaderboard", new Button(20, 200, "Leaderboard"));
+            _buttons.Add("Exit", new Button(20, 300, "Exit"));
         }
         public void Update()
         {
             playerName.CheckClick();
             if (playerName.Text.Length != 0) _buttons["Start"].isActive = true;
+            else _buttons["Start"].isActive = false;
             foreach (var button in _buttons)
             {
                 button.Value.Update();
