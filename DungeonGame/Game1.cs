@@ -29,7 +29,7 @@ namespace DungeonGame
         SpriteBatch spriteBatch;
         public static GameState _gameState;
         public static Camera _camera;
-
+        
         public static Player player;
         MainMenu mainMenu;
         Scene scene;
@@ -54,6 +54,7 @@ namespace DungeonGame
             _camera = new Camera(GraphicsDevice.Viewport);
             mainMenu = new MainMenu();
             player = new Player();
+            player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
             base.Initialize();
         }
 
@@ -151,6 +152,7 @@ namespace DungeonGame
             {
                 case GameState.MenuScene:
                     mainMenu.Draw(spriteBatch);
+                    player.Draw(spriteBatch);
                     break;
                 case GameState.DoorScene:
                     scene?.Draw(spriteBatch);

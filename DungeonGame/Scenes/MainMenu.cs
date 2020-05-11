@@ -19,7 +19,7 @@ namespace DungeonGame
 
         public void Load(ContentManager Content)
         {
-            playerName = new TextBox(200, 200, 100, 250, "Fonts/MainMenuFont", Content);
+            playerName = new TextBox(Game1.gameWindow.ClientBounds.Width / 2 - 11, Game1.player.Height - 30, "Персонажа зовут", "Fonts/MainMenuFont", Content);
 
             _song = Content.Load<Song>("Music/MainMenu");
             MediaPlayer.IsRepeating = true;
@@ -34,7 +34,7 @@ namespace DungeonGame
         }
         public void Update()
         {
-            playerName.CheckClick();
+            //playerName.CheckClick();
             if (playerName.Text.Length != 0) _buttons["Start"].isActive = true;
             else _buttons["Start"].isActive = false;
             foreach (var button in _buttons)

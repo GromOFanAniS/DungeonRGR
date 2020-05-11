@@ -11,17 +11,20 @@ namespace DungeonGame
     {
         public StringBuilder Text { get { return _text; } }
 
-        public bool isFocused = false;
+        public bool isFocused = true;
         StringBuilder _text = new StringBuilder();
         Vector2 _position;
         Rectangle _hitbox;
         SpriteFont _font;
+        string _label;
 
-        public TextBox(int x, int y, int width, int height, string font, ContentManager Content)
+        public TextBox(int x, int y, string label, /*int width, int height,*/ string font, ContentManager Content)
         {
             _font = Content.Load<SpriteFont>(font);
             _position = new Vector2(x, y);
-            _hitbox = new Rectangle(x, y, width, height);
+            _label = label;
+            //_hitbox = new Rectangle(x, y, width, height);
+            RegisterFocusedButtonForTextInput(OnInput);
         }
 
         void RegisterFocusedButtonForTextInput(System.EventHandler<TextInputEventArgs> method)
@@ -69,8 +72,8 @@ namespace DungeonGame
 
         public void Draw(SpriteBatch s)
         {
-            s.DrawString(_font, "Персонажа зовут", new Vector2(_position.X, _position.Y-45), Color.Yellow);
-            s.DrawString(_font, _text, _position, Color.Black);
+            s.DrawString(_font, _label, new Vector2(_position.X - _font.MeasureString(_label).X / 2, _position.Y - _font.MeasureString(_label).Y), Color.Yellow);
+            s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2, _position.Y), Color.Black);
         }
     }
 }
