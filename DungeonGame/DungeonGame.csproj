@@ -45,6 +45,8 @@
     <Compile Include="Objects\Characters\Character.cs" />
     <Compile Include="Objects\Characters\Enemies\Slime.cs" />
     <Compile Include="Objects\Gold.cs" />
+    <Compile Include="Objects\UI\HealthBar.cs" />
+    <Compile Include="Objects\UI\Label.cs" />
     <Compile Include="Scenes\EnemyScene.cs" />
     <Compile Include="Scenes\GoldScene.cs" />
     <Compile Include="Scenes\Scene.cs" />

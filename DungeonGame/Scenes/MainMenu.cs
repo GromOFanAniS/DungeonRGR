@@ -32,7 +32,7 @@ namespace DungeonGame
             _buttons.Add("Leaderboard", new Button(20, 200, "Leaderboard"));
             _buttons.Add("Exit", new Button(20, 300, "Exit"));
         }
-        public void Update()
+        public void Update() 
         {
             //playerName.CheckClick();
             if (playerName.Text.Length != 0) _buttons["Start"].isActive = true;

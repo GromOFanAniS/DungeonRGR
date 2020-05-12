@@ -31,6 +31,8 @@ namespace DungeonGame
         public static Camera _camera;
         
         public static Player player;
+        public static Label actions;
+        Label gold;
         MainMenu mainMenu;
         Scene scene;
 
@@ -38,6 +40,8 @@ namespace DungeonGame
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferWidth = 1000;
+            graphics.PreferredBackBufferHeight = 600;
         }
 
         /// <summary>
@@ -52,9 +56,11 @@ namespace DungeonGame
             this.IsMouseVisible = true;
             gameWindow = Window;
             _camera = new Camera(GraphicsDevice.Viewport);
+            actions = new Label(10, Window.ClientBounds.Height - 100);
+            gold = new Label(Window.ClientBounds.Width / 2, 15);
             mainMenu = new MainMenu();
             player = new Player();
-            player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
+            player.Position((Window.ClientBounds.Width + player.Width) / 2, 180);
             base.Initialize();
         }
 
@@ -71,6 +77,8 @@ namespace DungeonGame
             mainMenu.Load(Content);
             Door.Load(Content);
             Gold.Load(Content);
+            HealthBar.Load(Content);
+            Label.Load(Content);
             Character.LoadCharacters(Content);
         }
 
@@ -132,6 +140,7 @@ namespace DungeonGame
                 case GameState.LeaderboardScene:
                     break;
             }
+            actions.Update(gameTime);
 
             // TODO: Add your update logic here
             
@@ -157,14 +166,20 @@ namespace DungeonGame
                 case GameState.DoorScene:
                     scene?.Draw(spriteBatch);
                     player.Draw(spriteBatch);
+                    actions.Draw(spriteBatch);
+                    gold.Draw(spriteBatch);
                     break;
                 case GameState.GoldScene:
                     scene?.Draw(spriteBatch);
                     player.Draw(spriteBatch);
+                    actions.Draw(spriteBatch);
+                    gold.Draw(spriteBatch);
                     break;
                 case GameState.EnemyScene:
                     scene?.Draw(spriteBatch);
                     player.Draw(spriteBatch);
+                    actions.Draw(spriteBatch);
+                    gold.Draw(spriteBatch);
                     break;
                 case GameState.LeaderboardScene:
                     break;
@@ -172,6 +187,7 @@ namespace DungeonGame
                     Exit();
                     break;
             }
+            gold.Text = "У вас " + player.gold + " золота";
             spriteBatch.End();
            
             base.Draw(gameTime);

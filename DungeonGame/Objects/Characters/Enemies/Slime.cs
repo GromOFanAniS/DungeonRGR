@@ -19,6 +19,7 @@ namespace DungeonGame
 
             _animation = idle;
             Position((Game1.gameWindow.ClientBounds.Width - Width) / 2, 180);
+            Game1.actions.Text += "Слизень";
             _attacks = new List<Attack>()
             {
                 new Attack()

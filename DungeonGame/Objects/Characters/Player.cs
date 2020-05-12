@@ -12,7 +12,6 @@ namespace DungeonGame
     {
         public StringBuilder Name { get; set; }
         public int gold = 0;
-        
         Animation idle;
         Animation walk;
         static Texture2D playerSheetTexture;
@@ -21,7 +20,9 @@ namespace DungeonGame
         public Player()
         {
             Name = new StringBuilder();
-
+            _healthBar = new HealthBar(5, 10);
+            _maxHealth = 100;
+            _health = 100;
             idle = new Animation();
                 idle.AddFrame(new Rectangle(0, 0, 95, 184), TimeSpan.FromSeconds(1));
             _animation = idle;
@@ -41,10 +42,6 @@ namespace DungeonGame
         public override void Update(GameTime gameTime)
         {
             _animation = idle;
-            //if (keyboardState.IsKeyDown(Keys.W)) 
-            //{
-            //    this.Y -= 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //}
             if (Game1.keyboardState.IsKeyDown(Keys.A))
             {
                 _animation = walk;
@@ -52,10 +49,6 @@ namespace DungeonGame
                 if ((this.X - velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0) return;
                 this.X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            //if (keyboardState.IsKeyDown(Keys.S)) 
-            //{
-            //    this.Y += 250f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //}
             if (Game1.keyboardState.IsKeyDown(Keys.D)) 
             {
                 _animation = walk;
@@ -72,6 +65,7 @@ namespace DungeonGame
             Color color = Color.White;
             var sourceRectangle = _animation.CurrentRectangle;
             s.Draw(playerSheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, color, flip);
+            _healthBar.Draw(s, _health, _maxHealth);
         }
     }
 }

@@ -49,6 +49,7 @@ namespace DungeonGame
             {
                 _doDraw = false;
                 Game1.player.gold += _amount;
+                Game1.actions.Text = "Подобрано " + _amount + " золота";
             }
             _animation.Update(gameTime);
         }

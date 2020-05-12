@@ -80,6 +80,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/ButtonFont.spritefont
 
+#begin Fonts/LabelFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/LabelFont.spritefont
+
 #begin Fonts/MainMenuFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -116,4 +123,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Player/PlayerSheet.png
+
+#begin UI/HealthBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/HealthBar.png
 

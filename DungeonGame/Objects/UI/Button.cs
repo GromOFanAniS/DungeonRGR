@@ -74,7 +74,7 @@ namespace DungeonGame
             if (_state == StateButton.Press)
                 s.Draw(_textures[_state], new Vector2(Position.X, ++Position.Y));
             else s.Draw(_textures[_state], Position);
-            s.DrawString(_font, _label, new Vector2(Position.X + _textures[0].Width / 2f - _label.Length * 3.5f, Position.Y + _textures[0].Height / 2 - 5), Color.White);
+            s.DrawString(_font, _label, new Vector2(Position.X + _textures[0].Width / 2 - _font.MeasureString(_label).X / 2 + 0.5f, Position.Y + _textures[0].Height / 2 - _font.MeasureString(_label).Y / 2  + 2), Color.White);
         }
     }
 }

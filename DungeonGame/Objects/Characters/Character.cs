@@ -55,6 +55,7 @@ namespace DungeonGame
 
         protected int _health;
         protected int _maxHealth;
+        protected HealthBar _healthBar;
         protected static Texture2D _texture;
         protected AttackTypes _weakness;
         protected AttackTypes _resistance;
@@ -63,13 +64,15 @@ namespace DungeonGame
         protected List<Attack> _attacks;
         protected List<AttackSpots> _weakSpots;
 
-        protected int Health
+        public int Health
         {
             get => _health;
             set
             {
-                if (value <= _maxHealth)
+                if (value <= _maxHealth && value >= 0)
                     _health = value;
+                else if (value < 0)
+                    _health = 0;
                 else
                     _health = _maxHealth;
             }

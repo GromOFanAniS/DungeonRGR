@@ -67,11 +67,13 @@ namespace DungeonGame
                 if (Game1.random.Next(100) <= 50)
                 {
                     Game1._gameState = GameState.EnemyScene;
+                    Game1.actions.Text = "Вам встретился ";
                     Console.WriteLine("Enemy");
                 }
                 else
                 {
                     Game1._gameState = GameState.GoldScene;
+                    Game1.actions.Text = "Вам попалось золото";
                     Console.WriteLine("Gold");
                 }
                 Scene.DoNewGenerate = true;
@@ -79,6 +81,7 @@ namespace DungeonGame
             else if (Game1._gameState == GameState.EnemyScene || Game1._gameState == GameState.GoldScene)
             {
                 Game1._gameState = GameState.DoorScene;
+
                 Scene.DoNewGenerate = true;
             }
         }
