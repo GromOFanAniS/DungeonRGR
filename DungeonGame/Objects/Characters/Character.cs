@@ -127,7 +127,7 @@ namespace DungeonGame
             }
             else
             {
-                //промазал
+                Game1.actions.Text = "Вы промахнулись";
             }
         }
     }

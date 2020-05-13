@@ -18,13 +18,14 @@ namespace DungeonGame
     public class Button
     {
         private StateButton _state;
-        public StateButton state { get { return _state; } }
+        public StateButton state => _state; 
         private static Dictionary<StateButton, Texture2D> _textures;
         public Vector2 Position;
         Rectangle Hitbox;
         public bool isActive { get; set; }
         private static SpriteFont _font;
         private string _label;
+        private MouseState oldState;
 
 
         public Button(int x, int y, string label, bool isActive = true)
@@ -54,7 +55,8 @@ namespace DungeonGame
             }
             if (Hitbox.Contains(Game1.mouseState.X, Game1.mouseState.Y))
             {
-                if (Game1.mouseState.LeftButton == ButtonState.Pressed)
+                MouseState newState = Mouse.GetState();
+                if (newState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released)
                 {
                     _state = StateButton.Press;
                 }
@@ -62,6 +64,7 @@ namespace DungeonGame
                 {
                     _state = StateButton.Hover;
                 }
+                oldState = newState;
             }
             else
             {
@@ -72,7 +75,7 @@ namespace DungeonGame
         public void Draw(SpriteBatch s)
         {
             if (_state == StateButton.Press)
-                s.Draw(_textures[_state], new Vector2(Position.X, ++Position.Y));
+                s.Draw(_textures[StateButton.Hover], Position);
             else s.Draw(_textures[_state], Position);
             s.DrawString(_font, _label, new Vector2(Position.X + _textures[0].Width / 2 - _font.MeasureString(_label).X / 2 + 0.5f, Position.Y + _textures[0].Height / 2 - _font.MeasureString(_label).Y / 2  + 2), Color.White);
         }

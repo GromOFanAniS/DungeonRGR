@@ -16,6 +16,7 @@ namespace DungeonGame
         Animation walk;
         static Texture2D playerSheetTexture;
         SpriteEffects flip = SpriteEffects.None;
+        public bool canWalk = true;
 
         public Player()
         {
@@ -42,19 +43,27 @@ namespace DungeonGame
         public override void Update(GameTime gameTime)
         {
             _animation = idle;
-            if (Game1.keyboardState.IsKeyDown(Keys.A))
+            if (canWalk)
             {
-                _animation = walk;
-                flip = SpriteEffects.FlipHorizontally;
-                if ((this.X - velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0) return;
-                this.X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (Game1.keyboardState.IsKeyDown(Keys.A))
+                {
+                    _animation = walk;
+                    flip = SpriteEffects.FlipHorizontally;
+                    if ((this.X - velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0) return;
+                    this.X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                if (Game1.keyboardState.IsKeyDown(Keys.D))
+                {
+                    _animation = walk;
+                    flip = SpriteEffects.None;
+                    if ((this.X + velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) >= (Game1.gameWindow.ClientBounds.Width - Width)) return;
+                    this.X += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
             }
-            if (Game1.keyboardState.IsKeyDown(Keys.D)) 
+            else
             {
-                _animation = walk;
                 flip = SpriteEffects.None;
-                if ((this.X + velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) >= (Game1.gameWindow.ClientBounds.Width - Width)) return;
-                this.X += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Position(Game1.gameWindow.ClientBounds.Width / 2 - 100 - Width, (int)Y);
             }
             _animation.Update(gameTime);
         }

@@ -16,9 +16,8 @@ namespace DungeonGame
         {
             _maxHealth = 100;
             _health = _maxHealth;
-
             _animation = idle;
-            Position((Game1.gameWindow.ClientBounds.Width - Width) / 2, 180);
+            Y += Height / 2;
             Game1.actions.Text += "Слизень";
             _attacks = new List<Attack>()
             {

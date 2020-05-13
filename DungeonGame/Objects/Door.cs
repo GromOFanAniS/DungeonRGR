@@ -54,9 +54,9 @@ namespace DungeonGame
             }
         }
 
-        public void Draw(SpriteBatch s)
+        public void Draw(SpriteBatch s, SpriteEffects spriteEffect = SpriteEffects.None)
         {
-            s.Draw(_textures[_state], _position);
+            s.Draw(_textures[_state], _position, null, null, null, 0, null, null, spriteEffect);
         }
 
 
@@ -68,11 +68,12 @@ namespace DungeonGame
                 {
                     Game1._gameState = GameState.EnemyScene;
                     Game1.actions.Text = "Вам встретился ";
+                    
                     Console.WriteLine("Enemy");
                 }
                 else
                 {
-                    Game1._gameState = GameState.GoldScene;
+                    Game1._gameState = GameState.EnemyScene;
                     Game1.actions.Text = "Вам попалось золото";
                     Console.WriteLine("Gold");
                 }

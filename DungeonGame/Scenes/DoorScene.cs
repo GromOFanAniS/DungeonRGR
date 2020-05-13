@@ -27,8 +27,8 @@ namespace DungeonGame
 
         public override void Draw(SpriteBatch s)
         {
-            foreach (var door in _doors)
-                door?.Draw(s);
+            _doors[0]?.Draw(s, SpriteEffects.FlipHorizontally);
+            _doors[1]?.Draw(s);
         }
     }
 }

@@ -56,7 +56,7 @@ namespace DungeonGame
             this.IsMouseVisible = true;
             gameWindow = Window;
             _camera = new Camera(GraphicsDevice.Viewport);
-            actions = new Label(10, Window.ClientBounds.Height - 100);
+            actions = new Label(10, Window.ClientBounds.Height / 7 * 6);
             gold = new Label(Window.ClientBounds.Width / 2, 15);
             mainMenu = new MainMenu();
             player = new Player();
@@ -116,7 +116,7 @@ namespace DungeonGame
                 case GameState.DoorScene:
                     if (Scene.DoNewGenerate)
                     {
-                        player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
+                        player.Position((Window.ClientBounds.Width - player.Width) / 2, (Window.ClientBounds.Height - player.Height) / 2);
                         scene = new DoorScene();
                     }
                     
@@ -132,7 +132,10 @@ namespace DungeonGame
                     break;
                 case GameState.EnemyScene:
                     if (Scene.DoNewGenerate)
+                    {
+                        player.canWalk = false;
                         scene = new EnemyScene();
+                    }
 
                     scene.Update(gameTime);
                     player.Update(gameTime);
