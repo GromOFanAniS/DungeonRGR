@@ -13,6 +13,7 @@ namespace DungeonGame
         EnemyScene,
         DoorScene,
         GoldScene,
+        GameOverScene,
         Exit
     }
 
@@ -33,7 +34,6 @@ namespace DungeonGame
         public static Player player;
         public static Label actions;
         Label gold;
-        MainMenu mainMenu;
         Scene scene;
 
         public Game1()
@@ -55,12 +55,10 @@ namespace DungeonGame
             // TODO: Add your initialization logic here
             this.IsMouseVisible = true;
             gameWindow = Window;
-            _camera = new Camera(GraphicsDevice.Viewport);
             actions = new Label(10, Window.ClientBounds.Height / 7 * 6);
+            _camera = new Camera(GraphicsDevice.Viewport);
             gold = new Label(Window.ClientBounds.Width / 2, 15);
-            mainMenu = new MainMenu();
             player = new Player();
-            player.Position((Window.ClientBounds.Width + player.Width) / 2, 180);
             base.Initialize();
         }
 
@@ -74,12 +72,13 @@ namespace DungeonGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
 
-            mainMenu.Load(Content);
+            MainMenu.Load(Content);
             Door.Load(Content);
             Gold.Load(Content);
             HealthBar.Load(Content);
             Label.Load(Content);
             Character.LoadCharacters(Content);
+
         }
 
         /// <summary>
@@ -111,7 +110,13 @@ namespace DungeonGame
             switch (_gameState)
             {
                 case GameState.MenuScene:
-                    mainMenu.Update();
+                    if(Scene.DoNewGenerate)
+                    {
+                        player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
+                        scene = new MainMenu();
+                    }
+                        
+                    scene.Update(gameTime);
                     break;
                 case GameState.DoorScene:
                     if (Scene.DoNewGenerate)
@@ -140,6 +145,13 @@ namespace DungeonGame
                     scene.Update(gameTime);
                     player.Update(gameTime);
                     break;
+                case GameState.GameOverScene:
+                    if (Scene.DoNewGenerate)
+                    {
+                        scene = new GameOverScene();
+                    }
+                    scene.Update(gameTime);
+                    break;
                 case GameState.LeaderboardScene:
                     break;
             }
@@ -163,7 +175,7 @@ namespace DungeonGame
             switch (_gameState)
             {
                 case GameState.MenuScene:
-                    mainMenu.Draw(spriteBatch);
+                    scene?.Draw(spriteBatch);
                     player.Draw(spriteBatch);
                     break;
                 case GameState.DoorScene:
@@ -185,6 +197,9 @@ namespace DungeonGame
                     gold.Draw(spriteBatch);
                     break;
                 case GameState.LeaderboardScene:
+                    break;
+                case GameState.GameOverScene:
+                    scene?.Draw(spriteBatch);
                     break;
                 case GameState.Exit:
                     Exit();

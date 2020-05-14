@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,15 +10,25 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace DungeonGame
 {
-    class MainMenu
+    class MainMenu : Scene
     {
-        private Song _song;
+        private static Song _song;
 
-        private TextBox playerName;
+        private static TextBox playerName;
 
         private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
 
-        public void Load(ContentManager Content)
+        public MainMenu()
+        {
+            _buttons.Add("Start", new Button(20, 100, "Start", false));
+            _buttons.Add("Leaderboard", new Button(20, 200, "Leaderboard"));
+            _buttons.Add("Exit", new Button(20, 300, "Exit"));
+            playerName.isFocused = true;
+            playerName.Text = "";
+            DoNewGenerate = false;
+        }
+
+        public static void Load(ContentManager Content)
         {
             playerName = new TextBox(Game1.gameWindow.ClientBounds.Width / 2 - 11, Game1.player.Height - 30, "Персонажа зовут", "Fonts/MainMenuFont", Content);
 
@@ -27,12 +38,8 @@ namespace DungeonGame
             MediaPlayer.Play(_song);
 
             Button.Load(Content);
-
-            _buttons.Add("Start", new Button(20, 100, "Start", false));
-            _buttons.Add("Leaderboard", new Button(20, 200, "Leaderboard"));
-            _buttons.Add("Exit", new Button(20, 300, "Exit"));
         }
-        public void Update() 
+        public override void Update(GameTime gameTime)
         {
             //playerName.CheckClick();
             if (playerName.Text.Length != 0) _buttons["Start"].isActive = true;
@@ -48,14 +55,14 @@ namespace DungeonGame
                             Game1._gameState = GameState.DoorScene;
                             Game1.player.Name = playerName.Text;
                             playerName.isFocused = false;
+                            DoNewGenerate = true;
                             break;
-
                         case "Leaderboard":
                             Game1._gameState = GameState.LeaderboardScene;
                             playerName.isFocused = false;
                             Console.WriteLine("Leaderboard");
+                            DoNewGenerate = true;
                             break;
-
                         case "Exit":
                             Game1._gameState = GameState.Exit;
                             break;
@@ -63,7 +70,7 @@ namespace DungeonGame
                 }
             }
         }
-        public void Draw(SpriteBatch s)
+        public override void Draw(SpriteBatch s)
         {
             playerName.Draw(s);
             foreach (var button in _buttons)

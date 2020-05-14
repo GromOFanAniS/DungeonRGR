@@ -27,6 +27,8 @@ namespace DungeonGame
         private string _label;
         private MouseState oldState;
 
+        public static int Width => _textures[0].Width;
+        public static int Height => _textures[0].Height;
 
         public Button(int x, int y, string label, bool isActive = true)
         {

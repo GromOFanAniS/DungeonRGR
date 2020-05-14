@@ -18,56 +18,84 @@ namespace DungeonGame
         private Enemy enemy;
         private Door door;
         public AttackTurn attackTurn = AttackTurn.Player;
-        private static Dictionary<AttackSpots, Button> _buttons = new Dictionary<AttackSpots, Button>();
+        private Dictionary<AttackSpots, Button> _buttons = new Dictionary<AttackSpots, Button>();
 
         public EnemyScene()
         {
             DoNewGenerate = false;
+            door = new Door(Game1.gameWindow.ClientBounds.Width - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
             enemy = Enemy.Generate();
+            Game1.actions.Text = $"Вам встретился {enemy.Name}";
             SetButtons();
         }
 
         public override void Draw(SpriteBatch s)
         {
-            enemy.Draw(s);
-            enemy.DrawHealthBar(s);
-            foreach (var button in _buttons)
-                button.Value.Draw(s);
+            
+            if(enemy.IsDead)
+            {
+                Game1.actions.Text = $"Вы победили {enemy.Name}";
+                door.Draw(s);
+            }
+            else
+            {
+                enemy.Draw(s);
+                enemy.DrawHealthBar(s);
+                foreach (var button in _buttons)
+                    button.Value.Draw(s);
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
             enemy.Update(gameTime);
-
-            if (attackTurn == AttackTurn.Enemy) return;
-            foreach (var button in _buttons)
+            switch (attackTurn)
             {
-                button.Value.Update();
-                if (button.Value.state == StateButton.Press)
-                {
-                    switch (button.Key)
+                case AttackTurn.Enemy:
+                    if (enemy.IsDead)
                     {
-                        case AttackSpots.Head:
-                            Game1.player.Health -= 10;
-                            break;
-
-                        case AttackSpots.Body:
-                            Game1.player.Health += 10;
-                            break;
-
-                        case AttackSpots.Hands:
-                            enemy.Health -= 10;
-                            break;
-
-                        case AttackSpots.Legs:
-                            enemy.Health += 10;
-                            break;
+                        door.Update();
+                        Game1.player.canWalk = true;
+                        return;
                     }
-                }
+                    else
+                        enemy.AttackPlayer();
+                    attackTurn = AttackTurn.Player;
+                    break;
+                case AttackTurn.Player:
+                    foreach (var button in _buttons)
+                    {
+                        button.Value.Update();
+                        if (button.Value.state == StateButton.Press)
+                        {
+                            switch (button.Key)
+                            {
+                                case AttackSpots.Head:
+                                    Game1.player.Health -= 10;
+                                    break;
+
+                                case AttackSpots.Body:
+                                    Game1.player.Health += 10;
+                                    break;
+
+                                case AttackSpots.Hands:
+                                    enemy.Health -= 10;
+                                    break;
+
+                                case AttackSpots.Legs:
+                                    enemy.Health += 10;
+                                    break;
+                            }
+                            Game1.actions.Text = "";
+                            attackTurn = AttackTurn.Enemy;
+                        }
+                    }
+                    
+                    break;
             }
         }
 
-        private static void SetButtons()
+        private void SetButtons()
         {
             int x = Game1.gameWindow.ClientBounds.Width / 5 * 4;
             int y = Game1.gameWindow.ClientBounds.Height / 8;

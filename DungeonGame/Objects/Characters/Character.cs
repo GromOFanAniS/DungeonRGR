@@ -28,6 +28,7 @@ namespace DungeonGame
     {
         public class Attack
         {
+            private string _name;
             private int _damage;
             private int _baseDamage;
             private int _baseChance;
@@ -35,28 +36,29 @@ namespace DungeonGame
             private AttackTypes _type;
             private AttackSpots _spot;
 
-            public int Damage { get => _damage; }
+            public int Damage { get => _damage; set => _damage = value; }
+            public string Name { get => _name; }
             public int BaseDamage { get => _baseDamage; }
             public int BaseChance { get => _baseChance; }
-            public int SuccessChance { get => _successChance; }
+            public int SuccessChance { get => _successChance; set => _successChance = value; }
             public AttackTypes Type { get => _type; }
             public AttackSpots Spot { get => _spot; }
 
-            public Attack(int damage = 0, int baseDamage = 0, int baseChance = 0, int successChance = 0, AttackTypes type = AttackTypes.None, AttackSpots spot = AttackSpots.Body)
+            public Attack(int baseDamage = 0, int baseChance = 0, AttackTypes type = AttackTypes.None, AttackSpots spot = AttackSpots.Body, string name = "")
             {
-                _damage = damage;
+                _damage = baseDamage;
                 _baseDamage = baseDamage;
                 _baseChance = baseChance;
-                _successChance = successChance;
+                _successChance = baseChance;
                 _type = type;
                 _spot = spot;
+                _name = name;
             }
         }
 
         protected int _health;
         protected int _maxHealth;
         protected HealthBar _healthBar;
-        protected static Texture2D _texture;
         protected AttackTypes _weakness;
         protected AttackTypes _resistance;
         protected Animation _animation;
@@ -83,6 +85,8 @@ namespace DungeonGame
         public float Y { get; protected set; }
         public int Height => _animation.CurrentRectangle.Height;
         public int Width => _animation.CurrentRectangle.Width;
+        public string Name { get; set; }
+        
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(SpriteBatch s);
@@ -123,11 +127,12 @@ namespace DungeonGame
                         dmg *= 2;
                     }
                 }
+                Game1.actions.Text += string.Format("{0} использовал {1}! Урон: {2}\n", Name, attack.Name, dmg);
                 target.Health -= dmg;
             }
             else
             {
-                Game1.actions.Text = "Вы промахнулись";
+                Game1.actions.Text = $"{GetType().Name} промахнулся";
             }
         }
     }

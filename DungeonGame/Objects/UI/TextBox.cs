@@ -9,10 +9,10 @@ namespace DungeonGame
 {
     class TextBox
     {
-        public StringBuilder Text { get { return _text; } }
+        public string Text { get => _text; set => _text = value; }
 
         public bool isFocused = true;
-        StringBuilder _text = new StringBuilder();
+        string _text;
         Vector2 _position;
         Rectangle _hitbox;
         SpriteFont _font;
@@ -47,10 +47,10 @@ namespace DungeonGame
                 if (k == Keys.Back)
                 {
                     if (_text.Length > 0)
-                        _text.Remove(_text.Length - 1, 1);
+                        _text = _text.Remove(_text.Length - 1);
                     else return;
                 }
-                else if (_text.Length < 25) _text.Append(c);
+                else if (_text.Length < 25) _text += c;
             }
         }
 

@@ -7,11 +7,18 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DungeonGame
 {
+    public enum AlignmentPosition
+    {
+        left,
+        center,
+        right
+    }
     public class Label
     {
         private static SpriteFont _font;
         private string _text;
         private Vector2 _position;
+        private AlignmentPosition _alignment;
 
         private const float _delay = 2;
         private float _remainingDelay = _delay;
@@ -26,10 +33,11 @@ namespace DungeonGame
             }
         }
 
-        public Label(int x, int y, string text = "")
+        public Label(int x, int y, string text = "", AlignmentPosition alignment = AlignmentPosition.left)
         {
             _text = text;
             _position = new Vector2(x, y);
+            _alignment = alignment;
         }
 
         public static void Load(ContentManager content)
@@ -52,7 +60,15 @@ namespace DungeonGame
 
         public void Draw(SpriteBatch s)
         {
-            s.DrawString(_font, _text, _position, Color.Black);
+            if (_alignment == AlignmentPosition.center)
+            {
+                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y), Color.Black);
+                
+            }
+            else
+            {
+                s.DrawString(_font, _text, _position, Color.Black);
+            }
         }
     }
 }

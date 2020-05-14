@@ -12,8 +12,11 @@ namespace DungeonGame
 {
     abstract class Enemy : Character
     {
-        public bool isDead = false;
         private HealthBar healthBar;
+
+        protected bool isDead = false;
+
+        public bool IsDead => isDead;
         protected Enemy()
         {
             Position(Game1.gameWindow.ClientBounds.Width / 2 + 100, Game1.gameWindow.ClientBounds.Height / 2);
@@ -27,6 +30,19 @@ namespace DungeonGame
                 default: return new Slime();
             }
         }
+
+        public void AttackPlayer()
+        {
+            Attack usedAttack = _attacks[Game1.random.Next(_attacks.Count)];
+            DoAttack(Game1.player, usedAttack);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (_health <= 0) isDead = true;
+            _animation.Update(gameTime);
+        }
+
         public void DrawHealthBar(SpriteBatch s)
         {
             healthBar.Draw(s, _health, _maxHealth, 0.5f);

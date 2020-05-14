@@ -18,6 +18,7 @@ namespace DungeonGame
             DoNewGenerate = false;
             gold = new Gold();
             door = new Door(Game1.gameWindow.ClientBounds.Width - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
+            Game1.actions.Text = "Вам попалось золото";
         }
         public override void Draw(SpriteBatch s)
         {
