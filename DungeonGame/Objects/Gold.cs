@@ -11,6 +11,7 @@ namespace DungeonGame
     class Gold
     {
         private int _amount;
+        private int _potionAmount;
         private static Texture2D _sheetTexture;
         private static Animation _animation;
         private Rectangle _hitbox;
@@ -27,6 +28,7 @@ namespace DungeonGame
         {
             _doDraw = true;
             _amount = Game1.random.Next(0, 101);
+            _potionAmount = Game1.random.Next(0, 5);
 
             X = (Game1.gameWindow.ClientBounds.Width - _width) / 2;
             Y = 240;
@@ -49,7 +51,8 @@ namespace DungeonGame
             {
                 _doDraw = false;
                 Game1.player.gold += _amount;
-                Game1.actions.Text = $"Подобрано {_amount} золота";
+                Game1.player.TakePotions(_potionAmount);
+                Game1.actions.Text = $"Подобрано {_amount} золота и {_potionAmount} зелий";
             }
             _animation.Update(gameTime);
         }

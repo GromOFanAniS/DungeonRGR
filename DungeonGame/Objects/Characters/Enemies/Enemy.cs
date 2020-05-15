@@ -17,6 +17,8 @@ namespace DungeonGame
         protected bool isDead = false;
 
         public bool IsDead => isDead;
+        public int experience;
+
         protected Enemy()
         {
             Position(Game1.gameWindow.ClientBounds.Width / 2 + 100, Game1.gameWindow.ClientBounds.Height / 2);

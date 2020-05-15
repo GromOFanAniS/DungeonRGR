@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DungeonGame
 {
+    [Serializable]
     public enum AttackTypes
     {
         None,
@@ -17,6 +18,7 @@ namespace DungeonGame
         Ranged,
         Special
     }
+    [Serializable]
     public enum AttackSpots
     {
         Head,
@@ -24,8 +26,10 @@ namespace DungeonGame
         Hands,
         Legs
     }
+    [Serializable]
     public abstract class Character
     {
+        [Serializable]
         public class Attack
         {
             private string _name;
@@ -58,14 +62,17 @@ namespace DungeonGame
 
         protected int _health;
         protected int _maxHealth;
+        [NonSerialized]
         protected HealthBar _healthBar;
         protected AttackTypes _weakness;
         protected AttackTypes _resistance;
+        [NonSerialized]
         protected Animation _animation;
 
         protected List<Attack> _attacks;
         protected List<AttackSpots> _weakSpots;
 
+        //public List<Attack> Attacks => _attacks;
         public int Health
         {
             get => _health;
@@ -132,7 +139,7 @@ namespace DungeonGame
             }
             else
             {
-                Game1.actions.Text = $"{GetType().Name} промахнулся";
+                Game1.actions.Text = $"{Name} промахнулся\n";
             }
         }
     }

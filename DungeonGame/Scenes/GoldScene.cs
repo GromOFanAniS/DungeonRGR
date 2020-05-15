@@ -13,6 +13,7 @@ namespace DungeonGame
         private Gold gold;
         private Door door;
 
+
         public GoldScene()
         {
             DoNewGenerate = false;

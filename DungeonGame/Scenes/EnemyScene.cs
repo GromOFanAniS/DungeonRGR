@@ -15,13 +15,15 @@ namespace DungeonGame
     }
     class EnemyScene : Scene
     {
+        private bool enemyOldState;
         private Enemy enemy;
         private Door door;
         public AttackTurn attackTurn = AttackTurn.Player;
-        private Dictionary<AttackSpots, Button> _buttons = new Dictionary<AttackSpots, Button>();
+        private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
 
         public EnemyScene()
         {
+            enemyOldState = false;
             DoNewGenerate = false;
             door = new Door(Game1.gameWindow.ClientBounds.Width - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
             enemy = Enemy.Generate();
@@ -34,7 +36,6 @@ namespace DungeonGame
             
             if(enemy.IsDead)
             {
-                Game1.actions.Text = $"Вы победили {enemy.Name}";
                 door.Draw(s);
             }
             else
@@ -48,6 +49,9 @@ namespace DungeonGame
 
         public override void Update(GameTime gameTime)
         {
+            if (Game1.player.Potions <= 0)
+                _buttons["Heal"].isActive = false;
+            else _buttons["Heal"].isActive = true;
             enemy.Update(gameTime);
             switch (attackTurn)
             {
@@ -55,7 +59,13 @@ namespace DungeonGame
                     if (enemy.IsDead)
                     {
                         door.Update();
-                        Game1.player.canWalk = true;
+                        if (!enemyOldState)
+                        {
+                            Game1.actions.Text = $"Вы победили {enemy.Name}\n";
+                            Game1.player.experience += enemy.experience;
+                            Game1.player.canWalk = true;
+                            enemyOldState = true;
+                        }
                         return;
                     }
                     else
@@ -68,29 +78,11 @@ namespace DungeonGame
                         button.Value.Update();
                         if (button.Value.state == StateButton.Press)
                         {
-                            switch (button.Key)
-                            {
-                                case AttackSpots.Head:
-                                    Game1.player.Health -= 10;
-                                    break;
-
-                                case AttackSpots.Body:
-                                    Game1.player.Health += 10;
-                                    break;
-
-                                case AttackSpots.Hands:
-                                    enemy.Health -= 10;
-                                    break;
-
-                                case AttackSpots.Legs:
-                                    enemy.Health += 10;
-                                    break;
-                            }
                             Game1.actions.Text = "";
+                            Game1.player.ButtonAction(button.Key, enemy);
                             attackTurn = AttackTurn.Enemy;
                         }
                     }
-                    
                     break;
             }
         }
@@ -100,10 +92,11 @@ namespace DungeonGame
             int x = Game1.gameWindow.ClientBounds.Width / 5 * 4;
             int y = Game1.gameWindow.ClientBounds.Height / 8;
             
-            _buttons.Add(AttackSpots.Head, new Button(x, y, "Hit Head"));
-            _buttons.Add(AttackSpots.Body, new Button(x, y * 2, "Hit Body"));
-            _buttons.Add(AttackSpots.Hands, new Button(x, y * 3, "Hit Hands"));
-            _buttons.Add(AttackSpots.Legs, new Button(x, y * 4, "Hit Legs"));
+            _buttons.Add("Head", new Button(x, y, "Удар по голове"));
+            _buttons.Add("Body", new Button(x, y * 2, "Удар по торсу"));
+            _buttons.Add("Hands", new Button(x, y * 3, "Удар по рукам"));
+            _buttons.Add("Legs", new Button(x, y * 4, "Удар по ногам"));
+            _buttons.Add("Heal", new Button(x, y * 5, "Выпить зелье"));
         }
     }
 }

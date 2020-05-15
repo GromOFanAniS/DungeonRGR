@@ -16,11 +16,17 @@ namespace DungeonGame
 
         public Slime()
         {
+            Name = "Слизень";
             _maxHealth = 100;
             _health = _maxHealth;
             _animation = _idle;
-            Name = "Слизень";
+            experience = 10;
             Y += Height / 2;
+            _weakSpots = new List<AttackSpots>()
+            {
+                AttackSpots.Body
+            };
+            _weakness = AttackTypes.Physical;
             _attacks = new List<Attack>()
             {
                 new Attack(10, 100, AttackTypes.Poison)

@@ -21,8 +21,9 @@ namespace DungeonGame
         public MainMenu()
         {
             _buttons.Add("Start", new Button(20, 100, "Start", false));
-            _buttons.Add("Leaderboard", new Button(20, 200, "Leaderboard"));
-            _buttons.Add("Exit", new Button(20, 300, "Exit"));
+            _buttons.Add("Load", new Button(20, 200, "Загрузить"));
+            _buttons.Add("Leaderboard", new Button(20, 300, "Leaderboard"));
+            _buttons.Add("Exit", new Button(20, 400, "Exit"));
             playerName.isFocused = true;
             playerName.Text = "";
             DoNewGenerate = false;
@@ -35,7 +36,7 @@ namespace DungeonGame
             _song = Content.Load<Song>("Music/MainMenu");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.33f;
-            MediaPlayer.Play(_song);
+            //MediaPlayer.Play(_song);
 
             Button.Load(Content);
         }
@@ -54,6 +55,12 @@ namespace DungeonGame
                         case "Start":
                             Game1._gameState = GameState.DoorScene;
                             Game1.player.Name = playerName.Text;
+                            playerName.isFocused = false;
+                            DoNewGenerate = true;
+                            break;
+                        case "Load":
+                            Game1._gameState = GameState.DoorScene;
+                            Game1.player = SaveLoadSystem.LoadGame();
                             playerName.isFocused = false;
                             DoNewGenerate = true;
                             break;
