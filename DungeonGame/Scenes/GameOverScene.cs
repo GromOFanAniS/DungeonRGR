@@ -15,8 +15,8 @@ namespace DungeonGame
 
         public GameOverScene()
         {
-            button = new Button((Game1.gameWindow.ClientBounds.Width - Button.Width) / 2, (Game1.gameWindow.ClientBounds.Height * 2 / 3), "В главное меню");
-            label = new Label(Game1.gameWindow.ClientBounds.Width / 2, (Game1.gameWindow.ClientBounds.Height / 3), $"Вы умерли, ваш счет {Game1.player.gold}", AlignmentPosition.center);
+            button = new Button((Game1.WindowWidth - Button.Width) / 2, (Game1.WindowHeight * 2 / 3), "В главное меню");
+            label = new Label(Game1.WindowWidth / 2, (Game1.WindowHeight / 3), $"Вы умерли, ваш счет {Game1.player.gold}", AlignmentPosition.center);
         }
 
 
@@ -29,7 +29,7 @@ namespace DungeonGame
         public override void Update(GameTime gameTime)
         {
             button.Update();
-            if(button.state == StateButton.Press)
+            if(button.State == StateButton.Press)
             {
                 Game1._gameState = GameState.MenuScene;
                 Game1.player = new Player();

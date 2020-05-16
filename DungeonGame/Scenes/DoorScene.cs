@@ -25,8 +25,9 @@ namespace DungeonGame
             int y = Game1.gameWindow.ClientBounds.Height;
             _buttons = new Dictionary<string, Button>()
             {
-                {"Save", new Button( x/2 + 10 , y - Button.Height - 10, "Сохранить") },
-                {"Heal", new Button( x/2 - Button.Width - 10, y - Button.Height - 10, "Выпить зелье") }
+                {"Save", new Button( x/2 + 5 , y - Button.Height - 10, "Сохранить") },
+                {"Heal", new Button( x/2 - Button.Width - 5, y - Button.Height - 10, "Выпить зелье") },
+                {"PlayerMenu", new Button(x/2 - Button.Width*2 - 15, y - Button.Height - 10, "Меню игрока") }
             };
         }
 
@@ -50,7 +51,7 @@ namespace DungeonGame
                 if (Game1.player.Potions <= 0)
                     _buttons["Heal"].isActive = false;
                 button.Value.Update();
-                if (button.Value.state == StateButton.Press)
+                if (button.Value.State == StateButton.Press)
                 {
                     switch (button.Key)
                     {
@@ -59,6 +60,10 @@ namespace DungeonGame
                             break;
                         case "Heal":
                             Game1.player.UsePotion();
+                            break;
+                        case "PlayerMenu":
+                            DoNewGenerate = true;
+                            Game1._gameState = GameState.PlayerMenuScene;
                             break;
                     }
                 }

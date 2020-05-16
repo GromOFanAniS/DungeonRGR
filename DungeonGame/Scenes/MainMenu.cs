@@ -31,7 +31,7 @@ namespace DungeonGame
 
         public static void Load(ContentManager Content)
         {
-            playerName = new TextBox(Game1.gameWindow.ClientBounds.Width / 2 - 11, Game1.player.Height - 30, "Персонажа зовут", "Fonts/MainMenuFont", Content);
+            playerName = new TextBox(Game1.WindowWidth / 2 - 11, Game1.player.Height - 30, "Персонажа зовут", "Fonts/MainMenuFont", Content);
 
             _song = Content.Load<Song>("Music/MainMenu");
             MediaPlayer.IsRepeating = true;
@@ -48,7 +48,7 @@ namespace DungeonGame
             foreach (var button in _buttons)
             {
                 button.Value.Update();
-                if (button.Value.state == StateButton.Press)
+                if (button.Value.State == StateButton.Press)
                 {
                     switch (button.Key)
                     {

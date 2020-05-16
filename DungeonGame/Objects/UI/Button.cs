@@ -17,16 +17,16 @@ namespace DungeonGame
     }
     public class Button
     {
-        private StateButton _state;
-        public StateButton state => _state; 
-        private static Dictionary<StateButton, Texture2D> _textures;
         public Vector2 Position;
-        Rectangle Hitbox;
-        public bool isActive { get; set; }
+        private StateButton _state;
+        private static Dictionary<StateButton, Texture2D> _textures;
+        private Rectangle Hitbox;
         private static SpriteFont _font;
         private string _label;
-        private MouseState oldState;
+        private static MouseState oldState;
 
+        public StateButton State => _state; 
+        public bool isActive { get; set; }
         public static int Width => _textures[0].Width;
         public static int Height => _textures[0].Height;
 

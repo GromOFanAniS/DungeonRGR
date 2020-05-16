@@ -25,7 +25,7 @@ namespace DungeonGame
         {
             enemyOldState = false;
             DoNewGenerate = false;
-            door = new Door(Game1.gameWindow.ClientBounds.Width - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
+            door = new Door(Game1.WindowWidth - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
             enemy = Enemy.Generate();
             Game1.actions.Text = $"Вам встретился {enemy.Name}";
             SetButtons();
@@ -76,7 +76,7 @@ namespace DungeonGame
                     foreach (var button in _buttons)
                     {
                         button.Value.Update();
-                        if (button.Value.state == StateButton.Press)
+                        if (button.Value.State == StateButton.Press)
                         {
                             Game1.actions.Text = "";
                             Game1.player.ButtonAction(button.Key, enemy);
@@ -89,8 +89,8 @@ namespace DungeonGame
 
         private void SetButtons()
         {
-            int x = Game1.gameWindow.ClientBounds.Width / 5 * 4;
-            int y = Game1.gameWindow.ClientBounds.Height / 8;
+            int x = Game1.WindowWidth / 5 * 4;
+            int y = Game1.WindowHeight / 8;
             
             _buttons.Add("Head", new Button(x, y, "Удар по голове"));
             _buttons.Add("Body", new Button(x, y * 2, "Удар по торсу"));

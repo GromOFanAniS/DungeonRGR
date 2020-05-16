@@ -35,6 +35,21 @@ namespace DungeonGame
 
         public int Level => _level;
         public int Potions => _potions;
+        public int StatPoints 
+        { 
+            get => _statPoints; 
+            set
+            {
+                if (value > 0)
+                    _statPoints = value;
+                else
+                    _statPoints = 0;
+            }
+        }
+        public int Strength { get => _strength; set => _strength = value; }
+        public int Agility { get => _agility; set => _agility = value; }
+        public int Intellect { get => _intellect; set => _intellect = value; }
+        public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
 
         public Player()
         {
@@ -79,6 +94,7 @@ namespace DungeonGame
             WalkingUpdete(gameTime);
             if(_health <= 0)
             {
+                LeaderBoard.GetLeaderBoard().AddToBoard(Name, gold);
                 Game1._gameState = GameState.GameOverScene;
                 Scene.DoNewGenerate = true;
             }

@@ -33,7 +33,10 @@ namespace DungeonGame
             catch (IOException /*e*/)
             {
                 //Console.WriteLine(e.Message + "\n" + e.StackTrace + "\n" + e.Source + "\n" + e.InnerException);
-                return new Player();
+                return new Player()
+                {
+                    Name = "Игрок"
+                };
             }
         }
     }

@@ -12,6 +12,7 @@ namespace DungeonGame
         LeaderboardScene,
         EnemyScene,
         DoorScene,
+        PlayerMenuScene,
         GoldScene,
         GameOverScene,
         Exit
@@ -23,18 +24,19 @@ namespace DungeonGame
     public class Game1 : Game
     {
         public static Random random = new Random();
-
         public static GameWindow gameWindow;
-        
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
         public static GameState _gameState;
         public static Camera _camera;
-        
         public static Player player;
         public static Label actions;
-        Label gold;
-        Scene scene;
+        public static int WindowWidth => gameWindow.ClientBounds.Width;
+        public static int WindowHeight => gameWindow.ClientBounds.Height;
+        
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private Label gold;
+        private Scene scene;
+        private LeaderBoard leaderBoard;
 
         public Game1()
         {
@@ -72,6 +74,7 @@ namespace DungeonGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
 
+            leaderBoard = LeaderBoard.GetLeaderBoard();
             MainMenu.Load(Content);
             Door.Load(Content);
             Gold.Load(Content);
@@ -87,6 +90,7 @@ namespace DungeonGame
         /// </summary>
         protected override void UnloadContent()
         {
+            leaderBoard.SaveBoard();
             // TODO: Unload any non ContentManager content here
         }
 
@@ -116,7 +120,6 @@ namespace DungeonGame
                         scene = new MainMenu();
                     }
                         
-                    scene.Update(gameTime);
                     break;
                 case GameState.DoorScene:
                     if (Scene.DoNewGenerate)
@@ -125,14 +128,12 @@ namespace DungeonGame
                         scene = new DoorScene();
                     }
                     
-                    scene.Update(gameTime);
                     player.Update(gameTime);
                     break;
                 case GameState.GoldScene:
                     if (Scene.DoNewGenerate)
                         scene = new GoldScene();
 
-                    scene.Update(gameTime);
                     player.Update(gameTime);
                     break;
                 case GameState.EnemyScene:
@@ -142,7 +143,15 @@ namespace DungeonGame
                         scene = new EnemyScene();
                     }
 
-                    scene.Update(gameTime);
+                    player.Update(gameTime);
+                    break;
+                case GameState.PlayerMenuScene:
+                    if (Scene.DoNewGenerate)
+                    {
+                        player.canWalk = false;
+                        player.Position((Window.ClientBounds.Width - player.Width) / 2, (Window.ClientBounds.Height - player.Height) / 2);
+                        scene = new PlayerMenuScene();
+                    }
                     player.Update(gameTime);
                     break;
                 case GameState.GameOverScene:
@@ -150,11 +159,18 @@ namespace DungeonGame
                     {
                         scene = new GameOverScene();
                     }
-                    scene.Update(gameTime);
                     break;
                 case GameState.LeaderboardScene:
+                    if (Scene.DoNewGenerate)
+                    {
+                        scene = new LeaderBoardScene(leaderBoard.BoardLabel);
+                    }
+                    break;
+                case GameState.Exit:
+                    Exit();
                     break;
             }
+            scene?.Update(gameTime);
             actions.Update(gameTime);
 
             // TODO: Add your update logic here
@@ -172,37 +188,29 @@ namespace DungeonGame
             // TODO: Add your drawing code here
             var viewMatrix = _camera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: viewMatrix);
+            scene?.Draw(spriteBatch);
             switch (_gameState)
             {
                 case GameState.MenuScene:
-                    scene?.Draw(spriteBatch);
                     player.Draw(spriteBatch);
                     break;
                 case GameState.DoorScene:
-                    scene?.Draw(spriteBatch);
                     player.Draw(spriteBatch);
                     actions.Draw(spriteBatch);
                     gold.Draw(spriteBatch);
                     break;
                 case GameState.GoldScene:
-                    scene?.Draw(spriteBatch);
                     player.Draw(spriteBatch);
                     actions.Draw(spriteBatch);
                     gold.Draw(spriteBatch);
                     break;
                 case GameState.EnemyScene:
-                    scene?.Draw(spriteBatch);
                     player.Draw(spriteBatch);
                     actions.Draw(spriteBatch);
                     gold.Draw(spriteBatch);
                     break;
-                case GameState.LeaderboardScene:
-                    break;
-                case GameState.GameOverScene:
-                    scene?.Draw(spriteBatch);
-                    break;
-                case GameState.Exit:
-                    Exit();
+                case GameState.PlayerMenuScene:
+                    player.Draw(spriteBatch);
                     break;
             }
             gold.Text = "У вас " + player.gold + " золота";
