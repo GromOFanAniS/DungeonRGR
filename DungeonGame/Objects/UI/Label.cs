@@ -20,8 +20,16 @@ namespace DungeonGame
         private Vector2 _position;
         private AlignmentPosition _alignment;
 
+        public Vector2 FontSize => _font.MeasureString(_text);
+
         private const float _delay = 2;
         private float _remainingDelay = _delay;
+
+        public float Y
+        {
+            get => _position.Y;
+            set => _position.Y = value;
+        }
 
         public string Text
         {

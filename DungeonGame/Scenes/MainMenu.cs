@@ -55,18 +55,15 @@ namespace DungeonGame
                         case "Start":
                             Game1._gameState = GameState.DoorScene;
                             Game1.player.Name = playerName.Text;
-                            playerName.isFocused = false;
                             DoNewGenerate = true;
                             break;
                         case "Load":
                             Game1._gameState = GameState.DoorScene;
                             Game1.player = SaveLoadSystem.LoadGame();
-                            playerName.isFocused = false;
                             DoNewGenerate = true;
                             break;
                         case "Leaderboard":
                             Game1._gameState = GameState.LeaderboardScene;
-                            playerName.isFocused = false;
                             Console.WriteLine("Leaderboard");
                             DoNewGenerate = true;
                             break;
@@ -74,6 +71,7 @@ namespace DungeonGame
                             Game1._gameState = GameState.Exit;
                             break;
                     }
+                    playerName.isFocused = false;
                 }
             }
         }

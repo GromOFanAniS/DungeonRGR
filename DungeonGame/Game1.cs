@@ -105,7 +105,6 @@ namespace DungeonGame
         {
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
-            //if (keyboardState.IsKeyDown(Keys.Escape)) Exit();
             if (keyboardState.IsKeyDown(Keys.T)) Console.WriteLine(player.Name);
             if (keyboardState.IsKeyDown(Keys.Up)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (keyboardState.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -173,8 +172,6 @@ namespace DungeonGame
             scene?.Update(gameTime);
             actions.Update(gameTime);
 
-            // TODO: Add your update logic here
-            
             base.Update(gameTime);
         }
 

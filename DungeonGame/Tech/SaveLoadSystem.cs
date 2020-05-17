@@ -12,6 +12,7 @@ namespace DungeonGame
     {
         public static void SaveGame(Player player)
         {
+            if (!Directory.Exists(@"saves/")) Directory.CreateDirectory(@"saves/");
             BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream fs = new FileStream(@"saves/save.dat", FileMode.OpenOrCreate))
             {
