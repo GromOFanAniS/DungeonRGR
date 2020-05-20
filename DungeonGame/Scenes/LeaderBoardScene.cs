@@ -31,7 +31,7 @@ namespace DungeonGame
             {
                 DoNewGenerate = true;
                 _label.Y = 20;
-                Game1._gameState = GameState.MenuScene;
+                Game1.gameState = GameState.MenuScene;
             }
 
             Console.WriteLine(Game1.mouseState.ScrollWheelValue + " " + _oldScroll);

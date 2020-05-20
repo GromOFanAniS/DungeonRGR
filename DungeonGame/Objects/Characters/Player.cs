@@ -46,10 +46,10 @@ namespace DungeonGame
                     _statPoints = 0;
             }
         }
-        public int Strength { get => _strength; set => _strength = value; }
-        public int Agility { get => _agility; set => _agility = value; }
-        public int Intellect { get => _intellect; set => _intellect = value; }
-        public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+        public int Strength => _strength;
+        public int Agility => _agility;
+        public int Intellect => _intellect;
+        public int MaxHealth => _maxHealth;
 
         public Player()
         {
@@ -91,11 +91,11 @@ namespace DungeonGame
         {
             _animation = _idle;
             CheckLevel();
-            WalkingUpdete(gameTime);
+            WalkingUpdate(gameTime);
             if(_health <= 0)
             {
                 LeaderBoard.GetLeaderBoard().AddToBoard(Name, gold);
-                Game1._gameState = GameState.GameOverScene;
+                Game1.gameState = GameState.GameOverScene;
                 Scene.DoNewGenerate = true;
             }
             _animation.Update(gameTime);
@@ -148,7 +148,7 @@ namespace DungeonGame
             if(_potions > 0)
             {
                 _potions--;
-                Health += 10; //*Difficulty
+                Health += 15; //*Difficulty
             }  
         }
         
@@ -156,8 +156,34 @@ namespace DungeonGame
         {
             _potions += value;
         }
+        public void ChangeStats(string stat)
+        {
+            StatPoints--;
+            switch (stat)
+            {
+                case "Health":
+                    _maxHealth += 25;
+                    Health += 25;
+                    break;
+                case "Strength":
+                    _strength++;
+                    break;
+                case "Agility":
+                    _agility++;
+                    break;
+                case "Intellect":
+                    _intellect++;
+                    break;
+                case "Exit":
+                    Game1.gameState = GameState.DoorScene;
+                    Scene.DoNewGenerate = true;
+                    canWalk = true;
+                    break;
+            }
+            RegenerateAttacks();
+        }
 
-        private void WalkingUpdete(GameTime gameTime)
+        private void WalkingUpdate(GameTime gameTime)
         {
             if (canWalk)
             {
@@ -192,6 +218,14 @@ namespace DungeonGame
                 _level++;
                 experience -= _experienceToNextLevel;
                 _experienceToNextLevel += 15 * _level;
+            }
+        }
+        private void RegenerateAttacks()
+        {
+            foreach(var attack in _attacks)
+            {
+                attack.Damage = attack.BaseDamage + _strength * 5;
+                attack.SuccessChance = attack.BaseChance + _agility * 2;
             }
         }
     }

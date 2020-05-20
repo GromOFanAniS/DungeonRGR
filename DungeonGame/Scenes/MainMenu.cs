@@ -20,10 +20,10 @@ namespace DungeonGame
 
         public MainMenu()
         {
-            _buttons.Add("Start", new Button(20, 100, "Start", false));
+            _buttons.Add("Start", new Button(20, 100, "Новая игра", false));
             _buttons.Add("Load", new Button(20, 200, "Загрузить"));
-            _buttons.Add("Leaderboard", new Button(20, 300, "Leaderboard"));
-            _buttons.Add("Exit", new Button(20, 400, "Exit"));
+            _buttons.Add("Leaderboard", new Button(20, 300, "Доска почёта"));
+            _buttons.Add("Exit", new Button(20, 400, "Выйти"));
             playerName.isFocused = true;
             playerName.Text = "";
             DoNewGenerate = false;
@@ -53,22 +53,21 @@ namespace DungeonGame
                     switch (button.Key)
                     {
                         case "Start":
-                            Game1._gameState = GameState.DoorScene;
+                            Game1.gameState = GameState.DoorScene;
                             Game1.player.Name = playerName.Text;
                             DoNewGenerate = true;
                             break;
                         case "Load":
-                            Game1._gameState = GameState.DoorScene;
+                            Game1.gameState = GameState.DoorScene;
                             Game1.player = SaveLoadSystem.LoadGame();
                             DoNewGenerate = true;
                             break;
                         case "Leaderboard":
-                            Game1._gameState = GameState.LeaderboardScene;
-                            Console.WriteLine("Leaderboard");
+                            Game1.gameState = GameState.LeaderboardScene;
                             DoNewGenerate = true;
                             break;
                         case "Exit":
-                            Game1._gameState = GameState.Exit;
+                            Game1.gameState = GameState.Exit;
                             break;
                     }
                     playerName.isFocused = false;

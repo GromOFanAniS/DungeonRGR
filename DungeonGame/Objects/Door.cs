@@ -62,23 +62,23 @@ namespace DungeonGame
 
         private static void OpenDoor()
         {
-            if (Game1._gameState == GameState.DoorScene)
+            if (Game1.gameState == GameState.DoorScene)
             {
                 if (Game1.random.Next(100) <= 50)
                 {
-                    Game1._gameState = GameState.EnemyScene;
+                    Game1.gameState = GameState.EnemyScene;
                     Console.WriteLine("Enemy");
                 }
                 else
                 {
-                    Game1._gameState = GameState.GoldScene;
+                    Game1.gameState = GameState.GoldScene;
                     Console.WriteLine("Gold");
                 }
                 Scene.DoNewGenerate = true;
             }
-            else if (Game1._gameState == GameState.EnemyScene || Game1._gameState == GameState.GoldScene)
+            else if (Game1.gameState == GameState.EnemyScene || Game1.gameState == GameState.GoldScene)
             {
-                Game1._gameState = GameState.DoorScene;
+                Game1.gameState = GameState.DoorScene;
 
                 Scene.DoNewGenerate = true;
             }

@@ -25,7 +25,7 @@ namespace DungeonGame
     {
         public static Random random = new Random();
         public static GameWindow gameWindow;
-        public static GameState _gameState;
+        public static GameState gameState;
         public static Camera _camera;
         public static Player player;
         public static Label actions;
@@ -59,7 +59,7 @@ namespace DungeonGame
             gameWindow = Window;
             actions = new Label(10, Window.ClientBounds.Height / 7 * 6);
             _camera = new Camera(GraphicsDevice.Viewport);
-            gold = new Label(Window.ClientBounds.Width / 2, 15);
+            gold = new Label(WindowWidth / 2, 15);
             player = new Player();
             base.Initialize();
         }
@@ -110,7 +110,7 @@ namespace DungeonGame
             if (keyboardState.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 
-            switch (_gameState)
+            switch (gameState)
             {
                 case GameState.MenuScene:
                     if(Scene.DoNewGenerate)
@@ -186,7 +186,7 @@ namespace DungeonGame
             var viewMatrix = _camera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: viewMatrix);
             scene?.Draw(spriteBatch);
-            switch (_gameState)
+            switch (gameState)
             {
                 case GameState.MenuScene:
                     player.Draw(spriteBatch);
@@ -210,7 +210,7 @@ namespace DungeonGame
                     player.Draw(spriteBatch);
                     break;
             }
-            gold.Text = "У вас " + player.gold + " золота";
+            gold.Text = $"У вас {player.gold} золота и {player.Potions} зелий";
             spriteBatch.End();
            
             base.Draw(gameTime);

@@ -25,11 +25,11 @@ namespace DungeonGame
         {
             _buttons = new Dictionary<string, Button>()
             {
-                {"Health", new Button(Game1.WindowWidth / 2  - Button.Width * 2 - 45, Game1.WindowHeight - Button.Height - 10 , "Здоровье +25") },
-                {"Strength", new Button(Game1.WindowWidth / 2  - Button.Width - 35, Game1.WindowHeight - Button.Height - 10, "Сила +1")},
-                {"Agility", new Button(Game1.WindowWidth / 2 - 25, Game1.WindowHeight - Button.Height - 10, "Ловкость +1") },
-                {"Intellect", new Button(Game1.WindowWidth / 2 + Button.Width - 15, Game1.WindowHeight - Button.Height - 10, "Интеллект +1") },
-                {"Exit", new Button(Game1.WindowWidth / 2 + Button.Width*2 - 5, Game1.WindowHeight - Button.Height - 10, "Назад") }
+                {"Health", new Button(Game1.WindowWidth / 2  - Button.Width * 3 + 20, Game1.WindowHeight - Button.Height - 10 , "Здоровье +25") },
+                {"Strength", new Button(Game1.WindowWidth / 2  - Button.Width * 2 + 30, Game1.WindowHeight - Button.Height - 10, "Сила +1")},
+                {"Agility", new Button(Game1.WindowWidth / 2 - Button.Width + 40, Game1.WindowHeight - Button.Height - 10, "Ловкость +1") },
+                {"Intellect", new Button(Game1.WindowWidth / 2 + 50, Game1.WindowHeight - Button.Height - 10, "Интеллект +1") },
+                {"Exit", new Button(Game1.WindowWidth / 2 + Button.Width*2 - 20, Game1.WindowHeight - Button.Height - 10, "Назад") }
             };
         }
 
@@ -53,29 +53,7 @@ namespace DungeonGame
                     button.Value.isActive = true;
                 button.Value.Update();
                 if (button.Value.State == StateButton.Press)
-                {
-                    Game1.player.StatPoints--;
-                    switch (button.Key)
-                    {
-                        case "Health":
-                            Game1.player.MaxHealth += 25;
-                            break;
-                        case "Strength":
-                            Game1.player.Strength++;
-                            break;
-                        case "Agility":
-                            Game1.player.Agility++;
-                            break;
-                        case "Intellect":
-                            Game1.player.Intellect++;
-                            break;
-                        case "Exit":
-                            Game1._gameState = GameState.DoorScene;
-                            DoNewGenerate = true;
-                            Game1.player.canWalk = true;
-                            break;
-                    }
-                }
+                    Game1.player.ChangeStats(button.Key);
             }
         }
     }

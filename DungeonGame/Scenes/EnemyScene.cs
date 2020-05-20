@@ -61,7 +61,7 @@ namespace DungeonGame
                         door.Update();
                         if (!enemyOldState)
                         {
-                            Game1.actions.Text = $"Вы победили {enemy.Name}\n";
+                            Game1.actions.Text += $"Вы победили {enemy.Name}\n";
                             Game1.player.experience += enemy.experience;
                             Game1.player.canWalk = true;
                             enemyOldState = true;

@@ -21,13 +21,14 @@ namespace DungeonGame
 
         private void GenerateButtons()
         {
-            int x = Game1.gameWindow.ClientBounds.Width;
-            int y = Game1.gameWindow.ClientBounds.Height;
+            int x = Game1.WindowWidth;
+            int y = Game1.WindowHeight;
             _buttons = new Dictionary<string, Button>()
             {
                 {"Save", new Button( x/2 + 5 , y - Button.Height - 10, "Сохранить") },
                 {"Heal", new Button( x/2 - Button.Width - 5, y - Button.Height - 10, "Выпить зелье") },
-                {"PlayerMenu", new Button(x/2 - Button.Width*2 - 15, y - Button.Height - 10, "Меню игрока") }
+                {"PlayerMenu", new Button( x/2 - Button.Width*2 - 15, y - Button.Height - 10, "Меню игрока") },
+                {"Exit", new Button( x/2  + Button.Width + 15, y - Button.Height - 10, "Выйти в меню")}
             };
         }
 
@@ -63,7 +64,11 @@ namespace DungeonGame
                             break;
                         case "PlayerMenu":
                             DoNewGenerate = true;
-                            Game1._gameState = GameState.PlayerMenuScene;
+                            Game1.gameState = GameState.PlayerMenuScene;
+                            break;
+                        case "Exit":
+                            DoNewGenerate = true;
+                            Game1.gameState = GameState.MenuScene;
                             break;
                     }
                 }
