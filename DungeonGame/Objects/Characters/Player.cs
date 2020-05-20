@@ -34,7 +34,17 @@ namespace DungeonGame
         private int _intellect;
 
         public int Level => _level;
-        public int Potions => _potions;
+        public int Potions
+        { 
+            get => _potions; 
+            private set
+            {
+                if (value > 0)
+                    _potions = value;
+                else
+                    _potions = 0;
+            }
+        }  
         public int StatPoints 
         { 
             get => _statPoints; 
@@ -91,6 +101,7 @@ namespace DungeonGame
         {
             _animation = _idle;
             CheckLevel();
+            CheckDifficulty();
             WalkingUpdate(gameTime);
             if(_health <= 0)
             {
@@ -120,6 +131,17 @@ namespace DungeonGame
                 case "Heal":
                     UsePotion();
                     break;
+                case "Flee":
+                    if(Game1.random.Next(101) > 90)
+                    {
+                        Game1.actions.Text += "Вам удалось сбежать\n";
+                        Game1.gameState = GameState.DoorScene;
+                        canWalk = true;
+                        Scene.DoNewGenerate = true;
+                    }
+                    else
+                        Game1.actions.Text += "Вам не удалось сбежать\n";
+                    break;
             }
         }
 
@@ -140,16 +162,14 @@ namespace DungeonGame
             Color color = Color.White;
             var sourceRectangle = _animation.CurrentRectangle;
             s.Draw(_playerSheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, color, _flip);
-            _healthBar.Draw(s, _health, _maxHealth);
+            if(Game1.gameState != GameState.MenuScene)
+                _healthBar.Draw(s, _health, _maxHealth);
         }
 
         public void UsePotion()
         {
-            if(_potions > 0)
-            {
-                _potions--;
-                Health += 15; //*Difficulty
-            }  
+            Potions--;
+            Health += 15 * Game1.difficulty;
         }
         
         public void TakePotions(int value)
@@ -226,6 +246,15 @@ namespace DungeonGame
             {
                 attack.Damage = attack.BaseDamage + _strength * 5;
                 attack.SuccessChance = attack.BaseChance + _agility * 2;
+            }
+        }
+        private void CheckDifficulty()
+        {
+            if(_level > Game1.difficulty * 3)
+            {
+                Game1.difficulty++;
+                Game1.actions.Text += "Вы нашли дверь, ведущую на более глубокий уровень подземелья.\n"
+                                      + "Враги станут сильнее, но и награда больше.\n";
             }
         }
     }

@@ -22,7 +22,7 @@ namespace DungeonGame
 
         public Vector2 FontSize => _font.MeasureString(_text);
 
-        private const float _delay = 2;
+        private const float _delay = 3;
         private float _remainingDelay = _delay;
 
         public float Y

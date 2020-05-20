@@ -29,6 +29,7 @@ namespace DungeonGame
         public static Camera _camera;
         public static Player player;
         public static Label actions;
+        public static int difficulty;
         public static int WindowWidth => gameWindow.ClientBounds.Width;
         public static int WindowHeight => gameWindow.ClientBounds.Height;
         
@@ -55,8 +56,9 @@ namespace DungeonGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.IsMouseVisible = true;
+            IsMouseVisible = true;
             gameWindow = Window;
+            difficulty = 1;
             actions = new Label(10, Window.ClientBounds.Height / 7 * 6);
             _camera = new Camera(GraphicsDevice.Viewport);
             gold = new Label(WindowWidth / 2, 15);
@@ -81,7 +83,7 @@ namespace DungeonGame
             HealthBar.Load(Content);
             Label.Load(Content);
             Character.LoadCharacters(Content);
-
+            MusicPlayer.Load(Content);
         }
 
         /// <summary>
@@ -109,16 +111,15 @@ namespace DungeonGame
             if (keyboardState.IsKeyDown(Keys.Up)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (keyboardState.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-
             switch (gameState)
             {
                 case GameState.MenuScene:
                     if(Scene.DoNewGenerate)
                     {
+                        player = new Player();
                         player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
                         scene = new MainMenu();
                     }
-                        
                     break;
                 case GameState.DoorScene:
                     if (Scene.DoNewGenerate)
@@ -126,13 +127,11 @@ namespace DungeonGame
                         player.Position((Window.ClientBounds.Width - player.Width) / 2, (Window.ClientBounds.Height - player.Height) / 2);
                         scene = new DoorScene();
                     }
-                    
                     player.Update(gameTime);
                     break;
                 case GameState.GoldScene:
                     if (Scene.DoNewGenerate)
                         scene = new GoldScene();
-
                     player.Update(gameTime);
                     break;
                 case GameState.EnemyScene:
@@ -141,7 +140,6 @@ namespace DungeonGame
                         player.canWalk = false;
                         scene = new EnemyScene();
                     }
-
                     player.Update(gameTime);
                     break;
                 case GameState.PlayerMenuScene:
@@ -155,15 +153,11 @@ namespace DungeonGame
                     break;
                 case GameState.GameOverScene:
                     if (Scene.DoNewGenerate)
-                    {
                         scene = new GameOverScene();
-                    }
                     break;
                 case GameState.LeaderboardScene:
                     if (Scene.DoNewGenerate)
-                    {
                         scene = new LeaderBoardScene(leaderBoard.BoardLabel);
-                    }
                     break;
                 case GameState.Exit:
                     Exit();
@@ -171,7 +165,7 @@ namespace DungeonGame
             }
             scene?.Update(gameTime);
             actions.Update(gameTime);
-
+            MusicPlayer.Update();
             base.Update(gameTime);
         }
 

@@ -49,7 +49,7 @@ namespace DungeonGame
             }
             foreach (var button in _buttons)
             {
-                if (Game1.player.Potions <= 0)
+                if (Game1.player.Potions <= 0 || Game1.player.Health == Game1.player.MaxHealth)
                     _buttons["Heal"].isActive = false;
                 button.Value.Update();
                 if (button.Value.State == StateButton.Press)

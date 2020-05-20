@@ -32,12 +32,6 @@ namespace DungeonGame
         public static void Load(ContentManager Content)
         {
             playerName = new TextBox(Game1.WindowWidth / 2 - 11, Game1.player.Height - 30, "Персонажа зовут", "Fonts/MainMenuFont", Content);
-
-            _song = Content.Load<Song>("Music/MainMenu");
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.33f;
-            //MediaPlayer.Play(_song);
-
             Button.Load(Content);
         }
         public override void Update(GameTime gameTime)

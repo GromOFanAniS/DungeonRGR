@@ -49,7 +49,7 @@ namespace DungeonGame
 
         public override void Update(GameTime gameTime)
         {
-            if (Game1.player.Potions <= 0)
+            if (Game1.player.Potions <= 0 || Game1.player.Health == Game1.player.MaxHealth)
                 _buttons["Heal"].isActive = false;
             else _buttons["Heal"].isActive = true;
             enemy.Update(gameTime);
@@ -97,6 +97,7 @@ namespace DungeonGame
             _buttons.Add("Hands", new Button(x, y * 3, "Удар по рукам"));
             _buttons.Add("Legs", new Button(x, y * 4, "Удар по ногам"));
             _buttons.Add("Heal", new Button(x, y * 5, "Выпить зелье"));
+            _buttons.Add("Flee", new Button(x, y * 6, "Сбежать"));
         }
     }
 }

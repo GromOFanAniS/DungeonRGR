@@ -94,11 +94,89 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/MainMenuFont.spritefont
 
-#begin Music/MainMenu.wav
-/importer:WavImporter
+#begin Music/Soundtrack/BattleMusic/03 82nd All the Way.mp3
+/importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Music/MainMenu.wav
+/build:Music/Soundtrack/BattleMusic/03 82nd All the Way.mp3
+
+#begin Music/Soundtrack/BattleMusic/04 The Attack of the Dead Men.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/BattleMusic/04 The Attack of the Dead Men.mp3
+
+#begin Music/Soundtrack/BattleMusic/06 The Red Baron (Soundtrack Version).mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/BattleMusic/06 The Red Baron (Soundtrack Version).mp3
+
+#begin Music/Soundtrack/BattleMusic/07 Great War (Soundtrack Version).mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/BattleMusic/07 Great War (Soundtrack Version).mp3
+
+#begin Music/Soundtrack/BattleMusic/09 Fields of Verdun.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/BattleMusic/09 Fields of Verdun.mp3
+
+#begin Music/Soundtrack/BattleMusic/11 In Flanders Fields (Soundtrack Version).mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/BattleMusic/11 In Flanders Fields (Soundtrack Version).mp3
+
+#begin Music/Soundtrack/Doom/02. Rip & Tear.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/Doom/02. Rip & Tear.mp3
+
+#begin Music/Soundtrack/Doom/11. Bfg Division.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/Doom/11. Bfg Division.mp3
+
+#begin Music/Soundtrack/Doom/22. Damnation.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/Doom/22. Damnation.mp3
+
+#begin Music/Soundtrack/MainMenu/01 - For Varldarna Nio.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/MainMenu/01 - For Varldarna Nio.mp3
+
+#begin Music/Soundtrack/MainMenu/01 - Nio Natters Led.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/MainMenu/01 - Nio Natters Led.mp3
+
+#begin Music/Soundtrack/MainMenu/04 - Flykt.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/MainMenu/04 - Flykt.mp3
+
+#begin Music/Soundtrack/MainMenu/04 - Nar Gudarna Kalla.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/MainMenu/04 - Nar Gudarna Kalla.mp3
+
+#begin Music/Soundtrack/MainMenu/06 - Jag Vet Ett Tempel Sta.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Soundtrack/MainMenu/06 - Jag Vet Ett Tempel Sta.mp3
 
 #begin Objects/GoldPile.png
 /importer:TextureImporter

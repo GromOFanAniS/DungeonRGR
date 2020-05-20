@@ -140,7 +140,7 @@ namespace DungeonGame
             }
             else
             {
-                Game1.actions.Text = $"{Name} промахнулся\n";
+                Game1.actions.Text += $"{Name} промахнулся\n";
             }
         }
     }
