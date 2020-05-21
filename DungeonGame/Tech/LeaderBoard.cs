@@ -32,6 +32,7 @@ namespace DungeonGame
         public void SaveBoard()
         {
             BinaryFormatter formatter = new BinaryFormatter();
+            if (!Directory.Exists(@"saves/")) Directory.CreateDirectory(@"saves/");
             using (FileStream fs = new FileStream(@"saves/scoreboard.dat", FileMode.OpenOrCreate))
             {
                 formatter.Serialize(fs, this);

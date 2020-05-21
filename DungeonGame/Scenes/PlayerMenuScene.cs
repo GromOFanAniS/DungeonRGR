@@ -44,7 +44,7 @@ namespace DungeonGame
         public override void Update(GameTime gameTime)
         {
             statPointsLabel.Text = $"Уровень: {Game1.player.Level}  Очков характеристик: {Game1.player.StatPoints}";
-            statsLabel.Text = $" Запас здоровья: {Game1.player.MaxHealth} \n Сила: {Game1.player.Strength} \n Ловкость {Game1.player.Agility} \n Интеллект {Game1.player.Intellect} ";
+            statsLabel.Text = $" Запас здоровья: {Game1.player.MaxHealth} \n Сила: {Game1.player.Strength} \n Ловкость {Game1.player.Agility} \n Интеллект {Game1.player.Intelligence} ";
             foreach (var button in _buttons)
             {
                 if (Game1.player.StatPoints == 0 && button.Key != "Exit")

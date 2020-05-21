@@ -35,7 +35,6 @@ namespace DungeonGame
         
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private Label gold;
         private Scene scene;
         private LeaderBoard leaderBoard;
 
@@ -61,7 +60,6 @@ namespace DungeonGame
             difficulty = 1;
             actions = new Label(10, Window.ClientBounds.Height / 7 * 6);
             _camera = new Camera(GraphicsDevice.Viewport);
-            gold = new Label(WindowWidth / 2, 15);
             player = new Player();
             base.Initialize();
         }
@@ -80,6 +78,9 @@ namespace DungeonGame
             MainMenu.Load(Content);
             Door.Load(Content);
             Gold.Load(Content);
+            ShortSword.Load(Content);
+            Sword.Load(Content);
+            Bow.Load(Content);
             HealthBar.Load(Content);
             Label.Load(Content);
             Character.LoadCharacters(Content);
@@ -188,23 +189,20 @@ namespace DungeonGame
                 case GameState.DoorScene:
                     player.Draw(spriteBatch);
                     actions.Draw(spriteBatch);
-                    gold.Draw(spriteBatch);
                     break;
                 case GameState.GoldScene:
                     player.Draw(spriteBatch);
                     actions.Draw(spriteBatch);
-                    gold.Draw(spriteBatch);
                     break;
                 case GameState.EnemyScene:
                     player.Draw(spriteBatch);
                     actions.Draw(spriteBatch);
-                    gold.Draw(spriteBatch);
                     break;
                 case GameState.PlayerMenuScene:
                     player.Draw(spriteBatch);
                     break;
             }
-            gold.Text = $"У вас {player.gold} золота и {player.Potions} зелий";
+            
             spriteBatch.End();
            
             base.Draw(gameTime);

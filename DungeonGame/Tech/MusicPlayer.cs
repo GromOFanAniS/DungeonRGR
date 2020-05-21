@@ -28,7 +28,7 @@ namespace DungeonGame
 
             ChangeSong(Game1.gameState);
 
-            MediaPlayer.Play(songToPlay);
+            //MediaPlayer.Play(songToPlay);
             currentSong = songToPlay;
         }
         private static void ChangeSong(GameState gameState)

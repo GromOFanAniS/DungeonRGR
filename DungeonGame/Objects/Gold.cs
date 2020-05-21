@@ -19,10 +19,10 @@ namespace DungeonGame
         private bool _doDraw;
         public bool DoDraw => _doDraw;
 
-        private int _width => _animation.CurrentRectangle.Width;
-        private int _height => _animation.CurrentRectangle.Height;
-        private int X;
-        private int Y;
+        private int Width => _animation.CurrentRectangle.Width;
+        private int Height => _animation.CurrentRectangle.Height;
+        private int x;
+        private int y;
 
         public Gold()
         {
@@ -30,10 +30,10 @@ namespace DungeonGame
             _amount = Game1.random.Next(101);
             _potionAmount = Game1.random.Next(1, 5);
 
-            X = (Game1.WindowWidth - _width) / 2;
-            Y = 240;
+            x = (Game1.WindowWidth - Width) / 2;
+            y = 240;
 
-            _hitbox = new Rectangle(X, Y, _width, _height);
+            _hitbox = new Rectangle(x, y, Width, Height);
         }
 
         public static void Load(ContentManager content)
@@ -61,7 +61,7 @@ namespace DungeonGame
         {
             if (_doDraw)
             {
-                Vector2 topLeftOfSprite = new Vector2(this.X, this.Y);
+                Vector2 topLeftOfSprite = new Vector2(this.x, this.y);
                 var sourceRectangle = _animation.CurrentRectangle;
                 s.Draw(_sheetTexture, topLeftOfSprite, null, sourceRectangle);
             }

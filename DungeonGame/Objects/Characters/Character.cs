@@ -45,7 +45,7 @@ namespace DungeonGame
             public int BaseDamage { get => _baseDamage; }
             public int BaseChance { get => _baseChance; }
             public int SuccessChance { get => _successChance; set => _successChance = value; }
-            public AttackTypes Type { get => _type; }
+            public AttackTypes Type { get => _type; set => _type = value; }
             public AttackSpots Spot { get => _spot; }
 
             public Attack(int baseDamage = 0, int baseChance = 0, AttackTypes type = AttackTypes.None, AttackSpots spot = AttackSpots.Body, string name = "")

@@ -24,14 +24,22 @@ namespace DungeonGame
         private static Texture2D _playerSheetTexture;
         [NonSerialized]
         private SpriteEffects _flip = SpriteEffects.None;
+        [NonSerialized]
+        private Label _weaponLabel;
+        [NonSerialized]
+        private Label _goldAndPots;
+        [NonSerialized]
+        private Label _expLabel;
 
+        private Weapon _currentWeapon;
         private int _level;
         private int _experienceToNextLevel;
         private int _potions;
         private int _statPoints;
         private int _strength;
         private int _agility;
-        private int _intellect;
+        private int _intelligence;
+        private bool _drawWeaponString;
 
         public int Level => _level;
         public int Potions
@@ -58,7 +66,7 @@ namespace DungeonGame
         }
         public int Strength => _strength;
         public int Agility => _agility;
-        public int Intellect => _intellect;
+        public int Intelligence => _intelligence;
         public int MaxHealth => _maxHealth;
 
         public Player()
@@ -70,7 +78,7 @@ namespace DungeonGame
             _potions = 2;
             _strength = 1;
             _agility = 1;
-            _intellect = 1;
+            _intelligence = 1;
 
             _weakSpots = new List<AttackSpots>();
             _weakness = AttackTypes.None;
@@ -82,14 +90,7 @@ namespace DungeonGame
                 new Attack(15, 95, AttackTypes.Physical, AttackSpots.Legs, "удар по ногам")
             };
 
-            _healthBar = new HealthBar(5, 10);
-            _idle = new Animation();
-            _idle.AddFrame(new Rectangle(0, 0, 95, 184), TimeSpan.FromSeconds(1));
-            _animation = _idle;
-            _walk = new Animation();
-            for (int i = 1; i < 8; i++)
-                _walk.AddFrame(new Rectangle(96*i, 0, 95, 184), TimeSpan.FromSeconds(.25));
-            
+            Initialize();
         }
 
         public static void Load(ContentManager content)
@@ -118,15 +119,19 @@ namespace DungeonGame
             {
                 case "Head":
                     DoAttack(enemy, _attacks[0]);
+                    _currentWeapon?.DamageWeapon();
                     break;
                 case "Body":
                     DoAttack(enemy, _attacks[1]);
+                    _currentWeapon?.DamageWeapon();
                     break;
                 case "Hands":
                     DoAttack(enemy, _attacks[2]);
+                    _currentWeapon?.DamageWeapon();
                     break;
                 case "Legs":
                     DoAttack(enemy, _attacks[3]);
+                    _currentWeapon?.DamageWeapon();
                     break;
                 case "Heal":
                     UsePotion();
@@ -148,6 +153,10 @@ namespace DungeonGame
         public void Initialize()
         {
             _healthBar = new HealthBar(5, 10);
+            _weaponLabel = new Label(50, 50, "");
+            _goldAndPots = new Label(Game1.WindowWidth / 2, 15);
+            _expLabel = new Label(Game1.WindowWidth / 2, 15);
+            _drawWeaponString = false;
             _idle = new Animation();
             _idle.AddFrame(new Rectangle(0, 0, 95, 184), TimeSpan.FromSeconds(1));
             _animation = _idle;
@@ -158,12 +167,47 @@ namespace DungeonGame
 
         public override void Draw(SpriteBatch s)
         {
-            Vector2 topLeftOfSprite = new Vector2(this.X, this.Y);
+            Vector2 topLeftOfSprite = new Vector2(X, Y);
             Color color = Color.White;
             var sourceRectangle = _animation.CurrentRectangle;
             s.Draw(_playerSheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, color, _flip);
             if(Game1.gameState != GameState.MenuScene)
                 _healthBar.Draw(s, _health, _maxHealth);
+            if(Game1.gameState != GameState.PlayerMenuScene && Game1.gameState != GameState.MenuScene)
+            {
+                _goldAndPots.Draw(s);
+                _goldAndPots.Text = $"У вас {gold} золота и {Potions} зелий";
+            }
+            else if(Game1.gameState != GameState.MenuScene)
+            {
+                _expLabel.Draw(s);
+                _expLabel.Text = $"Очков опыта: {experience}. Необходимо: {_experienceToNextLevel}";
+            }
+            if (_drawWeaponString)
+                _weaponLabel.Draw(s);
+        }
+
+        public void DrawWeaponLabel(Weapon weaponToTake, bool draw)
+        {
+            if(draw)
+            {
+                _drawWeaponString = true;
+                _weaponLabel.Text =  $"{"", 4}Оружие:{_currentWeapon?.Name,-15}{weaponToTake.Name}\n"
+                                   + $"{"", 8}Урон:{_currentWeapon?.Damage,-15}{weaponToTake.Damage}\n"
+                                   + $"Прочность:{_currentWeapon?.Durability, -15}{weaponToTake.Durability}\n"
+                                   + $"Тип урона: \n";
+            }
+            else
+            {
+                _drawWeaponString = false;
+                _weaponLabel.Text = "";
+            }            
+        }
+
+        public void TakeNewWeapon(Weapon weaponToTake)
+        {
+            _currentWeapon = weaponToTake;
+            RegenerateAttacks();
         }
 
         public void UsePotion()
@@ -192,7 +236,7 @@ namespace DungeonGame
                     _agility++;
                     break;
                 case "Intellect":
-                    _intellect++;
+                    _intelligence++;
                     break;
                 case "Exit":
                     Game1.gameState = GameState.DoorScene;
@@ -228,7 +272,7 @@ namespace DungeonGame
                 Position(Game1.gameWindow.ClientBounds.Width / 2 - 100 - Width, (int)Y);
             }
         }
-
+        
         private void CheckLevel()
         {
             if(experience >= _experienceToNextLevel)
@@ -244,8 +288,29 @@ namespace DungeonGame
         {
             foreach(var attack in _attacks)
             {
-                attack.Damage = attack.BaseDamage + _strength * 5;
-                attack.SuccessChance = attack.BaseChance + _agility * 2;
+                switch(_currentWeapon?.AttackType)
+                {
+                    case AttackTypes.Physical:
+                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _strength * 5 ;
+                        attack.SuccessChance = attack.BaseChance + _agility * 2;
+                        break;
+                    case AttackTypes.Ranged:
+                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _agility * 5;
+                        attack.SuccessChance = attack.BaseChance + _agility * 3;
+                        break;
+                    case AttackTypes.Magic:
+                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _intelligence * 5;
+                        attack.SuccessChance = attack.BaseChance + _agility * 1;
+                        break;
+                    case AttackTypes.Poison:
+                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage;
+                        break;
+                    case null:
+                        attack.Damage = attack.BaseDamage + _strength * 5;
+                        attack.SuccessChance = attack.BaseChance + _agility * 2;
+                        break;
+                }
+                attack.Type = _currentWeapon?.AttackType ?? AttackTypes.Physical;
             }
         }
         private void CheckDifficulty()

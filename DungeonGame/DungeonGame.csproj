@@ -47,7 +47,8 @@
     <Compile Include="Objects\Gold.cs" />
     <Compile Include="Objects\UI\HealthBar.cs" />
     <Compile Include="Objects\UI\Label.cs" />
-    <Compile Include="Objects\Weapon.cs" />
+    <Compile Include="Objects\Weapons\Weapons.cs" />
+    <Compile Include="Objects\Weapons\Weapon.cs" />
     <Compile Include="Scenes\EnemyScene.cs" />
     <Compile Include="Scenes\GameOverScene.cs" />
     <Compile Include="Scenes\GoldScene.cs" />

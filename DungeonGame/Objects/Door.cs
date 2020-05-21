@@ -21,7 +21,7 @@ namespace DungeonGame
         private Vector2 _position;
         private Rectangle _hitbox;
 
-        public StateDoor state { get { return _state; } }
+        public StateDoor State { get { return _state; } }
 
         public Door(int x, int y)
         {
@@ -31,7 +31,7 @@ namespace DungeonGame
                 { StateDoor.Opened, openedTexture }
             };
             _hitbox = new Rectangle(x, y, closedTexture.Width, closedTexture.Height);
-            this._position = new Vector2(x, y);
+            _position = new Vector2(x, y);
         }
 
         public static void Load(ContentManager content)

@@ -12,8 +12,6 @@ namespace DungeonGame
 {
     class MainMenu : Scene
     {
-        private static Song _song;
-
         private static TextBox playerName;
 
         private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
