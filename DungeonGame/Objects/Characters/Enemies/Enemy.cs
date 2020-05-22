@@ -36,7 +36,7 @@ namespace DungeonGame
         public void AttackPlayer()
         {
             Attack usedAttack = _attacks[Game1.random.Next(_attacks.Count)];
-            DoAttack(Game1.player, usedAttack);
+            DoAttack(Player.GetPlayer(), usedAttack);
         }
 
         public override void Update(GameTime gameTime)

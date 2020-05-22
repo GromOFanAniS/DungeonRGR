@@ -13,6 +13,7 @@ namespace DungeonGame
         private Dictionary<string, Button> _buttons;
         private Label statPointsLabel;
         private Label statsLabel;
+        private Player player = Player.GetPlayer();
 
         public PlayerMenuScene()
         {
@@ -43,17 +44,17 @@ namespace DungeonGame
 
         public override void Update(GameTime gameTime)
         {
-            statPointsLabel.Text = $"Уровень: {Game1.player.Level}  Очков характеристик: {Game1.player.StatPoints}";
-            statsLabel.Text = $" Запас здоровья: {Game1.player.MaxHealth} \n Сила: {Game1.player.Strength} \n Ловкость {Game1.player.Agility} \n Интеллект {Game1.player.Intelligence} ";
+            statPointsLabel.Text = $"Уровень: {player.Level}  Очков характеристик: {player.StatPoints}";
+            statsLabel.Text = $" Запас здоровья: {player.MaxHealth} \n Сила: {player.Strength} \n Ловкость {player.Agility} \n Интеллект {player.Intelligence} ";
             foreach (var button in _buttons)
             {
-                if (Game1.player.StatPoints == 0 && button.Key != "Exit")
+                if (player.StatPoints == 0 && button.Key != "Exit")
                     button.Value.isActive = false;
                 else
                     button.Value.isActive = true;
                 button.Value.Update();
                 if (button.Value.State == StateButton.Press)
-                    Game1.player.ChangeStats(button.Key);
+                    player.ChangeStats(button.Key);
             }
         }
     }

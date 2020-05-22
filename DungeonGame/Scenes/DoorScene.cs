@@ -11,6 +11,7 @@ namespace DungeonGame
     {
         private List<Door> _doors;
         private Dictionary<string, Button> _buttons;
+        private Player player = Player.GetPlayer();
 
         public DoorScene()
         {
@@ -49,7 +50,7 @@ namespace DungeonGame
             }
             foreach (var button in _buttons)
             {
-                if (Game1.player.Potions <= 0 || Game1.player.Health == Game1.player.MaxHealth)
+                if (player.Potions <= 0 || player.Health == player.MaxHealth)
                     _buttons["Heal"].isActive = false;
                 button.Value.Update();
                 if (button.Value.State == StateButton.Press)
@@ -57,10 +58,10 @@ namespace DungeonGame
                     switch (button.Key)
                     {
                         case "Save":
-                            SaveLoadSystem.SaveGame(Game1.player);
+                            Player.SaveLoadSystem.SaveGame();
                             break;
                         case "Heal":
-                            Game1.player.UsePotion();
+                            player.UsePotion();
                             break;
                         case "PlayerMenu":
                             DoNewGenerate = true;

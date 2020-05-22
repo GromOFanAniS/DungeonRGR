@@ -68,21 +68,21 @@ namespace DungeonGame
         {
             if (_enabled)
             {
-                Rectangle playerPosition = new Rectangle((int)Game1.player.X, (int)Game1.player.Y - 1, Game1.player.Width, Game1.player.Height);
+                Rectangle playerPosition = new Rectangle((int)Player.GetPlayer().X, (int)Player.GetPlayer().Y - 1, Player.GetPlayer().Width, Player.GetPlayer().Height);
                 if (_hitbox.Intersects(playerPosition))
                 {
-                    Game1.player.DrawWeaponLabel(this, true);
+                    Player.GetPlayer().DrawWeaponLabel(this, true);
                     if (Game1.keyboardState.IsKeyDown(Keys.Space))
                     {
-                        Game1.player.DrawWeaponLabel(this, false);
-                        Game1.player.TakeNewWeapon(this);
+                        Player.GetPlayer().DrawWeaponLabel(this, false);
+                        Player.GetPlayer().TakeNewWeapon(this);
                         Game1.actions.Text += $"Вы взяли {_name}";
                         _enabled = false;
                     }
                 }
                 else
                 {
-                    Game1.player.DrawWeaponLabel(this, false);
+                    Player.GetPlayer().DrawWeaponLabel(this, false);
                 }
             }
         }

@@ -15,10 +15,12 @@ namespace DungeonGame
     }
     class EnemyScene : Scene
     {
+        public AttackTurn attackTurn = AttackTurn.Player;
+
+        private Player player = Player.GetPlayer();
         private bool enemyOldState;
         private Enemy enemy;
         private Door door;
-        public AttackTurn attackTurn = AttackTurn.Player;
         private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
 
         public EnemyScene()
@@ -49,7 +51,7 @@ namespace DungeonGame
 
         public override void Update(GameTime gameTime)
         {
-            if (Game1.player.Potions <= 0 || Game1.player.Health == Game1.player.MaxHealth)
+            if (player.Potions <= 0 || player.Health == player.MaxHealth)
                 _buttons["Heal"].isActive = false;
             else _buttons["Heal"].isActive = true;
             enemy.Update(gameTime);
@@ -62,8 +64,8 @@ namespace DungeonGame
                         if (!enemyOldState)
                         {
                             Game1.actions.Text += $"Вы победили {enemy.Name}\n";
-                            Game1.player.experience += enemy.experience;
-                            Game1.player.canWalk = true;
+                            player.experience += enemy.experience;
+                            player.canWalk = true;
                             enemyOldState = true;
                         }
                         return;
@@ -79,7 +81,7 @@ namespace DungeonGame
                         if (button.Value.State == StateButton.Press)
                         {
                             Game1.actions.Text = "";
-                            Game1.player.ButtonAction(button.Key, enemy);
+                            player.ButtonAction(button.Key, enemy);
                             attackTurn = AttackTurn.Enemy;
                         }
                     }

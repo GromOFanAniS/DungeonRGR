@@ -16,7 +16,7 @@ namespace DungeonGame
         public GameOverScene()
         {
             button = new Button((Game1.WindowWidth - Button.Width) / 2, (Game1.WindowHeight * 2 / 3), "В главное меню");
-            label = new Label(Game1.WindowWidth / 2, (Game1.WindowHeight / 3), $"Вы умерли, ваш счет {Game1.player.gold}", AlignmentPosition.center);
+            label = new Label(Game1.WindowWidth / 2, (Game1.WindowHeight / 3), $"Вы умерли, ваш счет {Player.GetPlayer().gold}", AlignmentPosition.center);
         }
 
 
@@ -32,7 +32,7 @@ namespace DungeonGame
             if(button.State == StateButton.Press)
             {
                 Game1.gameState = GameState.MenuScene;
-                Game1.player = new Player();
+                Player.Kill();
             }
         }
     }

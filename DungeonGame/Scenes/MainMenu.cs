@@ -13,7 +13,7 @@ namespace DungeonGame
     class MainMenu : Scene
     {
         private static TextBox playerName;
-
+        private static Player player = Player.GetPlayer();
         private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
 
         public MainMenu()
@@ -29,7 +29,7 @@ namespace DungeonGame
 
         public static void Load(ContentManager Content)
         {
-            playerName = new TextBox(Game1.WindowWidth / 2 - 11, Game1.player.Height - 30, "Персонажа зовут", "Fonts/MainMenuFont", Content);
+            playerName = new TextBox(Game1.WindowWidth / 2 - 11, player.Height - 30, "Персонажа зовут", "Fonts/MainMenuFont", Content);
             Button.Load(Content);
         }
         public override void Update(GameTime gameTime)
@@ -46,12 +46,12 @@ namespace DungeonGame
                     {
                         case "Start":
                             Game1.gameState = GameState.DoorScene;
-                            Game1.player.Name = playerName.Text;
+                            player.Name = playerName.Text;
                             DoNewGenerate = true;
                             break;
                         case "Load":
                             Game1.gameState = GameState.DoorScene;
-                            Game1.player = SaveLoadSystem.LoadGame();
+                            Player.SaveLoadSystem.LoadGame();
                             DoNewGenerate = true;
                             break;
                         case "Leaderboard":

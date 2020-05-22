@@ -70,7 +70,6 @@
     <Compile Include="Objects\UI\TextBox.cs" />
     <Compile Include="Tech\LeaderBoard.cs" />
     <Compile Include="Tech\MusicPlayer.cs" />
-    <Compile Include="Tech\SaveLoadSystem.cs" />
     <Compile Include="Tech\Skill.cs" />
   </ItemGroup>
   <ItemGroup>

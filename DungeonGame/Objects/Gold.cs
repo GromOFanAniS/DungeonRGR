@@ -15,6 +15,7 @@ namespace DungeonGame
         private static Texture2D _sheetTexture;
         private static Animation _animation;
         private Rectangle _hitbox;
+        private Player player = Player.GetPlayer();
 
         private bool _doDraw;
         public bool DoDraw => _doDraw;
@@ -46,12 +47,12 @@ namespace DungeonGame
 
         public void Update(GameTime gameTime)
         {
-            Rectangle playerPosition = new Rectangle((int)Game1.player.X, (int)Game1.player.Y - 1, Game1.player.Width, Game1.player.Height);
+            Rectangle playerPosition = new Rectangle((int)player.X, (int)player.Y - 1, player.Width, player.Height);
             if (_hitbox.Intersects(playerPosition) && Game1.keyboardState.IsKeyDown(Keys.Space) && _doDraw)
             {
                 _doDraw = false;
-                Game1.player.gold += _amount;
-                Game1.player.TakePotions(_potionAmount);
+                player.gold += _amount;
+                player.TakePotions(_potionAmount);
                 Game1.actions.Text = $"Подобрано {_amount} золота и {_potionAmount} зелий";
             }
             _animation.Update(gameTime);

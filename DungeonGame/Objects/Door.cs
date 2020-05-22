@@ -42,7 +42,7 @@ namespace DungeonGame
 
         public void Update()
         {
-            Rectangle playerPosition = new Rectangle((int)Game1.player.X, (int)Game1.player.Y - 1, Game1.player.Width, Game1.player.Height);
+            Rectangle playerPosition = new Rectangle((int)Player.GetPlayer().X, (int)Player.GetPlayer().Y - 1, Player.GetPlayer().Width, Player.GetPlayer().Height);
             if (_hitbox.Intersects(playerPosition))
             {
                 _state = StateDoor.Opened;

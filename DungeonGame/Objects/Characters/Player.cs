@@ -5,12 +5,51 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Runtime.Serialization;
 
 namespace DungeonGame
 {
     [Serializable]
     public class Player : Character
     {
+         public static class SaveLoadSystem
+        {
+            public static void SaveGame()
+            {
+                if (!Directory.Exists(@"saves/")) Directory.CreateDirectory(@"saves/");
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream fs = new FileStream(@"saves/save.dat", FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, playerInstance);
+                }
+            }
+            public static void LoadGame()
+            {
+                try
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    using (FileStream fs = new FileStream(@"saves/save.dat", FileMode.OpenOrCreate))
+                    {
+                        Player player = (Player)formatter.Deserialize(fs);
+                        player.Initialize();
+                        playerInstance = player;
+                    }
+                }
+                catch (IOException /*e*/)
+                {
+                    playerInstance = new Player();
+                }
+                catch (SerializationException)
+                {
+                    playerInstance = new Player();
+                }
+            }
+        }
+
+        private static Player playerInstance = null;
+
         public int gold = 0;
         public bool canWalk = true;
         public int experience;
@@ -69,7 +108,7 @@ namespace DungeonGame
         public int Intelligence => _intelligence;
         public int MaxHealth => _maxHealth;
 
-        public Player()
+        private Player()
         {
             _level = 1;
             _experienceToNextLevel = 10;
@@ -91,6 +130,17 @@ namespace DungeonGame
             };
 
             Initialize();
+        }
+
+        public static Player GetPlayer()
+        {
+            if (playerInstance == null)
+                playerInstance = new Player();
+            return playerInstance;
+        }
+        public static void Kill()
+        {
+            playerInstance = null;
         }
 
         public static void Load(ContentManager content)
@@ -152,6 +202,7 @@ namespace DungeonGame
 
         public void Initialize()
         {
+            Name = "Игрок";
             _healthBar = new HealthBar(5, 10);
             _weaponLabel = new Label(50, 50, "");
             _goldAndPots = new Label(Game1.WindowWidth / 2, 15);

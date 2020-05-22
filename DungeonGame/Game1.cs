@@ -27,12 +27,12 @@ namespace DungeonGame
         public static GameWindow gameWindow;
         public static GameState gameState;
         public static Camera _camera;
-        public static Player player;
         public static Label actions;
         public static int difficulty;
         public static int WindowWidth => gameWindow.ClientBounds.Width;
         public static int WindowHeight => gameWindow.ClientBounds.Height;
         
+        private static Player player;
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private Scene scene;
@@ -60,7 +60,7 @@ namespace DungeonGame
             difficulty = 1;
             actions = new Label(10, Window.ClientBounds.Height / 7 * 6);
             _camera = new Camera(GraphicsDevice.Viewport);
-            player = new Player();
+            player = Player.GetPlayer();
             base.Initialize();
         }
 
@@ -117,7 +117,7 @@ namespace DungeonGame
                 case GameState.MenuScene:
                     if(Scene.DoNewGenerate)
                     {
-                        player = new Player();
+                        player = Player.GetPlayer();
                         player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
                         scene = new MainMenu();
                     }
