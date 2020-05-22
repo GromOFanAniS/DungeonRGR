@@ -53,6 +53,7 @@ namespace DungeonGame
         public int gold = 0;
         public bool canWalk = true;
         public int experience;
+        public List<Skill> skills;
 
         private const float velocity = 250f;
         [NonSerialized]
@@ -75,6 +76,7 @@ namespace DungeonGame
         private int _experienceToNextLevel;
         private int _potions;
         private int _statPoints;
+        private int _skillPoints;
         private int _strength;
         private int _agility;
         private int _intelligence;
@@ -92,10 +94,21 @@ namespace DungeonGame
                     _potions = 0;
             }
         }  
+        public int SkillPoints
+        {
+            get => _skillPoints;
+            private set
+            {
+                if (value > 0)
+                    _skillPoints = value;
+                else
+                    _skillPoints = 0;
+            }
+        }
         public int StatPoints 
         { 
             get => _statPoints; 
-            set
+            private set
             {
                 if (value > 0)
                     _statPoints = value;
@@ -119,6 +132,18 @@ namespace DungeonGame
             _agility = 1;
             _intelligence = 1;
 
+            skills = new List<Skill>()
+            {
+                new Punch(),
+                new Punch()
+                {
+                    _name = "asd"
+                },
+                new Punch()
+                {
+                    _name = "dsa"
+                }
+            };
             _weakSpots = new List<AttackSpots>();
             _weakness = AttackTypes.None;
             _attacks = new List<Attack>()
@@ -162,8 +187,13 @@ namespace DungeonGame
             }
             _animation.Update(gameTime);
         }
-
-        public void ButtonAction(string key, Character enemy)
+        public void UpgradeSkill(string skillName)
+        {
+            SkillPoints--;
+            skills.Find(x => x.Name == skillName).level++;
+            //RegenerateSkills();
+        }
+        public void AttackAction(string key, Character enemy)
         {
             switch (key)
             {
@@ -329,7 +359,8 @@ namespace DungeonGame
             if(experience >= _experienceToNextLevel)
             {
                 Game1.actions.Text += "Новый Уровень!\n";
-                _statPoints += 3;
+                StatPoints += 3;
+                SkillPoints += 2;
                 _level++;
                 experience -= _experienceToNextLevel;
                 _experienceToNextLevel += 15 * _level;

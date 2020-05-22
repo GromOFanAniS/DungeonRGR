@@ -60,14 +60,14 @@ namespace DungeonGame
             }
         }
 
-        protected int _health;
-        protected int _maxHealth;
         [NonSerialized]
         protected HealthBar _healthBar;
-        protected AttackTypes _weakness;
-        protected AttackTypes _resistance;
         [NonSerialized]
         protected Animation _animation;
+        protected int _health;
+        protected int _maxHealth;
+        protected AttackTypes _weakness;
+        protected AttackTypes _resistance;
 
         protected List<Attack> _attacks;
         protected List<AttackSpots> _weakSpots;
@@ -93,7 +93,9 @@ namespace DungeonGame
         public int Height => _animation.CurrentRectangle.Height;
         public int Width => _animation.CurrentRectangle.Width;
         public string Name { get; set; }
-        
+
+        public AttackTypes Weakness => _weakness;
+        public AttackTypes Resistance => _resistance;
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(SpriteBatch s);

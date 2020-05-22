@@ -4,21 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DungeonGame.Tech
+namespace DungeonGame
 {
     [Serializable]
-    abstract class Skill
+    public abstract class Skill
     {
         public int level;
 
-        protected string _name;
+        public string _name;
         protected int _pointsToLearn;
 
         public string Name => _name;
         public int PointsToLearn => _pointsToLearn;
+
+        public abstract Type GetSkillType();
     }
     [Serializable]
-    abstract class ActiveSkill
+    public abstract class ActiveSkill : Skill
     {
         public int damage;
 
@@ -32,12 +34,46 @@ namespace DungeonGame.Tech
             get => _cooldown;
             set
             {
-                if (value <= 0) _cooldown = 0;
-                else _cooldown = value;
+                if (value > 0) _cooldown = value;
+                else _cooldown = 0;
             }
         }
         public int CooldownTime => _cooldownTime;
         public int BaseDamage => _baseDamage;
         public AttackTypes AttackType => _attackType;
+
+        public override Type GetSkillType()
+        {
+            return typeof(ActiveSkill);
+        }
+
+        public void Use(Character target)
+        {
+            int dmg = damage;
+            if (_attackType == target.Weakness)
+            {
+                dmg = (int)(dmg * 1.5);
+            }
+            else if (_attackType == target.Resistance)
+            {
+                dmg = (int)(dmg / 1.5);
+            }
+            target.Health -= dmg;
+        }
+    }
+    [Serializable]
+    public class Punch : ActiveSkill
+    {
+        public Punch()
+        {
+            _name = "Удар";
+            _baseDamage = 30;
+            _cooldownTime = 3;
+            _cooldown = 0;
+            _pointsToLearn = 2;
+            damage = _baseDamage;
+            _attackType = AttackTypes.Physical;
+            level = 0;
+        }
     }
 }

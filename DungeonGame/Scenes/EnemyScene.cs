@@ -81,7 +81,7 @@ namespace DungeonGame
                         if (button.Value.State == StateButton.Press)
                         {
                             Game1.actions.Text = "";
-                            player.ButtonAction(button.Key, enemy);
+                            player.AttackAction(button.Key, enemy);
                             attackTurn = AttackTurn.Enemy;
                         }
                     }

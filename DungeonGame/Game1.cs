@@ -13,6 +13,7 @@ namespace DungeonGame
         EnemyScene,
         DoorScene,
         PlayerMenuScene,
+        SkillMenuScene,
         GoldScene,
         GameOverScene,
         Exit
@@ -152,6 +153,14 @@ namespace DungeonGame
                     }
                     player.Update(gameTime);
                     break;
+                case GameState.SkillMenuScene:
+                    if (Scene.DoNewGenerate)
+                    {
+                        player.canWalk = false;
+                        scene = new SkillMenuScene();
+                    }
+                    player.Update(gameTime);
+                    break;
                 case GameState.GameOverScene:
                     if (Scene.DoNewGenerate)
                         scene = new GameOverScene();
@@ -200,6 +209,8 @@ namespace DungeonGame
                     break;
                 case GameState.PlayerMenuScene:
                     player.Draw(spriteBatch);
+                    break;
+                case GameState.SkillMenuScene:
                     break;
             }
             

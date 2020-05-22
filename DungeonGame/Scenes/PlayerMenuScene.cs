@@ -30,6 +30,7 @@ namespace DungeonGame
                 {"Strength", new Button(Game1.WindowWidth / 2  - Button.Width * 2 + 30, Game1.WindowHeight - Button.Height - 10, "Сила +1")},
                 {"Agility", new Button(Game1.WindowWidth / 2 - Button.Width + 40, Game1.WindowHeight - Button.Height - 10, "Ловкость +1") },
                 {"Intellect", new Button(Game1.WindowWidth / 2 + 50, Game1.WindowHeight - Button.Height - 10, "Интеллект +1") },
+                {"Skills", new Button(Game1.WindowWidth / 2 + Button.Width*2, Game1.WindowHeight - Button.Height * 2 - 20, "Навыки") },
                 {"Exit", new Button(Game1.WindowWidth / 2 + Button.Width*2 - 20, Game1.WindowHeight - Button.Height - 10, "Назад") }
             };
         }
@@ -48,11 +49,17 @@ namespace DungeonGame
             statsLabel.Text = $" Запас здоровья: {player.MaxHealth} \n Сила: {player.Strength} \n Ловкость {player.Agility} \n Интеллект {player.Intelligence} ";
             foreach (var button in _buttons)
             {
-                if (player.StatPoints == 0 && button.Key != "Exit")
+                if (player.StatPoints == 0 && button.Key != "Exit" && button.Key != "Skills")
                     button.Value.isActive = false;
                 else
                     button.Value.isActive = true;
                 button.Value.Update();
+                if(button.Value.State == StateButton.Press && button.Key == "Skills")
+                {
+                    Game1.gameState = GameState.SkillMenuScene;
+                    DoNewGenerate = true;
+                    break;
+                }
                 if (button.Value.State == StateButton.Press)
                     player.ChangeStats(button.Key);
             }
