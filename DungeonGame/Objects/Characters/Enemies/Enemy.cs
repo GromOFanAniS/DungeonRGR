@@ -33,6 +33,11 @@ namespace DungeonGame
             }
         }
 
+        public override void SetAnimation(Animations animation)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AttackPlayer()
         {
             Attack usedAttack = _attacks[Game1.random.Next(_attacks.Count)];

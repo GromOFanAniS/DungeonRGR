@@ -59,16 +59,17 @@ namespace DungeonGame
         public bool canWalk = true;
         public int experience;
         public List<Skill> skills;
-
         #endregion
 
         #region private fields
         private const float velocity = 350f;
         [NonSerialized]
-        private Animation _idle;
+        private Animation _idleAnimation;
         [NonSerialized]
-        private Animation _walk;
-        
+        private Animation _walkAnimation;
+        [NonSerialized]
+        private Animation _attackAnimation;
+
         [NonSerialized]
         private SpriteEffects _flip = SpriteEffects.None;
         [NonSerialized]
@@ -181,7 +182,6 @@ namespace DungeonGame
         #region public methods
         public override void Update(GameTime gameTime)
         {
-            _animation = _idle;
             CheckLevel();
             CheckDifficulty();
             WalkingUpdate(gameTime);
@@ -192,6 +192,21 @@ namespace DungeonGame
                 Scene.DoNewGenerate = true;
             }
             _animation.Update(gameTime);
+        }
+        public override void SetAnimation(Animations animation)
+        {
+            switch (animation)
+            {
+                case Animations.Idle:
+                    _animation = _idleAnimation;
+                    break;
+                case Animations.Walk:
+                    _animation = _walkAnimation;
+                    break;
+                case Animations.Attack:
+                    _animation = _attackAnimation;
+                    break;
+            }
         }
         public void UpgradeSkill(string skillName)
         {
@@ -206,20 +221,16 @@ namespace DungeonGame
             {
                 case "Head":
                     DoAttack(enemy, _attacks[0]);
-                    _currentWeapon?.DamageWeapon();
-                    break;
+                    goto default;
                 case "Body":
                     DoAttack(enemy, _attacks[1]);
-                    _currentWeapon?.DamageWeapon();
-                    break;
+                    goto default;
                 case "Hands":
                     DoAttack(enemy, _attacks[2]);
-                    _currentWeapon?.DamageWeapon();
-                    break;
+                    goto default;
                 case "Legs":
                     DoAttack(enemy, _attacks[3]);
-                    _currentWeapon?.DamageWeapon();
-                    break;
+                    goto default;
                 case "Heal":
                     UsePotion();
                     break;
@@ -234,6 +245,10 @@ namespace DungeonGame
                     else
                         Game1.actions.Text += "Вам не удалось сбежать\n";
                     break;
+                default:
+                    _currentWeapon?.DamageWeapon();
+                    _animation.Play(_attackAnimation);
+                    break;
             }
             CooldownTick();
         }
@@ -244,10 +259,7 @@ namespace DungeonGame
         }
         public override void Draw(SpriteBatch s)
         {
-            Vector2 topLeftOfSprite = new Vector2(X, Y);
-            Color color = Color.White;
-            var sourceRectangle = _animation.CurrentRectangle;
-            s.Draw(_playerSheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, color, _flip);
+            _animation.Draw(s, _playerSheetTexture, new Vector2(X, Y), _flip);
             if(Game1.gameState != GameState.MenuScene)
                 _healthBar.Draw(s, _health, _maxHealth);
             if(Game1.gameState != GameState.PlayerMenuScene && Game1.gameState != GameState.MenuScene)
@@ -330,12 +342,16 @@ namespace DungeonGame
             _goldAndPots = new Label(Game1.WindowWidth / 2, 15);
             _expLabel = new Label(Game1.WindowWidth / 2, 15);
             _drawWeaponString = false;
-            _idle = new Animation();
-            _idle.AddFrame(new Rectangle(0, 0, 95, 184), TimeSpan.FromSeconds(1));
-            _animation = _idle;
-            _walk = new Animation();
-            for (int i = 1; i < 8; i++)
-                _walk.AddFrame(new Rectangle(96 * i, 0, 95, 184), TimeSpan.FromSeconds(.25));
+            _idleAnimation = new Animation();
+            for (int i = 0; i < 4; i++)
+                _idleAnimation.AddFrame(new Rectangle(0 + 200*i, 0, 200, 148), TimeSpan.FromSeconds(0.25));
+            _animation = _idleAnimation;
+            _walkAnimation = new Animation();
+            for (int i = 0; i < 6; i++)
+                _walkAnimation.AddFrame(new Rectangle(0 + 200 * i, 148, 200, 148), TimeSpan.FromSeconds(0.25));
+            _attackAnimation = new Animation();
+            for (int i = 0; i < 7; i++)
+                _attackAnimation.AddFrame(new Rectangle(0 + 200 * i, 296, 200, 148), TimeSpan.FromSeconds(0.25));
             Position((Game1.WindowWidth - Width) / 2, 180);
             RegenerateAttacks();
             RegenerateSkills();
@@ -346,18 +362,19 @@ namespace DungeonGame
             {
                 if (Game1.keyboardState.IsKeyDown(Keys.A))
                 {
-                    _animation = _walk;
+                    _animation = _walkAnimation;
                     _flip = SpriteEffects.FlipHorizontally;
                     if ((X - velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0) return;
                     X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
-                if (Game1.keyboardState.IsKeyDown(Keys.D))
+                else if (Game1.keyboardState.IsKeyDown(Keys.D))
                 {
-                    _animation = _walk;
+                    _animation = _walkAnimation;
                     _flip = SpriteEffects.None;
                     if ((X + velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) >= (Game1.gameWindow.ClientBounds.Width - Width)) return;
                     X += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
+                else _animation = _idleAnimation;
             }
             else
             {

@@ -26,6 +26,12 @@ namespace DungeonGame
         Hands,
         Legs
     }
+    public enum Animations
+    {
+        Idle,
+        Walk,
+        Attack
+    }
     [Serializable]
     public abstract class Character
     {
@@ -94,11 +100,15 @@ namespace DungeonGame
         public int Width => _animation.CurrentRectangle.Width;
         public string Name { get; set; }
 
+        public Animation CurrentAnimation => _animation;
+
         public AttackTypes Weakness => _weakness;
         public AttackTypes Resistance => _resistance;
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(SpriteBatch s);
+
+        public abstract void SetAnimation(Animations animation);
 
         public void Position(int x, int y)
         {

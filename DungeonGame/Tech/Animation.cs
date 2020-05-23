@@ -10,15 +10,21 @@ namespace DungeonGame
 {
     public class Animation
     {
-        List<AnimationFrame> frames = new List<AnimationFrame>();
-        TimeSpan timeIntoAnimation;
+        private List<AnimationFrame> _frames = new List<AnimationFrame>();
+        private TimeSpan _timeIntoAnimation;
+        private List<AnimationFrame> _oldFrames = new List<AnimationFrame>();
+        private bool _needToChange = false;
+        private AnimationFrame _currentFrame;
+
+        public bool IsPlaying => _needToChange;
+
 
         TimeSpan Duration
         {
             get
             {
                 double totalSeconds = 0;
-                foreach (var frame in frames)
+                foreach (var frame in _frames)
                 {
                     totalSeconds += frame.Duration.TotalSeconds;
                 }
@@ -34,7 +40,7 @@ namespace DungeonGame
                 Duration = duration
             };
 
-            frames.Add(newFrame);
+            _frames.Add(newFrame);
         }
 
         public Rectangle CurrentRectangle
@@ -45,9 +51,9 @@ namespace DungeonGame
 
                 TimeSpan accumulatedTime = new TimeSpan();
 
-                foreach (var frame in frames)
+                foreach (var frame in _frames)
                 {
-                    if (accumulatedTime + frame.Duration >= timeIntoAnimation)
+                    if (accumulatedTime + frame.Duration >= _timeIntoAnimation)
                     {
                         currentFrame = frame;
                         break;
@@ -60,10 +66,11 @@ namespace DungeonGame
 
                 if (currentFrame == null)
                 {
-                    currentFrame = frames.LastOrDefault();
+                    currentFrame = _frames.LastOrDefault();
                 }
                 if (currentFrame != null)
                 {
+                    _currentFrame = currentFrame;
                     return currentFrame.SourceRectangle;
                 }
                 else
@@ -75,10 +82,30 @@ namespace DungeonGame
 
         public void Update(GameTime gameTime)
         {
-            double secondsIntoAnimation = timeIntoAnimation.TotalSeconds + gameTime.ElapsedGameTime.TotalSeconds;
+            double secondsIntoAnimation = _timeIntoAnimation.TotalSeconds + gameTime.ElapsedGameTime.TotalSeconds;
             double remainder = secondsIntoAnimation % Duration.TotalSeconds;
 
-            timeIntoAnimation = TimeSpan.FromSeconds(remainder);
+            _timeIntoAnimation = TimeSpan.FromSeconds(remainder);
+
+            if (_needToChange && _currentFrame == _frames.LastOrDefault() && (int)remainder == 0)
+            {
+                _frames = _oldFrames;
+                _needToChange = false;
+            }
+        }
+
+        public void Draw(SpriteBatch s, Texture2D sheetTexture, Vector2 topLeftOfSprite, SpriteEffects _flip)
+        {
+            Color color = Color.White;
+            var sourceRectangle = CurrentRectangle;
+            s.Draw(sheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, color, _flip);
+        }
+
+        public void Play(Animation nextAnimation)
+        {
+            _oldFrames = _frames;
+            _frames = nextAnimation._frames;
+            _needToChange = true;
         }
     }
 }
