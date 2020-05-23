@@ -14,7 +14,7 @@ namespace DungeonGame
     [Serializable]
     public class Player : Character
     {
-         public static class SaveLoadSystem
+        public static class SaveLoadSystem
         {
             public static void SaveGame()
             {
@@ -47,21 +47,29 @@ namespace DungeonGame
                 }
             }
         }
+        #region static fields
 
         private static Player playerInstance = null;
 
+        [NonSerialized]
+        private static Texture2D _playerSheetTexture;
+        #endregion
+
+        #region public fields
         public int gold = 0;
         public bool canWalk = true;
         public int experience;
         public List<Skill> skills;
 
+        #endregion
+
+        #region private fields
         private const float velocity = 250f;
         [NonSerialized]
         private Animation _idle;
         [NonSerialized]
         private Animation _walk;
-        [NonSerialized]
-        private static Texture2D _playerSheetTexture;
+        
         [NonSerialized]
         private SpriteEffects _flip = SpriteEffects.None;
         [NonSerialized]
@@ -81,7 +89,9 @@ namespace DungeonGame
         private int _agility;
         private int _intelligence;
         private bool _drawWeaponString;
+        #endregion
 
+        #region public properties
         public int Level => _level;
         public int Potions
         { 
@@ -120,7 +130,9 @@ namespace DungeonGame
         public int Agility => _agility;
         public int Intelligence => _intelligence;
         public int MaxHealth => _maxHealth;
+        #endregion
 
+        #region constructors
         private Player()
         {
             _level = 1;
@@ -156,7 +168,9 @@ namespace DungeonGame
 
             Initialize();
         }
+        #endregion
 
+        #region static methods
         public static Player GetPlayer()
         {
             if (playerInstance == null)
@@ -172,7 +186,9 @@ namespace DungeonGame
         {
             _playerSheetTexture = content.Load<Texture2D>("Player/PlayerSheet");
         }
+        #endregion
 
+        #region public methods
         public override void Update(GameTime gameTime)
         {
             _animation = _idle;
@@ -191,8 +207,9 @@ namespace DungeonGame
         {
             SkillPoints--;
             skills.Find(x => x.Name == skillName).level++;
-            //RegenerateSkills();
+            RegenerateSkills();
         }
+
         public void AttackAction(string key, Character enemy)
         {
             switch (key)
@@ -320,14 +337,16 @@ namespace DungeonGame
                     _intelligence++;
                     break;
                 case "Exit":
+                    RegenerateAttacks();
                     Game1.gameState = GameState.DoorScene;
                     Scene.DoNewGenerate = true;
                     canWalk = true;
                     break;
             }
-            RegenerateAttacks();
         }
+        #endregion
 
+        #region private methods
         private void WalkingUpdate(GameTime gameTime)
         {
             if (canWalk)
@@ -353,7 +372,7 @@ namespace DungeonGame
                 Position(Game1.gameWindow.ClientBounds.Width / 2 - 100 - Width, (int)Y);
             }
         }
-        
+         
         private void CheckLevel()
         {
             if(experience >= _experienceToNextLevel)
@@ -395,6 +414,26 @@ namespace DungeonGame
                 attack.Type = _currentWeapon?.AttackType ?? AttackTypes.Physical;
             }
         }
+        private void RegenerateSkills()
+        {
+            List<Skill> activeSkills = skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill));
+            foreach(ActiveSkill skill in activeSkills)
+            {
+                switch(skill.AttackType)
+                {
+                    case AttackTypes.Magic:
+                        skill.damage = skill.BaseDamage + Intelligence * 10;
+                        break;
+                    case AttackTypes.Physical:
+                        skill.damage = skill.BaseDamage + Strength * 5;
+                        break;
+                    case AttackTypes.Ranged:
+                        skill.damage = skill.BaseDamage + Agility * 3;
+                        break;
+                }
+            }
+        }
+
         private void CheckDifficulty()
         {
             if(_level > Game1.difficulty * 3)
@@ -404,5 +443,6 @@ namespace DungeonGame
                                       + "Враги станут сильнее, но и награда больше.\n";
             }
         }
+        #endregion
     }
 }

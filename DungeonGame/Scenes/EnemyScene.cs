@@ -100,6 +100,7 @@ namespace DungeonGame
             _buttons.Add("Legs", new Button(x, y * 4, "Удар по ногам"));
             _buttons.Add("Heal", new Button(x, y * 5, "Выпить зелье"));
             _buttons.Add("Flee", new Button(x, y * 6, "Сбежать"));
+            _buttons.Add("Skills", new Button(x, y * 7, "Использовать навык"));
         }
     }
 }
