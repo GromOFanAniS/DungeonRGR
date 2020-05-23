@@ -11,9 +11,9 @@ namespace DungeonGame
     class PlayerMenuScene : Scene
     {
         private Dictionary<string, Button> _buttons;
-        private Label statPointsLabel;
-        private Label statsLabel;
-        private Player player = Player.GetPlayer();
+        private readonly Label statPointsLabel;
+        private readonly Label statsLabel;
+        private readonly Player player = Player.GetPlayer();
 
         public PlayerMenuScene()
         {
@@ -30,7 +30,7 @@ namespace DungeonGame
                 {"Strength", new Button(Game1.WindowWidth / 2  - Button.Width * 2 + 30, Game1.WindowHeight - Button.Height - 10, "Сила +1")},
                 {"Agility", new Button(Game1.WindowWidth / 2 - Button.Width + 40, Game1.WindowHeight - Button.Height - 10, "Ловкость +1") },
                 {"Intellect", new Button(Game1.WindowWidth / 2 + 50, Game1.WindowHeight - Button.Height - 10, "Интеллект +1") },
-                {"Skills", new Button(Game1.WindowWidth / 2 + Button.Width*2, Game1.WindowHeight - Button.Height * 2 - 20, "Навыки") },
+                {"Skills", new Button(Game1.WindowWidth / 2 + Button.Width*2 - 20, Game1.WindowHeight - Button.Height * 2 - 20, "Навыки") },
                 {"Exit", new Button(Game1.WindowWidth / 2 + Button.Width*2 - 20, Game1.WindowHeight - Button.Height - 10, "Назад") }
             };
         }

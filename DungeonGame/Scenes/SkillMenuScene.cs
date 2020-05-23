@@ -10,10 +10,10 @@ namespace DungeonGame
 {
      class SkillMenuScene : Scene
     {
-        private Player player = Player.GetPlayer();
-        private Dictionary<string, Button> _buttons;
-        private Label _skillPointsLabel;
-        private Label _skillsLabel;
+        private readonly Dictionary<string, Button> _buttons;
+        private readonly Label _skillPointsLabel;
+        private readonly Label _skillsLabel;
+        private readonly Player player = Player.GetPlayer();
 
         public SkillMenuScene()
         {

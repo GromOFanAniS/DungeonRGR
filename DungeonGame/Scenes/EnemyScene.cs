@@ -15,21 +15,30 @@ namespace DungeonGame
     }
     class EnemyScene : Scene
     {
+        enum MenuState
+        {
+            strike,
+            skill
+        }
         public AttackTurn attackTurn = AttackTurn.Player;
-
-        private Player player = Player.GetPlayer();
+        private MenuState _menuState;
         private bool enemyOldState;
-        private Enemy enemy;
-        private Door door;
-        private Dictionary<string, Button> _buttons = new Dictionary<string, Button>();
+        private readonly Enemy enemy;
+        private readonly Door door;
+        private readonly Dictionary<string, Button> _attackButtons;
+        private readonly Dictionary<string, Button> _skillButtons;
+        private readonly Player player = Player.GetPlayer();
 
         public EnemyScene()
         {
+            _attackButtons = new Dictionary<string, Button>();
+            _skillButtons = new Dictionary<string, Button>();
             enemyOldState = false;
             DoNewGenerate = false;
+            _menuState = MenuState.strike;
             door = new Door(Game1.WindowWidth - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
             enemy = Enemy.Generate();
-            Game1.actions.Text = $"Вам встретился {enemy.Name}";
+            Game1.actions.Text = $"Вам встретился {enemy.Name}\n";
             SetButtons();
         }
 
@@ -44,16 +53,26 @@ namespace DungeonGame
             {
                 enemy.Draw(s);
                 enemy.DrawHealthBar(s);
-                foreach (var button in _buttons)
-                    button.Value.Draw(s);
+                switch(_menuState)
+                {
+                    case MenuState.strike:
+                        foreach (var button in _attackButtons)
+                            button.Value.Draw(s);
+                        break;
+                    case MenuState.skill:
+                        foreach (var button in _skillButtons)
+                            button.Value.Draw(s);
+                        break;
+                }
+                
             }
         }
 
         public override void Update(GameTime gameTime)
         {
             if (player.Potions <= 0 || player.Health == player.MaxHealth)
-                _buttons["Heal"].isActive = false;
-            else _buttons["Heal"].isActive = true;
+                _attackButtons["Heal"].isActive = false;
+            else _attackButtons["Heal"].isActive = true;
             enemy.Update(gameTime);
             switch (attackTurn)
             {
@@ -75,15 +94,50 @@ namespace DungeonGame
                     attackTurn = AttackTurn.Player;
                     break;
                 case AttackTurn.Player:
-                    foreach (var button in _buttons)
+                    switch(_menuState)
                     {
-                        button.Value.Update();
-                        if (button.Value.State == StateButton.Press)
-                        {
-                            Game1.actions.Text = "";
-                            player.AttackAction(button.Key, enemy);
-                            attackTurn = AttackTurn.Enemy;
-                        }
+                        case MenuState.strike:
+                            foreach (var button in _attackButtons)
+                            {
+                                button.Value.Update();
+                                if (button.Value.State == StateButton.Press)
+                                {
+                                    switch (button.Key)
+                                    {
+                                        case "Skills":
+                                            _menuState = MenuState.skill;
+                                            break;
+                                        default:
+                                            Game1.actions.Text = "";
+                                            player.AttackAction(button.Key, enemy);
+                                            attackTurn = AttackTurn.Enemy;
+                                            break;
+                                    }
+
+                                }
+                            }
+                            break;
+                        case MenuState.skill:
+                            foreach (ActiveSkill skill in player.skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill) && x.level > 0))
+                            {
+                                var button = _skillButtons[skill.Name];
+                                if (skill.Cooldown > 0)
+                                    button.isActive = false;
+                                else
+                                    button.isActive = true;
+                                button.Update();
+                                if (button.State == StateButton.Press)
+                                {
+                                    skill.Use(enemy);
+                                    _menuState = MenuState.strike;
+                                    attackTurn = AttackTurn.Enemy;
+                                    break;
+                                }
+                            }
+                            _skillButtons["Strikes"].Update();
+                            if (_skillButtons["Strikes"].State == StateButton.Press)
+                                _menuState = MenuState.strike;
+                            break;
                     }
                     break;
             }
@@ -93,14 +147,22 @@ namespace DungeonGame
         {
             int x = Game1.WindowWidth / 5 * 4;
             int y = Game1.WindowHeight / 8;
+            int i = 1;
             
-            _buttons.Add("Head", new Button(x, y, "Удар по голове"));
-            _buttons.Add("Body", new Button(x, y * 2, "Удар по торсу"));
-            _buttons.Add("Hands", new Button(x, y * 3, "Удар по рукам"));
-            _buttons.Add("Legs", new Button(x, y * 4, "Удар по ногам"));
-            _buttons.Add("Heal", new Button(x, y * 5, "Выпить зелье"));
-            _buttons.Add("Flee", new Button(x, y * 6, "Сбежать"));
-            _buttons.Add("Skills", new Button(x, y * 7, "Использовать навык"));
+            _attackButtons.Add("Head", new Button(x, y, "Удар по голове"));
+            _attackButtons.Add("Body", new Button(x, y * 2, "Удар по торсу"));
+            _attackButtons.Add("Hands", new Button(x, y * 3, "Удар по рукам"));
+            _attackButtons.Add("Legs", new Button(x, y * 4, "Удар по ногам"));
+            _attackButtons.Add("Heal", new Button(x, y * 5, "Выпить зелье"));
+            _attackButtons.Add("Flee", new Button(x, y * 6, "Сбежать"));
+            _attackButtons.Add("Skills", new Button(x, y * 7, "Использовать навык"));
+
+            foreach(Skill skill in player.skills.FindAll(k => k.GetSkillType() == typeof(ActiveSkill) && k.level > 0))
+            {
+                _skillButtons.Add(skill.Name, new Button(x, y * i, $"{skill.Name,10}"));
+                i++;
+            }
+            _skillButtons.Add("Strikes", new Button(x, y * i, "Атаковать"));
         }
     }
 }

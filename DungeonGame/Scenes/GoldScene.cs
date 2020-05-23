@@ -10,9 +10,9 @@ namespace DungeonGame
 {
     class GoldScene : Scene
     {
-        private Gold gold;
-        private Door door;
-        private Weapon weapon;
+        private readonly Gold gold;
+        private readonly Door door;
+        private readonly Weapon weapon;
 
         public GoldScene()
         {

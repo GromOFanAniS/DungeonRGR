@@ -11,7 +11,7 @@ namespace DungeonGame
     {
         private List<Door> _doors;
         private Dictionary<string, Button> _buttons;
-        private Player player = Player.GetPlayer();
+        private readonly Player player = Player.GetPlayer();
 
         public DoorScene()
         {

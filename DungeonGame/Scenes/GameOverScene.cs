@@ -10,15 +10,14 @@ namespace DungeonGame
 {
     class GameOverScene : Scene
     {
-        Button button;
-        Label label;
+        private readonly Button button;
+        private readonly Label label;
 
         public GameOverScene()
         {
             button = new Button((Game1.WindowWidth - Button.Width) / 2, (Game1.WindowHeight * 2 / 3), "В главное меню");
             label = new Label(Game1.WindowWidth / 2, (Game1.WindowHeight / 3), $"Вы умерли, ваш счет {Player.GetPlayer().gold}", AlignmentPosition.center);
         }
-
 
         public override void Draw(SpriteBatch s)
         {

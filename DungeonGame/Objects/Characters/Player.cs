@@ -48,7 +48,6 @@ namespace DungeonGame
             }
         }
         #region static fields
-
         private static Player playerInstance = null;
 
         [NonSerialized]
@@ -64,7 +63,7 @@ namespace DungeonGame
         #endregion
 
         #region private fields
-        private const float velocity = 250f;
+        private const float velocity = 350f;
         [NonSerialized]
         private Animation _idle;
         [NonSerialized]
@@ -135,41 +134,33 @@ namespace DungeonGame
         #region constructors
         private Player()
         {
+            Name = "Игрок";
             _level = 1;
             _experienceToNextLevel = 10;
             _maxHealth = 100;
             _health = _maxHealth;
             _potions = 2;
-            _strength = 1;
-            _agility = 1;
-            _intelligence = 1;
+            _strength = 0;
+            _agility = 0;
+            _intelligence = 0;
 
             skills = new List<Skill>()
             {
                 new Punch(),
-                new Punch()
-                {
-                    _name = "asd"
-                },
-                new Punch()
-                {
-                    _name = "dsa"
-                }
             };
             _weakSpots = new List<AttackSpots>();
             _weakness = AttackTypes.None;
             _attacks = new List<Attack>()
             {
-                new Attack(30, 45, AttackTypes.Physical, AttackSpots.Head, "удар по голове"),
-                new Attack(23, 75, AttackTypes.Physical, AttackSpots.Body, "удар по торсу"),
-                new Attack(18, 85, AttackTypes.Physical, AttackSpots.Hands, "удар по рукам"),
-                new Attack(15, 95, AttackTypes.Physical, AttackSpots.Legs, "удар по ногам")
+                new Attack(20, 45, AttackTypes.Physical, AttackSpots.Head, "удар по голове"),
+                new Attack(13, 75, AttackTypes.Physical, AttackSpots.Body, "удар по торсу"),
+                new Attack(8, 85, AttackTypes.Physical, AttackSpots.Hands, "удар по рукам"),
+                new Attack(5, 95, AttackTypes.Physical, AttackSpots.Legs, "удар по ногам")
             };
 
             Initialize();
         }
         #endregion
-
         #region static methods
         public static Player GetPlayer()
         {
@@ -181,7 +172,6 @@ namespace DungeonGame
         {
             playerInstance = null;
         }
-
         public static void Load(ContentManager content)
         {
             _playerSheetTexture = content.Load<Texture2D>("Player/PlayerSheet");
@@ -206,10 +196,10 @@ namespace DungeonGame
         public void UpgradeSkill(string skillName)
         {
             SkillPoints--;
-            skills.Find(x => x.Name == skillName).level++;
-            RegenerateSkills();
+            var skill = skills.Find(x => x.Name == skillName);
+            skill.level++;
+            skill.Regenerate();
         }
-
         public void AttackAction(string key, Character enemy)
         {
             switch (key)
@@ -245,24 +235,13 @@ namespace DungeonGame
                         Game1.actions.Text += "Вам не удалось сбежать\n";
                     break;
             }
+            CooldownTick();
         }
-
-        public void Initialize()
+        public void CooldownTick()
         {
-            Name = "Игрок";
-            _healthBar = new HealthBar(5, 10);
-            _weaponLabel = new Label(50, 50, "");
-            _goldAndPots = new Label(Game1.WindowWidth / 2, 15);
-            _expLabel = new Label(Game1.WindowWidth / 2, 15);
-            _drawWeaponString = false;
-            _idle = new Animation();
-            _idle.AddFrame(new Rectangle(0, 0, 95, 184), TimeSpan.FromSeconds(1));
-            _animation = _idle;
-            _walk = new Animation();
-            for (int i = 1; i < 8; i++)
-                _walk.AddFrame(new Rectangle(96 * i, 0, 95, 184), TimeSpan.FromSeconds(.25));
+            foreach (ActiveSkill skill in skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill)))
+                skill.Cooldown--;
         }
-
         public override void Draw(SpriteBatch s)
         {
             Vector2 topLeftOfSprite = new Vector2(X, Y);
@@ -284,7 +263,6 @@ namespace DungeonGame
             if (_drawWeaponString)
                 _weaponLabel.Draw(s);
         }
-
         public void DrawWeaponLabel(Weapon weaponToTake, bool draw)
         {
             if(draw)
@@ -301,19 +279,16 @@ namespace DungeonGame
                 _weaponLabel.Text = "";
             }            
         }
-
         public void TakeNewWeapon(Weapon weaponToTake)
         {
             _currentWeapon = weaponToTake;
             RegenerateAttacks();
         }
-
         public void UsePotion()
         {
             Potions--;
             Health += 15 * Game1.difficulty;
         }
-        
         public void TakePotions(int value)
         {
             _potions += value;
@@ -338,6 +313,7 @@ namespace DungeonGame
                     break;
                 case "Exit":
                     RegenerateAttacks();
+                    RegenerateSkills();
                     Game1.gameState = GameState.DoorScene;
                     Scene.DoNewGenerate = true;
                     canWalk = true;
@@ -347,6 +323,23 @@ namespace DungeonGame
         #endregion
 
         #region private methods
+        private void Initialize()
+        {
+            _healthBar = new HealthBar(5, 10);
+            _weaponLabel = new Label(50, 50, "");
+            _goldAndPots = new Label(Game1.WindowWidth / 2, 15);
+            _expLabel = new Label(Game1.WindowWidth / 2, 15);
+            _drawWeaponString = false;
+            _idle = new Animation();
+            _idle.AddFrame(new Rectangle(0, 0, 95, 184), TimeSpan.FromSeconds(1));
+            _animation = _idle;
+            _walk = new Animation();
+            for (int i = 1; i < 8; i++)
+                _walk.AddFrame(new Rectangle(96 * i, 0, 95, 184), TimeSpan.FromSeconds(.25));
+            Position((Game1.WindowWidth - Width) / 2, 180);
+            RegenerateAttacks();
+            RegenerateSkills();
+        }
         private void WalkingUpdate(GameTime gameTime)
         {
             if (canWalk)
@@ -371,8 +364,7 @@ namespace DungeonGame
                 _flip = SpriteEffects.None;
                 Position(Game1.gameWindow.ClientBounds.Width / 2 - 100 - Width, (int)Y);
             }
-        }
-         
+        }        
         private void CheckLevel()
         {
             if(experience >= _experienceToNextLevel)
@@ -392,11 +384,11 @@ namespace DungeonGame
                 switch(_currentWeapon?.AttackType)
                 {
                     case AttackTypes.Physical:
-                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _strength * 5 ;
+                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _strength * 4;
                         attack.SuccessChance = attack.BaseChance + _agility * 2;
                         break;
                     case AttackTypes.Ranged:
-                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _agility * 5;
+                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _agility * 3;
                         attack.SuccessChance = attack.BaseChance + _agility * 3;
                         break;
                     case AttackTypes.Magic:
@@ -416,24 +408,11 @@ namespace DungeonGame
         }
         private void RegenerateSkills()
         {
-            List<Skill> activeSkills = skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill));
-            foreach(ActiveSkill skill in activeSkills)
+            foreach(Skill skill in skills)
             {
-                switch(skill.AttackType)
-                {
-                    case AttackTypes.Magic:
-                        skill.damage = skill.BaseDamage + Intelligence * 10;
-                        break;
-                    case AttackTypes.Physical:
-                        skill.damage = skill.BaseDamage + Strength * 5;
-                        break;
-                    case AttackTypes.Ranged:
-                        skill.damage = skill.BaseDamage + Agility * 3;
-                        break;
-                }
+                if (skill.level > 0) skill.Regenerate();
             }
         }
-
         private void CheckDifficulty()
         {
             if(_level > Game1.difficulty * 3)

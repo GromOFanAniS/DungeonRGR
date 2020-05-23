@@ -11,13 +11,15 @@ namespace DungeonGame
     {
         public int level;
 
-        public string _name;
+        protected string _name;
         protected int _pointsToLearn;
 
         public string Name => _name;
         public int PointsToLearn => _pointsToLearn;
 
         public abstract Type GetSkillType();
+        public abstract void Regenerate();
+
     }
     [Serializable]
     public abstract class ActiveSkill : Skill
@@ -59,6 +61,9 @@ namespace DungeonGame
                 dmg = (int)(dmg / 1.5);
             }
             target.Health -= dmg;
+            Game1.actions.Text += $"Вы нанесли {dmg} урона с помощью {_name}\n";
+            Player.GetPlayer().CooldownTick();
+            Cooldown = CooldownTime;
         }
     }
     [Serializable]
@@ -74,6 +79,10 @@ namespace DungeonGame
             damage = _baseDamage;
             _attackType = AttackTypes.Physical;
             level = 0;
+        }
+        public override void Regenerate()
+        {
+            damage = BaseDamage + level * 2 + Player.GetPlayer().Strength * 3;
         }
     }
 }

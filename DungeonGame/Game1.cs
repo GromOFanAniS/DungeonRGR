@@ -112,14 +112,13 @@ namespace DungeonGame
             if (keyboardState.IsKeyDown(Keys.T)) Console.WriteLine(player.Name);
             if (keyboardState.IsKeyDown(Keys.Up)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (keyboardState.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            player = Player.GetPlayer();
 
             switch (gameState)
             {
                 case GameState.MenuScene:
                     if(Scene.DoNewGenerate)
                     {
-                        player = Player.GetPlayer();
-                        player.Position((Window.ClientBounds.Width - player.Width) / 2, 180);
                         scene = new MainMenu();
                     }
                     break;
