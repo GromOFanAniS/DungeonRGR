@@ -54,7 +54,6 @@ namespace DungeonGame
                             if (player.Name == "Doom Slayer")
                             {
                                 MusicPlayer.DoomMode = true;
-                                Game1.difficulty = 5;
                                 MusicPlayer.ChangeSong(MusicState.Peaceful);
                                 MediaPlayer.Volume += 0.05f;
                             }
@@ -69,7 +68,6 @@ namespace DungeonGame
                         case "Load":
                             Game1.gameState = GameState.DoorScene;
                             Player.SaveLoadSystem.LoadGame();
-                            Game1.difficulty = Player.GetPlayer().Level * 3;
                             DoNewGenerate = true;
                             break;
                         case "Leaderboard":

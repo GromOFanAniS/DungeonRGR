@@ -22,6 +22,7 @@ namespace DungeonGame
                 BinaryFormatter formatter = new BinaryFormatter();
                 using (FileStream fs = new FileStream(@"saves/save.dat", FileMode.OpenOrCreate))
                 {
+                    playerInstance._difficulty = Game1.difficulty;
                     formatter.Serialize(fs, playerInstance);
                 }
             }
@@ -35,6 +36,7 @@ namespace DungeonGame
                         Player player = (Player)formatter.Deserialize(fs);
                         player.Initialize();
                         playerInstance = player;
+                        Game1.difficulty = player._difficulty;
                     }
                 }
                 catch (IOException /*e*/)
@@ -81,6 +83,7 @@ namespace DungeonGame
         private Rectangle _playerPosition;
 
         private Weapon _currentWeapon;
+        private int _difficulty;
         private int _experience;
         private int _level;
         private int _experienceToNextLevel;
@@ -165,6 +168,7 @@ namespace DungeonGame
             _strength = 0;
             _agility = 0;
             _intelligence = 0;
+            _difficulty = Game1.difficulty;
 
             skills = new List<Skill>()
             {
