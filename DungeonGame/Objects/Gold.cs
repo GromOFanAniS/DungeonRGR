@@ -47,13 +47,12 @@ namespace DungeonGame
 
         public void Update(GameTime gameTime)
         {
-            Rectangle playerPosition = new Rectangle((int)player.X, (int)player.Y - 1, player.Width, player.Height);
-            if (_hitbox.Intersects(playerPosition) && Game1.keyboardState.IsKeyDown(Keys.Space) && _doDraw)
+            if (_hitbox.Intersects(player.PlayerPosition) && Game1.keyboardState.IsKeyDown(Keys.Space) && _doDraw)
             {
                 _doDraw = false;
                 player.gold += _amount;
                 player.TakePotions(_potionAmount);
-                Game1.actions.Text = $"Подобрано {_amount} золота и {_potionAmount} зелий";
+                Game1.actions.Text = $"Подобрано {_amount} золота и {_potionAmount} зелий\n";
             }
             _animation.Update(gameTime);
         }

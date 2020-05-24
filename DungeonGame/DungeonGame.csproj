@@ -59,6 +59,7 @@
     <Compile Include="Tech\Animation.cs" />
     <Compile Include="Tech\AnimationFrame.cs" />
     <Compile Include="Objects\UI\Button.cs" />
+    <Compile Include="Tech\AnimationPlayer.cs" />
     <Compile Include="Tech\Camera.cs" />
     <Compile Include="Objects\Door.cs" />
     <Compile Include="Scenes\DoorScene.cs" />

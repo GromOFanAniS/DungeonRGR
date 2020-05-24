@@ -42,8 +42,8 @@ namespace DungeonGame
 
         public void Update()
         {
-            Rectangle playerPosition = new Rectangle((int)Player.GetPlayer().X, (int)Player.GetPlayer().Y - 1, Player.GetPlayer().Width, Player.GetPlayer().Height);
-            if (_hitbox.Intersects(playerPosition))
+            
+            if (_hitbox.Intersects(Player.GetPlayer().PlayerPosition))
             {
                 _state = StateDoor.Opened;
                 if (Game1.keyboardState.IsKeyDown(Keys.Space)) OpenDoor();

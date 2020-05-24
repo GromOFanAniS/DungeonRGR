@@ -18,9 +18,44 @@ namespace DungeonGame
         public int PointsToLearn => _pointsToLearn;
 
         public abstract Type GetSkillType();
-        public abstract void Regenerate();
-
     }
+
+    [Serializable]
+    public abstract class PassiveSkill : Skill
+    {
+        protected string _description;
+
+        public string Description => _description;
+
+        public override Type GetSkillType()
+        {
+            return typeof(PassiveSkill);
+        }
+    }
+    [Serializable]
+    public class ExperienceBuff : PassiveSkill
+    {
+        public ExperienceBuff()
+        {
+            _name = "Ученик";
+            _pointsToLearn = 6;
+            _description = "Увеличивает количество получаемого опыта";
+            level = 0;
+        }
+    }
+    [Serializable]
+    public class StoneSkin : PassiveSkill
+    {
+        public StoneSkin()
+        {
+            _name = "Каменная кожа";
+            _pointsToLearn = 3;
+            _description = "Уменьшает получаемый урон";
+            level = 0;
+        }
+    }
+
+
     [Serializable]
     public abstract class ActiveSkill : Skill
     {
@@ -44,6 +79,8 @@ namespace DungeonGame
         public int BaseDamage => _baseDamage;
         public AttackTypes AttackType => _attackType;
 
+        public abstract void Regenerate();
+
         public override Type GetSkillType()
         {
             return typeof(ActiveSkill);
@@ -51,6 +88,7 @@ namespace DungeonGame
 
         public void Use(Character target)
         {
+            Player.GetPlayer().SetAnimation(Animations.Attack);
             int dmg = damage;
             if (_attackType == target.Weakness)
             {
@@ -66,12 +104,13 @@ namespace DungeonGame
             Cooldown = CooldownTime;
         }
     }
+
     [Serializable]
-    public class Punch : ActiveSkill
+    public class CripplingStrike : ActiveSkill
     {
-        public Punch()
+        public CripplingStrike()
         {
-            _name = "Удар";
+            _name = "Критический удар";
             _baseDamage = 30;
             _cooldownTime = 3;
             _cooldown = 0;
@@ -83,6 +122,25 @@ namespace DungeonGame
         public override void Regenerate()
         {
             damage = BaseDamage + level * 2 + Player.GetPlayer().Strength * 3;
+        }
+    }
+    [Serializable]
+    public class FireBall : ActiveSkill
+    {
+        public FireBall()
+        {
+            _name = "Огненный шар";
+            _baseDamage = 50;
+            _cooldownTime = 5;
+            _cooldown = 0;
+            _pointsToLearn = 3;
+            _attackType = AttackTypes.Magical;
+            damage = _baseDamage;
+            level = 0;
+        }
+        public override void Regenerate()
+        {
+            damage = BaseDamage + level * 5 + Player.GetPlayer().Intelligence * 7;
         }
     }
 }

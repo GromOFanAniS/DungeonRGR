@@ -26,13 +26,13 @@ namespace DungeonGame
         private static MouseState oldState;
 
         public StateButton State => _state; 
-        public bool isActive { get; set; }
+        public bool IsActive { get; set; }
         public static int Width => _textures[0].Width;
         public static int Height => _textures[0].Height;
 
         public Button(int x, int y, string label, bool isActive = true)
         {
-            this.isActive = isActive;
+            this.IsActive = isActive;
             _label = label;
             Hitbox = new Rectangle(x, y, _textures[0].Width, _textures[0].Height);
             Position = new Vector2(x, y);
@@ -50,7 +50,7 @@ namespace DungeonGame
 
         public void Update()
         {
-            if (!isActive)
+            if (!IsActive)
             {
                 _state = StateButton.Hover;
                 return;

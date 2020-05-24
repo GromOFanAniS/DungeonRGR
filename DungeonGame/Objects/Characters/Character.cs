@@ -13,7 +13,7 @@ namespace DungeonGame
     {
         None,
         Physical,
-        Magic,
+        Magical,
         Poison,
         Ranged,
         Special
@@ -69,7 +69,7 @@ namespace DungeonGame
         [NonSerialized]
         protected HealthBar _healthBar;
         [NonSerialized]
-        protected Animation _animation;
+        protected AnimationPlayer _animation = new AnimationPlayer();
         protected int _health;
         protected int _maxHealth;
         protected AttackTypes _weakness;
@@ -79,7 +79,7 @@ namespace DungeonGame
         protected List<AttackSpots> _weakSpots;
 
         //public List<Attack> Attacks => _attacks;
-        public int Health
+        public virtual int Health
         {
             get => _health;
             set
@@ -100,7 +100,7 @@ namespace DungeonGame
         public int Width => _animation.CurrentRectangle.Width;
         public string Name { get; set; }
 
-        public Animation CurrentAnimation => _animation;
+        public AnimationPlayer CurrentAnimation => _animation;
 
         public AttackTypes Weakness => _weakness;
         public AttackTypes Resistance => _resistance;

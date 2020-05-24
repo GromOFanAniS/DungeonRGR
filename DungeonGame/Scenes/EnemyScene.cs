@@ -70,11 +70,11 @@ namespace DungeonGame
         }
         public override void Update(GameTime gameTime)
         {
-            if (player.CurrentAnimation.IsPlaying || enemy.CurrentAnimation.IsPlaying) return;
-            if (player.Potions <= 0 || player.Health == player.MaxHealth)
-                _attackButtons["Heal"].isActive = false;
-            else _attackButtons["Heal"].isActive = true;
+            if (player.CurrentAnimation.PlayOnce || enemy.CurrentAnimation.PlayOnce) return;
             enemy.Update(gameTime);
+            if (player.Potions <= 0 || player.Health == player.MaxHealth)
+                _attackButtons["Heal"].IsActive = false;
+            else _attackButtons["Heal"].IsActive = true;
             switch (attackTurn)
             {
                 case AttackTurn.Enemy:
@@ -84,14 +84,17 @@ namespace DungeonGame
                         if (!enemyOldState)
                         {
                             Game1.actions.Text += $"Вы победили {enemy.Name}\n";
-                            player.experience += enemy.experience;
+                            player.Experience += enemy.experience;
                             player.canWalk = true;
                             enemyOldState = true;
                         }
                         return;
                     }
                     else
+                    {
                         enemy.AttackPlayer();
+                        player.SetAnimation(Animations.Idle);
+                    }
                     attackTurn = AttackTurn.Player;
                     break;
                 case AttackTurn.Player:
@@ -123,9 +126,9 @@ namespace DungeonGame
                             {
                                 var button = _skillButtons[skill.Name];
                                 if (skill.Cooldown > 0)
-                                    button.isActive = false;
+                                    button.IsActive = false;
                                 else
-                                    button.isActive = true;
+                                    button.IsActive = true;
                                 button.Update();
                                 if (button.State == StateButton.Press)
                                 {
@@ -160,7 +163,7 @@ namespace DungeonGame
 
             foreach(Skill skill in player.skills.FindAll(k => k.GetSkillType() == typeof(ActiveSkill) && k.level > 0))
             {
-                _skillButtons.Add(skill.Name, new Button(x, y * i, $"{skill.Name,10}"));
+                _skillButtons.Add(skill.Name, new Button(x, y * i, $"{skill.Name}"));
                 i++;
             }
             _skillButtons.Add("Strikes", new Button(x, y * i, "Атаковать"));

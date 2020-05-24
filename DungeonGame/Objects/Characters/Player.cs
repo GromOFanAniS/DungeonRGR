@@ -57,7 +57,6 @@ namespace DungeonGame
         #region public fields
         public int gold = 0;
         public bool canWalk = true;
-        public int experience;
         public List<Skill> skills;
         #endregion
 
@@ -78,8 +77,11 @@ namespace DungeonGame
         private Label _goldAndPots;
         [NonSerialized]
         private Label _expLabel;
+        [NonSerialized]
+        private Rectangle _playerPosition;
 
         private Weapon _currentWeapon;
+        private int _experience;
         private int _level;
         private int _experienceToNextLevel;
         private int _potions;
@@ -92,6 +94,16 @@ namespace DungeonGame
         #endregion
 
         #region public properties
+
+        public override int Health 
+        { 
+            get => base.Health; 
+            set
+            {
+                value -= 5 * skills.Find(x => x.Name == "Каменная кожа").level;
+                base.Health = value;
+            }
+        }
         public int Level => _level;
         public int Potions
         { 
@@ -130,6 +142,15 @@ namespace DungeonGame
         public int Agility => _agility;
         public int Intelligence => _intelligence;
         public int MaxHealth => _maxHealth;
+        public Rectangle PlayerPosition => _playerPosition;
+        public int Experience
+        {
+            get => _experience; 
+            set
+            {
+                _experience = value + value*skills.Find(x => x.Name == "Ученик").level;
+            }
+        }
         #endregion
 
         #region constructors
@@ -147,7 +168,10 @@ namespace DungeonGame
 
             skills = new List<Skill>()
             {
-                new Punch(),
+                new CripplingStrike(),
+                new FireBall(),
+                new ExperienceBuff(),
+                new StoneSkin()
             };
             _weakSpots = new List<AttackSpots>();
             _weakness = AttackTypes.None;
@@ -182,6 +206,7 @@ namespace DungeonGame
         #region public methods
         public override void Update(GameTime gameTime)
         {
+            _playerPosition = new Rectangle((int)X + 50, (int)Y - 1, Width - 100, Height);
             CheckLevel();
             CheckDifficulty();
             WalkingUpdate(gameTime);
@@ -198,22 +223,21 @@ namespace DungeonGame
             switch (animation)
             {
                 case Animations.Idle:
-                    _animation = _idleAnimation;
+                    _animation.Set(_idleAnimation);
                     break;
                 case Animations.Walk:
-                    _animation = _walkAnimation;
+                    _animation.Set(_walkAnimation);
                     break;
                 case Animations.Attack:
-                    _animation = _attackAnimation;
+                    _animation.Set(_attackAnimation);
                     break;
             }
         }
         public void UpgradeSkill(string skillName)
         {
-            SkillPoints--;
             var skill = skills.Find(x => x.Name == skillName);
+            SkillPoints-= skill.PointsToLearn;
             skill.level++;
-            skill.Regenerate();
         }
         public void AttackAction(string key, Character enemy)
         {
@@ -270,7 +294,7 @@ namespace DungeonGame
             else if(Game1.gameState != GameState.MenuScene)
             {
                 _expLabel.Draw(s);
-                _expLabel.Text = $"Очков опыта: {experience}. Необходимо: {_experienceToNextLevel}";
+                _expLabel.Text = $"Очков опыта: {Experience}. Необходимо: {_experienceToNextLevel}";
             }
             if (_drawWeaponString)
                 _weaponLabel.Draw(s);
@@ -337,6 +361,7 @@ namespace DungeonGame
         #region private methods
         private void Initialize()
         {
+            _animation = new AnimationPlayer();
             _healthBar = new HealthBar(5, 10);
             _weaponLabel = new Label(50, 50, "");
             _goldAndPots = new Label(Game1.WindowWidth / 2, 15);
@@ -345,13 +370,13 @@ namespace DungeonGame
             _idleAnimation = new Animation();
             for (int i = 0; i < 4; i++)
                 _idleAnimation.AddFrame(new Rectangle(0 + 200*i, 0, 200, 148), TimeSpan.FromSeconds(0.25));
-            _animation = _idleAnimation;
+            _animation.Set(_idleAnimation);
             _walkAnimation = new Animation();
             for (int i = 0; i < 6; i++)
-                _walkAnimation.AddFrame(new Rectangle(0 + 200 * i, 148, 200, 148), TimeSpan.FromSeconds(0.25));
+                _walkAnimation.AddFrame(new Rectangle(0 + 200 * i, 148, 200, 148), TimeSpan.FromSeconds(0.15));
             _attackAnimation = new Animation();
             for (int i = 0; i < 7; i++)
-                _attackAnimation.AddFrame(new Rectangle(0 + 200 * i, 296, 200, 148), TimeSpan.FromSeconds(0.25));
+                _attackAnimation.AddFrame(new Rectangle(0 + 200 * i, 296, 200, 148), TimeSpan.FromSeconds(0.14));
             Position((Game1.WindowWidth - Width) / 2, 180);
             RegenerateAttacks();
             RegenerateSkills();
@@ -362,35 +387,35 @@ namespace DungeonGame
             {
                 if (Game1.keyboardState.IsKeyDown(Keys.A))
                 {
-                    _animation = _walkAnimation;
+                    SetAnimation(Animations.Walk);
                     _flip = SpriteEffects.FlipHorizontally;
                     if ((X - velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0) return;
                     X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
                 else if (Game1.keyboardState.IsKeyDown(Keys.D))
                 {
-                    _animation = _walkAnimation;
+                    SetAnimation(Animations.Walk);
                     _flip = SpriteEffects.None;
-                    if ((X + velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) >= (Game1.gameWindow.ClientBounds.Width - Width)) return;
+                    if ((X + velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) >= (Game1.WindowWidth - Width)) return;
                     X += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
-                else _animation = _idleAnimation;
+                else SetAnimation(Animations.Idle);
             }
             else
             {
                 _flip = SpriteEffects.None;
-                Position(Game1.gameWindow.ClientBounds.Width / 2 - 100 - Width, (int)Y);
+                Position(Game1.WindowWidth / 2 - 100 - Width, (int)Y);
             }
         }        
         private void CheckLevel()
         {
-            if(experience >= _experienceToNextLevel)
+            if(Experience >= _experienceToNextLevel)
             {
                 Game1.actions.Text += "Новый Уровень!\n";
                 StatPoints += 3;
                 SkillPoints += 2;
                 _level++;
-                experience -= _experienceToNextLevel;
+                Experience -= _experienceToNextLevel;
                 _experienceToNextLevel += 15 * _level;
             }
         }
@@ -408,7 +433,7 @@ namespace DungeonGame
                         attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _agility * 3;
                         attack.SuccessChance = attack.BaseChance + _agility * 3;
                         break;
-                    case AttackTypes.Magic:
+                    case AttackTypes.Magical:
                         attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _intelligence * 5;
                         attack.SuccessChance = attack.BaseChance + _agility * 1;
                         break;
@@ -425,7 +450,7 @@ namespace DungeonGame
         }
         private void RegenerateSkills()
         {
-            foreach(Skill skill in skills)
+            foreach (ActiveSkill skill in skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill)))
             {
                 if (skill.level > 0) skill.Regenerate();
             }

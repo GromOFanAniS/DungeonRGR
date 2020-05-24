@@ -29,23 +29,28 @@ namespace DungeonGame
             int i = 0;
             foreach(var skill in player.skills)
             {
-                _buttons.Add($"{skill.Name}", new Button(700, y + (Button.Height + 17) * i , "улучшить навык"));
+                _buttons.Add($"{skill.Name}", new Button(800, y + (Button.Height + 17) * i , "улучшить навык"));
                 i++;
             }
-            _buttons.Add("Exit", new Button(0, 0, "Назад"));
+            _buttons.Add("Exit", new Button(5, 5, "Назад"));
         }
         private void LabelsUpdate()
         {
-            var ActiveSkills = player.skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill));
-            //var PassiveSkills = player.skills.FindAll(x => x.GetSkillType() == typeof(PassiveSkill));
-            foreach(ActiveSkill skill in ActiveSkills)
+            var activeSkills = player.skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill));
+            var passiveSkills = player.skills.FindAll(x => x.GetSkillType() == typeof(PassiveSkill));
+            foreach(ActiveSkill skill in activeSkills)
             {
-                _skillsLabel.Text += string.Format("{0, 10}: Уровень {1, 2}, Необходимо очков: {2, 2}, Урон: {3, 3},\n "
+                _skillsLabel.Text += string.Format("{0, 15}: Уровень {1, 2}, Необходимо очков: {2, 2}, Урон: {3, 3},\n "
                                                    + "Время перезарядки: {4, 2}, Тип урона: {5, 5}\n\n",
                                                    skill.Name, skill.level, skill.PointsToLearn, skill.damage,
                                                    skill.CooldownTime, skill.AttackType);
             }
-            //foreach(PassiveSkill skill in PassiveSkill)
+            foreach(PassiveSkill skill in passiveSkills)
+            {
+                _skillsLabel.Text += string.Format("{0, 15}: Уровень {1, 2}, Необходимо очков: {2, 2},\n "
+                                                   + "{3}\n\n",
+                                                   skill.Name, skill.level, skill.PointsToLearn, skill.Description);
+            }
         }
 
         public override void Draw(SpriteBatch s)
@@ -60,10 +65,10 @@ namespace DungeonGame
         {
             foreach (var button in _buttons)
             {
-                if (player.SkillPoints == 0 && button.Key != "Exit")
-                    button.Value.isActive = false;
+                if (button.Key != "Exit" && player.SkillPoints < player.skills.Find(x => x.Name == button.Key).PointsToLearn)
+                    button.Value.IsActive = false;
                 else
-                    button.Value.isActive = true;
+                    button.Value.IsActive = true;
                 button.Value.Update();
                 if(button.Value.State == StateButton.Press)
                     switch(button.Key)

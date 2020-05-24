@@ -8,15 +8,18 @@ using Microsoft.Xna.Framework.Content;
 
 namespace DungeonGame
 {
-    public class Animation
+    public class Animation : ICloneable
     {
-        private List<AnimationFrame> _frames = new List<AnimationFrame>();
-        private TimeSpan _timeIntoAnimation;
-        private List<AnimationFrame> _oldFrames = new List<AnimationFrame>();
-        private bool _needToChange = false;
+        private List<AnimationFrame> _frames;
+        public TimeSpan _timeIntoAnimation;
         private AnimationFrame _currentFrame;
 
-        public bool IsPlaying => _needToChange;
+        public bool IsLast => _currentFrame == _frames.LastOrDefault();
+
+        public Animation()
+        {
+            _frames = new List<AnimationFrame>();
+        }
 
 
         TimeSpan Duration
@@ -47,7 +50,7 @@ namespace DungeonGame
         {
             get
             {
-                AnimationFrame currentFrame = null;
+                _currentFrame = null;
 
                 TimeSpan accumulatedTime = new TimeSpan();
 
@@ -55,7 +58,7 @@ namespace DungeonGame
                 {
                     if (accumulatedTime + frame.Duration >= _timeIntoAnimation)
                     {
-                        currentFrame = frame;
+                        _currentFrame = frame;
                         break;
                     }
                     else
@@ -64,14 +67,13 @@ namespace DungeonGame
                     }
                 }
 
-                if (currentFrame == null)
+                if (_currentFrame == null)
                 {
-                    currentFrame = _frames.LastOrDefault();
+                    _currentFrame = _frames.LastOrDefault();
                 }
-                if (currentFrame != null)
+                if (_currentFrame != null)
                 {
-                    _currentFrame = currentFrame;
-                    return currentFrame.SourceRectangle;
+                    return _currentFrame.SourceRectangle;
                 }
                 else
                 {
@@ -86,12 +88,6 @@ namespace DungeonGame
             double remainder = secondsIntoAnimation % Duration.TotalSeconds;
 
             _timeIntoAnimation = TimeSpan.FromSeconds(remainder);
-
-            if (_needToChange && _currentFrame == _frames.LastOrDefault() && (int)remainder == 0)
-            {
-                _frames = _oldFrames;
-                _needToChange = false;
-            }
         }
 
         public void Draw(SpriteBatch s, Texture2D sheetTexture, Vector2 topLeftOfSprite, SpriteEffects _flip)
@@ -101,11 +97,18 @@ namespace DungeonGame
             s.Draw(sheetTexture, topLeftOfSprite, null, sourceRectangle, null, 0, null, color, _flip);
         }
 
-        public void Play(Animation nextAnimation)
+        public object Clone()
         {
-            _oldFrames = _frames;
-            _frames = nextAnimation._frames;
-            _needToChange = true;
+            var frames = new List<AnimationFrame>();
+            foreach (var frame in _frames)
+                frames.Add(frame);
+            frames.Add(new AnimationFrame { SourceRectangle = _frames.First().SourceRectangle, Duration = TimeSpan.FromSeconds(1) });
+            return new Animation()
+            {
+                _frames = frames,
+                _currentFrame = _currentFrame,
+                _timeIntoAnimation = _timeIntoAnimation
+            };
         }
     }
 }

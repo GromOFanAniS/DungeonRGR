@@ -39,8 +39,8 @@ namespace DungeonGame
         public override void Update(GameTime gameTime)
         {
             //playerName.CheckClick();
-            if (playerName.Text.Length != 0) _buttons["Start"].isActive = true;
-            else _buttons["Start"].isActive = false;
+            if (playerName.Text.Length != 0) _buttons["Start"].IsActive = true;
+            else _buttons["Start"].IsActive = false;
             foreach (var button in _buttons)
             {
                 button.Value.Update();

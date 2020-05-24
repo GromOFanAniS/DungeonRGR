@@ -50,9 +50,9 @@ namespace DungeonGame
             foreach (var button in _buttons)
             {
                 if (player.StatPoints == 0 && button.Key != "Exit" && button.Key != "Skills")
-                    button.Value.isActive = false;
+                    button.Value.IsActive = false;
                 else
-                    button.Value.isActive = true;
+                    button.Value.IsActive = true;
                 button.Value.Update();
                 if(button.Value.State == StateButton.Press && button.Key == "Skills")
                 {

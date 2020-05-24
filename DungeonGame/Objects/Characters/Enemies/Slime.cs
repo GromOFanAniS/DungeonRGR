@@ -19,7 +19,7 @@ namespace DungeonGame
             Name = "Слизень";
             _maxHealth = 20 + 10 * Game1.difficulty;
             _health = _maxHealth;
-            _animation = _idle;
+            _animation.Set(_idle);
             experience = 10 + 20 * Game1.difficulty;
             Y += Height / 2;
             _weakSpots = new List<AttackSpots>()
@@ -44,9 +44,8 @@ namespace DungeonGame
 
         public override void Draw(SpriteBatch s)
         {
-            Vector2 topLeftOfSprite = new Vector2(this.X, this.Y);
-            var sourceRectangle = _animation.CurrentRectangle;
-            s.Draw(_texture, topLeftOfSprite, null, sourceRectangle);
+            Vector2 topLeftOfSprite = new Vector2(X, Y);
+            _animation.Draw(s, _texture, topLeftOfSprite, SpriteEffects.None);
         }
     }
 }
