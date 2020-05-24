@@ -51,6 +51,17 @@ namespace DungeonGame
                         case "Start":
                             Game1.gameState = GameState.DoorScene;
                             player.Name = playerName.Text;
+                            if (player.Name == "Doom Slayer")
+                            {
+                                MusicPlayer.DoomMode = true;
+                                MusicPlayer.ChangeSong(MusicState.Peaceful);
+                                MediaPlayer.Volume += 0.05f;
+                            }
+                            else if(MusicPlayer.DoomMode)
+                            {
+                                MusicPlayer.DoomMode = false;
+                                MusicPlayer.ChangeSong(MusicState.Peaceful);
+                            }
                             DoNewGenerate = true;
                             break;
                         case "Load":

@@ -17,7 +17,7 @@ namespace DungeonGame
         public Slime()
         {
             Name = "Слизень";
-            _maxHealth = 20 + 10 * Game1.difficulty;
+            _maxHealth = 40 + 20 * Game1.difficulty;
             _health = _maxHealth;
             _animation.Set(_idle);
             experience = 10 + 20 * Game1.difficulty;
@@ -29,8 +29,8 @@ namespace DungeonGame
             _weakness = AttackTypes.Physical;
             _attacks = new List<Attack>()
             {
-                new Attack(10 + 5 * Game1.difficulty, 75, AttackTypes.Poison, AttackSpots.Body, "Наскок"),
-                new Attack(20 + 10 * Game1.difficulty, 50, AttackTypes.Poison, AttackSpots.Body, "Поедание")
+                new Attack(3 + 1 * Game1.difficulty, 75, AttackTypes.Poison, AttackSpots.Body, "Наскок"),
+                new Attack(6 + 2 * Game1.difficulty, 50, AttackTypes.Poison, AttackSpots.Body, "Поедание")
             };
         }
 

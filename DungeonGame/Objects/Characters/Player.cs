@@ -100,7 +100,7 @@ namespace DungeonGame
             get => base.Health; 
             set
             {
-                value -= 5 * skills.Find(x => x.Name == "Каменная кожа").level;
+                value +=  (int)Math.Round((_health - value) * (5.0/100) * skills.Find(x => x.Name == "Каменная кожа").level);
                 base.Health = value;
             }
         }
@@ -148,7 +148,7 @@ namespace DungeonGame
             get => _experience; 
             set
             {
-                _experience = value + value*skills.Find(x => x.Name == "Ученик").level;
+                _experience = value + value * skills.Find(x => x.Name == "Ученик").level / 3;
             }
         }
         #endregion
@@ -177,10 +177,10 @@ namespace DungeonGame
             _weakness = AttackTypes.None;
             _attacks = new List<Attack>()
             {
-                new Attack(20, 45, AttackTypes.Physical, AttackSpots.Head, "удар по голове"),
-                new Attack(13, 75, AttackTypes.Physical, AttackSpots.Body, "удар по торсу"),
-                new Attack(8, 85, AttackTypes.Physical, AttackSpots.Hands, "удар по рукам"),
-                new Attack(5, 95, AttackTypes.Physical, AttackSpots.Legs, "удар по ногам")
+                new Attack(10, 45, AttackTypes.Physical, AttackSpots.Head, "удар по голове"),
+                new Attack(7, 75, AttackTypes.Physical, AttackSpots.Body, "удар по торсу"),
+                new Attack(4, 85, AttackTypes.Physical, AttackSpots.Hands, "удар по рукам"),
+                new Attack(2, 95, AttackTypes.Physical, AttackSpots.Legs, "удар по ногам")
             };
 
             Initialize();
@@ -262,6 +262,7 @@ namespace DungeonGame
                     if(Game1.random.Next(101) > 90)
                     {
                         Game1.actions.Text += "Вам удалось сбежать\n";
+                        MusicPlayer.ChangeSong(MusicState.Peaceful);
                         Game1.gameState = GameState.DoorScene;
                         canWalk = true;
                         Scene.DoNewGenerate = true;
@@ -304,9 +305,9 @@ namespace DungeonGame
             if(draw)
             {
                 _drawWeaponString = true;
-                _weaponLabel.Text =  $"{"", 4}Оружие:{_currentWeapon?.Name,-15}{weaponToTake.Name}\n"
-                                   + $"{"", 8}Урон:{_currentWeapon?.Damage,-15}{weaponToTake.Damage}\n"
-                                   + $"Прочность:{_currentWeapon?.Durability, -15}{weaponToTake.Durability}\n"
+                _weaponLabel.Text =  $"{"", 4}Оружие:{_currentWeapon?.Name,-25}{weaponToTake.Name}\n"
+                                   + $"{"", 8}Урон:{_currentWeapon?.Damage,-25}{weaponToTake.Damage}\n"
+                                   + $"Прочность:{_currentWeapon?.Durability, -25}{weaponToTake.Durability}\n"
                                    + $"Тип урона: \n";
             }
             else
@@ -426,23 +427,23 @@ namespace DungeonGame
                 switch(_currentWeapon?.AttackType)
                 {
                     case AttackTypes.Physical:
-                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _strength * 4;
-                        attack.SuccessChance = attack.BaseChance + _agility * 2;
+                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _strength * 2;
+                        attack.SuccessChance = attack.BaseChance + _agility * 1;
                         break;
                     case AttackTypes.Ranged:
-                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _agility * 3;
-                        attack.SuccessChance = attack.BaseChance + _agility * 3;
+                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _agility * 1;
+                        attack.SuccessChance = attack.BaseChance + _agility * 2;
                         break;
                     case AttackTypes.Magical:
-                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _intelligence * 5;
-                        attack.SuccessChance = attack.BaseChance + _agility * 1;
+                        attack.Damage = attack.BaseDamage + _currentWeapon.Damage + _intelligence * 3;
+                        attack.SuccessChance = attack.BaseChance;
                         break;
                     case AttackTypes.Poison:
                         attack.Damage = attack.BaseDamage + _currentWeapon.Damage;
                         break;
                     case null:
-                        attack.Damage = attack.BaseDamage + _strength * 5;
-                        attack.SuccessChance = attack.BaseChance + _agility * 2;
+                        attack.Damage = attack.BaseDamage + _strength * 2;
+                        attack.SuccessChance = attack.BaseChance + _agility * 1;
                         break;
                 }
                 attack.Type = _currentWeapon?.AttackType ?? AttackTypes.Physical;

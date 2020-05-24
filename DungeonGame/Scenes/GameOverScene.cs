@@ -15,6 +15,7 @@ namespace DungeonGame
 
         public GameOverScene()
         {
+            MusicPlayer.ChangeSong(MusicState.GameOver);
             button = new Button((Game1.WindowWidth - Button.Width) / 2, (Game1.WindowHeight * 2 / 3), "В главное меню");
             label = new Label(Game1.WindowWidth / 2, (Game1.WindowHeight / 3), $"Вы умерли, ваш счет {Player.GetPlayer().gold}", AlignmentPosition.center);
         }

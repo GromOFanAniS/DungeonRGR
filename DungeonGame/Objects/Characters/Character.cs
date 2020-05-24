@@ -144,7 +144,7 @@ namespace DungeonGame
                     if (Game1.random.Next(0, 100) < 10)
                     {
                         dmg *= 2;
-                        Game1.actions.Text += "Крит!";
+                        Game1.actions.Text += "Крит! ";
                     }
                 }
                 Game1.actions.Text += string.Format("{0} использовал {1}! Урон: {2}\n", Name, attack.Name, dmg);

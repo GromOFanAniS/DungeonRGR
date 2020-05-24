@@ -82,6 +82,7 @@ namespace DungeonGame
             ShortSword.Load(Content);
             Sword.Load(Content);
             Bow.Load(Content);
+            SkyFracture.Load(Content);
             HealthBar.Load(Content);
             Label.Load(Content);
             Character.LoadCharacters(Content);

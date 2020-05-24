@@ -67,19 +67,19 @@ namespace DungeonGame
                 if (Game1.random.Next(100) <= 50)
                 {
                     Game1.gameState = GameState.EnemyScene;
-                    Console.WriteLine("Enemy");
+                    MusicPlayer.ChangeSong(MusicState.Battle);
                 }
                 else
                 {
                     Game1.gameState = GameState.GoldScene;
-                    Console.WriteLine("Gold");
                 }
                 Scene.DoNewGenerate = true;
             }
             else if (Game1.gameState == GameState.EnemyScene || Game1.gameState == GameState.GoldScene)
             {
+                if (Game1.gameState == GameState.EnemyScene) 
+                    MusicPlayer.ChangeSong(MusicState.Peaceful);
                 Game1.gameState = GameState.DoorScene;
-
                 Scene.DoNewGenerate = true;
             }
         }
