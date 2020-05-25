@@ -72,6 +72,7 @@
     <Compile Include="Objects\UI\TextBox.cs" />
     <Compile Include="Tech\LeaderBoard.cs" />
     <Compile Include="Tech\MusicPlayer.cs" />
+    <Compile Include="Tech\SkillHandler.cs" />
     <Compile Include="Tech\Skills.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,9 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.7.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +136,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -59,7 +59,6 @@ namespace DungeonGame
         #region public fields
         public int gold = 0;
         public bool canWalk = true;
-        public List<Skill> skills;
         #endregion
 
         #region private fields
@@ -76,6 +75,7 @@ namespace DungeonGame
         [NonSerialized]
         private Rectangle _playerPosition;
 
+        private SkillHandler _skillHandler;
         private Weapon _currentWeapon;
         private int _difficulty;
         private int _experience;
@@ -83,7 +83,6 @@ namespace DungeonGame
         private int _experienceToNextLevel;
         private int _potions;
         private int _statPoints;
-        private int _skillPoints;
         private int _strength;
         private int _agility;
         private int _intelligence;
@@ -96,7 +95,7 @@ namespace DungeonGame
             get => base.Health; 
             set
             {
-                value +=  (int)Math.Round((_health - value) * (5.0/100) * skills.Find(x => x.Name == "Каменная кожа").level);
+                value +=  (int)Math.Round((_health - value) * (5.0/100) * _skillHandler.FindPassiveSkill("Каменная кожа").level);
                 base.Health = value;
             }
         }
@@ -112,17 +111,6 @@ namespace DungeonGame
                     _potions = 0;
             }
         }  
-        public int SkillPoints
-        {
-            get => _skillPoints;
-            private set
-            {
-                if (value > 0)
-                    _skillPoints = value;
-                else
-                    _skillPoints = 0;
-            }
-        }
         public int StatPoints 
         { 
             get => _statPoints; 
@@ -139,12 +127,13 @@ namespace DungeonGame
         public int Intelligence => _intelligence;
         public int MaxHealth => _maxHealth;
         public Rectangle PlayerPosition => _playerPosition;
+        public SkillHandler SkillHandler => _skillHandler;
         public int Experience
         {
             get => _experience; 
             set
             {
-                _experience = value + value * skills.Find(x => x.Name == "Ученик").level / 3;
+                _experience = value + value * _skillHandler.FindPassiveSkill("Ученик").level / 3;
             }
         }
         #endregion
@@ -163,13 +152,8 @@ namespace DungeonGame
             _intelligence = 0;
             _difficulty = Game1.difficulty;
 
-            skills = new List<Skill>()
-            {
-                new CripplingStrike(),
-                new FireBall(),
-                new ExperienceBuff(),
-                new StoneSkin()
-            };
+            _skillHandler = new SkillHandler();
+
             _weakSpots = new List<AttackSpots>();
             _weakness = AttackTypes.None;
             _attacks = new List<Attack>()
@@ -215,12 +199,7 @@ namespace DungeonGame
             }
             _animationPlayer.Update(gameTime);
         }
-        public void UpgradeSkill(string skillName)
-        {
-            var skill = skills.Find(x => x.Name == skillName);
-            SkillPoints-= skill.PointsToLearn;
-            skill.level++;
-        }
+
         public void AttackAction(string key, Character enemy)
         {
             switch (key)
@@ -257,12 +236,7 @@ namespace DungeonGame
                     _animationPlayer.Play(Animations.Attack);
                     break;
             }
-            CooldownTick();
-        }
-        public void CooldownTick()
-        {
-            foreach (ActiveSkill skill in skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill)))
-                skill.Cooldown--;
+            _skillHandler.CooldownTick();
         }
         public override void Draw(SpriteBatch s)
         {
@@ -332,7 +306,7 @@ namespace DungeonGame
                     break;
                 case "Exit":
                     RegenerateAttacks();
-                    RegenerateSkills();
+                    _skillHandler.RegenerateSkills();
                     Game1.gameState = GameState.DoorScene;
                     Scene.DoNewGenerate = true;
                     canWalk = true;
@@ -354,7 +328,7 @@ namespace DungeonGame
             AnimationInitialize();
             Position((Game1.WindowWidth - Width) / 2, 180);
             RegenerateAttacks();
-            RegenerateSkills();
+            _skillHandler.RegenerateSkills();
         }
         private void AnimationInitialize()
         {
@@ -407,7 +381,7 @@ namespace DungeonGame
             {
                 Game1.actions.Text += "Новый Уровень!\n";
                 StatPoints += 3;
-                SkillPoints += 2;
+                _skillHandler.SkillPoints += 2;
                 _level++;
                 Experience -= _experienceToNextLevel;
                 _experienceToNextLevel += 15 * _level;
@@ -440,13 +414,6 @@ namespace DungeonGame
                         break;
                 }
                 attack.Type = _currentWeapon?.AttackType ?? AttackTypes.Physical;
-            }
-        }
-        private void RegenerateSkills()
-        {
-            foreach (ActiveSkill skill in skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill)))
-            {
-                if (skill.level > 0) skill.Regenerate();
             }
         }
         private void CheckDifficulty()

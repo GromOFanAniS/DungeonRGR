@@ -23,10 +23,10 @@ namespace DungeonGame
         public AttackTurn attackTurn = AttackTurn.Player;
         private MenuState _menuState;
         private bool enemyOldState;
+        private Dictionary<string, Button> _skillButtons;
         private readonly Enemy enemy;
         private readonly Door door;
         private readonly Dictionary<string, Button> _attackButtons;
-        private readonly Dictionary<string, Button> _skillButtons;
         private readonly Player player = Player.GetPlayer();
 
         public EnemyScene()
@@ -122,25 +122,24 @@ namespace DungeonGame
                             }
                             break;
                         case MenuState.skill:
-                            foreach (ActiveSkill skill in player.skills.FindAll(x => x.GetSkillType() == typeof(ActiveSkill) && x.level > 0))
+                            foreach (var button in _skillButtons)
                             {
-                                var button = _skillButtons[skill.Name];
-                                if (skill.Cooldown > 0)
-                                    button.IsActive = false;
+                                if (button.Key != "Strikes" && player.SkillHandler.IsInCooldown(button.Key))
+                                    button.Value.IsActive = false;
                                 else
-                                    button.IsActive = true;
-                                button.Update();
-                                if (button.State == StateButton.Press)
+                                    button.Value.IsActive = true;
+                                button.Value.Update();
+                                if(button.Key == "Strikes" && button.Value.State == StateButton.Press)
+                                    _menuState = MenuState.strike;
+                                else if (button.Value.State == StateButton.Press)
                                 {
-                                    skill.Use(enemy);
+                                    player.SkillHandler.UseSkill(button.Key, enemy);
                                     _menuState = MenuState.strike;
                                     attackTurn = AttackTurn.Enemy;
                                     break;
                                 }
                             }
-                            _skillButtons["Strikes"].Update();
-                            if (_skillButtons["Strikes"].State == StateButton.Press)
-                                _menuState = MenuState.strike;
+
                             break;
                     }
                     break;
@@ -151,7 +150,6 @@ namespace DungeonGame
         {
             int x = Game1.WindowWidth / 5 * 4;
             int y = Game1.WindowHeight / 8;
-            int i = 1;
             
             _attackButtons.Add("Head", new Button(x, y, "Удар по голове"));
             _attackButtons.Add("Body", new Button(x, y * 2, "Удар по торсу"));
@@ -161,12 +159,7 @@ namespace DungeonGame
             _attackButtons.Add("Flee", new Button(x, y * 6, "Сбежать"));
             _attackButtons.Add("Skills", new Button(x, y * 7, "Использовать навык"));
 
-            foreach(Skill skill in player.skills.FindAll(k => k.GetSkillType() == typeof(ActiveSkill) && k.level > 0))
-            {
-                _skillButtons.Add(skill.Name, new Button(x, y * i, $"{skill.Name}"));
-                i++;
-            }
-            _skillButtons.Add("Strikes", new Button(x, y * i, "Атаковать"));
+            _skillButtons = player.SkillHandler.GenerateUseSkillButtons();
         }
     }
 }

@@ -100,7 +100,7 @@ namespace DungeonGame
             }
             target.Health -= dmg;
             Game1.actions.Text += $"Вы нанесли {dmg} урона с помощью {_name}\n";
-            Player.GetPlayer().CooldownTick();
+            Player.GetPlayer().SkillHandler.CooldownTick();
             Cooldown = CooldownTime;
         }
     }
