@@ -39,7 +39,7 @@ namespace DungeonGame
             door = new Door(Game1.WindowWidth - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
             enemy = Enemy.Generate();
             Game1.actions.Text = $"Вам встретился {enemy.Name}\n";
-            player.SetAnimation(Animations.Idle);
+            player.AnimationPlayer.SetAnimation(Animations.Idle);
             SetButtons();
         }
 
@@ -70,7 +70,7 @@ namespace DungeonGame
         }
         public override void Update(GameTime gameTime)
         {
-            if (player.CurrentAnimation.PlayOnce || enemy.CurrentAnimation.PlayOnce) return;
+            if (player.AnimationPlayer.PlayOnce || enemy.AnimationPlayer.PlayOnce) return;
             enemy.Update(gameTime);
             if (player.Potions <= 0 || player.Health == player.MaxHealth)
                 _attackButtons["Heal"].IsActive = false;
@@ -93,7 +93,7 @@ namespace DungeonGame
                     else
                     {
                         enemy.AttackPlayer();
-                        player.SetAnimation(Animations.Idle);
+                        player.AnimationPlayer.SetAnimation(Animations.Idle);
                     }
                     attackTurn = AttackTurn.Player;
                     break;

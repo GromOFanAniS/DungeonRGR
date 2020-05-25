@@ -88,7 +88,7 @@ namespace DungeonGame
 
         public void Use(Character target)
         {
-            Player.GetPlayer().SetAnimation(Animations.Attack);
+            Player.GetPlayer().AnimationPlayer.Play(Animations.Attack);
             int dmg = damage;
             if (_attackType == target.Weakness)
             {

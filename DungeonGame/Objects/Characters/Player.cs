@@ -64,12 +64,6 @@ namespace DungeonGame
 
         #region private fields
         private const float velocity = 350f;
-        [NonSerialized]
-        private Animation _idleAnimation;
-        [NonSerialized]
-        private Animation _walkAnimation;
-        [NonSerialized]
-        private Animation _attackAnimation;
 
         [NonSerialized]
         private SpriteEffects _flip = SpriteEffects.None;
@@ -97,7 +91,6 @@ namespace DungeonGame
         #endregion
 
         #region public properties
-
         public override int Health 
         { 
             get => base.Health; 
@@ -220,22 +213,7 @@ namespace DungeonGame
                 Game1.gameState = GameState.GameOverScene;
                 Scene.DoNewGenerate = true;
             }
-            _animation.Update(gameTime);
-        }
-        public override void SetAnimation(Animations animation)
-        {
-            switch (animation)
-            {
-                case Animations.Idle:
-                    _animation.Set(_idleAnimation);
-                    break;
-                case Animations.Walk:
-                    _animation.Set(_walkAnimation);
-                    break;
-                case Animations.Attack:
-                    _animation.Set(_attackAnimation);
-                    break;
-            }
+            _animationPlayer.Update(gameTime);
         }
         public void UpgradeSkill(string skillName)
         {
@@ -276,7 +254,7 @@ namespace DungeonGame
                     break;
                 default:
                     _currentWeapon?.DamageWeapon();
-                    _animation.Play(_attackAnimation);
+                    _animationPlayer.Play(Animations.Attack);
                     break;
             }
             CooldownTick();
@@ -288,7 +266,7 @@ namespace DungeonGame
         }
         public override void Draw(SpriteBatch s)
         {
-            _animation.Draw(s, _playerSheetTexture, new Vector2(X, Y), _flip);
+            _animationPlayer.Draw(s, _playerSheetTexture, new Vector2(X, Y), _flip);
             if(Game1.gameState != GameState.MenuScene)
                 _healthBar.Draw(s, _health, _maxHealth);
             if(Game1.gameState != GameState.PlayerMenuScene && Game1.gameState != GameState.MenuScene)
@@ -366,25 +344,36 @@ namespace DungeonGame
         #region private methods
         private void Initialize()
         {
-            _animation = new AnimationPlayer();
+            _animationPlayer = new AnimationPlayer();
             _healthBar = new HealthBar(5, 10);
             _weaponLabel = new Label(50, 50, "");
             _goldAndPots = new Label(Game1.WindowWidth / 2, 15);
             _expLabel = new Label(Game1.WindowWidth / 2, 15);
             _drawWeaponString = false;
-            _idleAnimation = new Animation();
-            for (int i = 0; i < 4; i++)
-                _idleAnimation.AddFrame(new Rectangle(0 + 200*i, 0, 200, 148), TimeSpan.FromSeconds(0.25));
-            _animation.Set(_idleAnimation);
-            _walkAnimation = new Animation();
-            for (int i = 0; i < 6; i++)
-                _walkAnimation.AddFrame(new Rectangle(0 + 200 * i, 148, 200, 148), TimeSpan.FromSeconds(0.15));
-            _attackAnimation = new Animation();
-            for (int i = 0; i < 7; i++)
-                _attackAnimation.AddFrame(new Rectangle(0 + 200 * i, 296, 200, 148), TimeSpan.FromSeconds(0.14));
+
+            AnimationInitialize();
             Position((Game1.WindowWidth - Width) / 2, 180);
             RegenerateAttacks();
             RegenerateSkills();
+        }
+        private void AnimationInitialize()
+        {
+            Animation idleAnimation = new Animation();
+            Animation walkAnimation = new Animation();
+            Animation attackAnimation = new Animation();
+
+            for (int i = 0; i < 4; i++)
+                idleAnimation.AddFrame(new Rectangle(0 + 200 * i, 0, 200, 148), TimeSpan.FromSeconds(0.25));
+            for (int i = 0; i < 6; i++)
+                walkAnimation.AddFrame(new Rectangle(0 + 200 * i, 148, 200, 148), TimeSpan.FromSeconds(0.15));
+            for (int i = 0; i < 7; i++)
+                attackAnimation.AddFrame(new Rectangle(0 + 200 * i, 296, 200, 148), TimeSpan.FromSeconds(0.14));
+
+            _animationPlayer.AddAnimation(Animations.Idle, idleAnimation);
+            _animationPlayer.AddAnimation(Animations.Walk, walkAnimation);
+            _animationPlayer.AddAnimation(Animations.Attack, attackAnimation);
+
+            _animationPlayer.SetAnimation(Animations.Idle);
         }
         private void WalkingUpdate(GameTime gameTime)
         {
@@ -392,19 +381,19 @@ namespace DungeonGame
             {
                 if (Game1.keyboardState.IsKeyDown(Keys.A))
                 {
-                    SetAnimation(Animations.Walk);
+                    _animationPlayer.SetAnimation(Animations.Walk);
                     _flip = SpriteEffects.FlipHorizontally;
                     if ((X - velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0) return;
                     X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
                 else if (Game1.keyboardState.IsKeyDown(Keys.D))
                 {
-                    SetAnimation(Animations.Walk);
+                    _animationPlayer.SetAnimation(Animations.Walk);
                     _flip = SpriteEffects.None;
                     if ((X + velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) >= (Game1.WindowWidth - Width)) return;
                     X += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
-                else SetAnimation(Animations.Idle);
+                else _animationPlayer.SetAnimation(Animations.Idle);
             }
             else
             {

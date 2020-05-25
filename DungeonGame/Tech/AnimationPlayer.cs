@@ -10,24 +10,34 @@ namespace DungeonGame
 {
     public class AnimationPlayer
     {
+        private Dictionary<Animations, Animation> _animationList = new Dictionary<Animations, Animation>();
         private Animation _animation;
         private bool _playOnce;
         private bool _isPlaying;
 
         public bool IsPlaying => _isPlaying;
-
         public bool PlayOnce => _playOnce;
         public Rectangle CurrentRectangle => _animation.CurrentRectangle;
 
-        public void Set(Animation animation)
+        public void AddAnimation(Animations key, Animation animation)
+        {
+            _animationList.Add(key, animation);
+        }
+
+        public void SetAnimation(Animations animation)
+        {
+            Set(_animationList[animation]);
+        }
+
+        private void Set(Animation animation)
         {
             _animation = animation;
             _isPlaying = true;
         }
 
-        public void Play(Animation animation)
+        public void Play(Animations animation)
         {
-            Set((Animation)animation.Clone());
+            Set((Animation)_animationList[animation].Clone());
             _playOnce = true;
         }
         public void Draw(SpriteBatch s, Texture2D sheetTexture, Vector2 position, SpriteEffects flip)

@@ -62,7 +62,7 @@ namespace DungeonGame
                                 MusicPlayer.DoomMode = false;
                                 MusicPlayer.ChangeSong(MusicState.Peaceful);
                             }
-                            Game1.difficulty = 0;
+                            Game1.difficulty = 1;
                             DoNewGenerate = true;
                             break;
                         case "Load":

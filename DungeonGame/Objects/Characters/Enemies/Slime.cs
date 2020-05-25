@@ -11,15 +11,15 @@ namespace DungeonGame
 {
     class Slime : Enemy
     {
-        private static Animation _idle;
         private static Texture2D _texture;
 
         public Slime()
         {
+            AnimationInitialize();
+
             Name = "Слизень";
             _maxHealth = 40 + 20 * Game1.difficulty;
             _health = _maxHealth;
-            _animation.Set(_idle);
             experience = 10 + 20 * Game1.difficulty;
             Y += Height / 2;
             _weakSpots = new List<AttackSpots>()
@@ -32,20 +32,27 @@ namespace DungeonGame
                 new Attack(3 + 1 * Game1.difficulty, 75, AttackTypes.Poison, AttackSpots.Body, "Наскок"),
                 new Attack(6 + 2 * Game1.difficulty, 50, AttackTypes.Poison, AttackSpots.Body, "Поедание")
             };
+
         }
 
         public static void Load(ContentManager content)
         {
-            _texture = content.Load<Texture2D>("Enemies/Slime");
-            _idle = new Animation();
-            _idle.AddFrame(new Rectangle(0, 4, 120, 64), TimeSpan.FromSeconds(0.25));
-            _idle.AddFrame(new Rectangle(0, 76, 120, 64), TimeSpan.FromSeconds(0.25));
+            _texture = content.Load<Texture2D>("Enemies/Slime");   
         }
 
         public override void Draw(SpriteBatch s)
         {
             Vector2 topLeftOfSprite = new Vector2(X, Y);
-            _animation.Draw(s, _texture, topLeftOfSprite, SpriteEffects.None);
+            _animationPlayer.Draw(s, _texture, topLeftOfSprite, SpriteEffects.None);
+        }
+
+        private void AnimationInitialize()
+        {
+            Animation idle = new Animation();
+            idle.AddFrame(new Rectangle(0, 4, 120, 64), TimeSpan.FromSeconds(0.25));
+            idle.AddFrame(new Rectangle(0, 76, 120, 64), TimeSpan.FromSeconds(0.25));
+            _animationPlayer.AddAnimation(Animations.Idle, idle);
+            _animationPlayer.SetAnimation(Animations.Idle);
         }
     }
 }

@@ -38,21 +38,22 @@ namespace DungeonGame
         [Serializable]
         public class Attack
         {
-            private string _name;
             private int _damage;
-            private int _baseDamage;
-            private int _baseChance;
             private int _successChance;
             private AttackTypes _type;
-            private AttackSpots _spot;
 
+            private readonly string _name;
+            private readonly int _baseDamage;
+            private readonly int _baseChance;
+            private readonly AttackSpots _spot;
+
+            public string Name => _name;
+            public int BaseDamage => _baseDamage;
+            public int BaseChance => _baseChance;
+            public AttackSpots Spot => _spot;
             public int Damage { get => _damage; set => _damage = value; }
-            public string Name { get => _name; }
-            public int BaseDamage { get => _baseDamage; }
-            public int BaseChance { get => _baseChance; }
             public int SuccessChance { get => _successChance; set => _successChance = value; }
             public AttackTypes Type { get => _type; set => _type = value; }
-            public AttackSpots Spot { get => _spot; }
 
             public Attack(int baseDamage = 0, int baseChance = 0, AttackTypes type = AttackTypes.None, AttackSpots spot = AttackSpots.Body, string name = "")
             {
@@ -69,7 +70,7 @@ namespace DungeonGame
         [NonSerialized]
         protected HealthBar _healthBar;
         [NonSerialized]
-        protected AnimationPlayer _animation = new AnimationPlayer();
+        protected AnimationPlayer _animationPlayer = new AnimationPlayer();
         protected int _health;
         protected int _maxHealth;
         protected AttackTypes _weakness;
@@ -96,19 +97,17 @@ namespace DungeonGame
         public float X { get; protected set; } = -100;
 
         public float Y { get; protected set; }
-        public int Height => _animation.CurrentRectangle.Height;
-        public int Width => _animation.CurrentRectangle.Width;
+        public int Height => _animationPlayer.CurrentRectangle.Height;
+        public int Width => _animationPlayer.CurrentRectangle.Width;
         public string Name { get; set; }
 
-        public AnimationPlayer CurrentAnimation => _animation;
+        public AnimationPlayer AnimationPlayer => _animationPlayer;
 
         public AttackTypes Weakness => _weakness;
         public AttackTypes Resistance => _resistance;
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(SpriteBatch s);
-
-        public abstract void SetAnimation(Animations animation);
 
         public void Position(int x, int y)
         {
