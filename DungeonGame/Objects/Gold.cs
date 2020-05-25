@@ -24,6 +24,7 @@ namespace DungeonGame
         private int Height => _animation.CurrentRectangle.Height;
         private int x;
         private int y;
+        private static KeyboardState oldState;
 
         public Gold()
         {
@@ -47,13 +48,15 @@ namespace DungeonGame
 
         public void Update(GameTime gameTime)
         {
-            if (_hitbox.Intersects(player.PlayerPosition) && Game1.keyboardState.IsKeyDown(Keys.Space) && _doDraw)
+            KeyboardState newState = Keyboard.GetState();
+            if (_hitbox.Intersects(player.PlayerPosition) && _doDraw && newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
             {
                 _doDraw = false;
                 player.gold += _amount;
                 player.TakePotions(_potionAmount);
                 Game1.actions.Text = $"Подобрано {_amount} золота и {_potionAmount} зелий\n";
             }
+            oldState = newState;
             _animation.Update(gameTime);
         }
 
