@@ -76,7 +76,7 @@ namespace DungeonGame
                     {
                         Player.GetPlayer().DrawWeaponLabel(this, false);
                         Player.GetPlayer().TakeNewWeapon(this);
-                        Game1.actions.Text += $"Вы взяли {_name}";
+                        Game1.actions.Text += $"Вы взяли {_name}\n";
                         _enabled = false;
                     }
                 }

@@ -95,7 +95,7 @@ namespace DungeonGame
             get => base.Health; 
             set
             {
-                value +=  (int)Math.Round((_health - value) * (5.0/100) * _skillHandler.FindPassiveSkill("Каменная кожа").level);
+                value +=  (int)Math.Round((_health - value) * (5.0/100) * _skillHandler.FindPassiveSkillLevel("Каменная кожа"));
                 base.Health = value;
             }
         }
@@ -133,7 +133,7 @@ namespace DungeonGame
             get => _experience; 
             set
             {
-                _experience = value + value * _skillHandler.FindPassiveSkill("Ученик").level / 3;
+                _experience = value + value * _skillHandler.FindPassiveSkillLevel("Ученик") / 3;
             }
         }
         #endregion
@@ -264,7 +264,7 @@ namespace DungeonGame
                 _weaponLabel.Text =  $"{"", 4}Оружие:{_currentWeapon?.Name,-25}{weaponToTake.Name}\n"
                                    + $"{"", 8}Урон:{_currentWeapon?.Damage,-25}{weaponToTake.Damage}\n"
                                    + $"Прочность:{_currentWeapon?.Durability, -25}{weaponToTake.Durability}\n"
-                                   + $"Тип урона: \n";
+                                   + $"Тип урона:{_currentWeapon?.AttackType, -25}{weaponToTake.AttackType}\n";
             }
             else
             {

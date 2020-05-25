@@ -14,9 +14,11 @@ namespace DungeonGame
     {
         private HealthBar healthBar;
 
+        protected List<AttackSpots> _bodyParts;
         protected bool isDead = false;
 
         public bool IsDead => isDead;
+        public List<AttackSpots> BodyParts => _bodyParts;
         public int experience;
 
         protected Enemy()

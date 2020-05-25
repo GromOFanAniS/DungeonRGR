@@ -10,8 +10,8 @@ namespace DungeonGame
     public class SkillHandler
     {
         private List<Skill> skills;
-        private List<ActiveSkill> activeSkills = new List<ActiveSkill>();
-        private List<PassiveSkill> passiveSkills = new List<PassiveSkill>();
+        private List<ActiveSkill> activeSkills;
+        private List<PassiveSkill> passiveSkills;
 
         private int _skillPoints;
 
@@ -29,6 +29,8 @@ namespace DungeonGame
 
         public SkillHandler()
         {
+            activeSkills = new List<ActiveSkill>();
+            passiveSkills = new List<PassiveSkill>();
             SkillsInitialize();
         }
 
@@ -62,9 +64,9 @@ namespace DungeonGame
                 skill.Cooldown--;
         }
 
-        public PassiveSkill FindPassiveSkill(string skillName)
+        public int FindPassiveSkillLevel(string skillName)
         {
-            return passiveSkills.Find(x => x.Name == skillName);
+            return passiveSkills.Find(x => x.Name == skillName).level;
         }
 
         public Dictionary<string, Button> GenerateUpgradeSkillButtons()
@@ -74,32 +76,16 @@ namespace DungeonGame
             int i = 0;
             foreach (var skill in activeSkills)
             {
-                buttons.Add($"{skill.Name}", new Button(800, y + (Button.Height + 17) * i, "улучшить навык"));
+                buttons.Add($"{skill.Name}", new Button(800, y + (Button.Height + 17) * i, "улучшить\nнавык"));
                 i++;
             }
             foreach (var skill in passiveSkills)
             {
-                buttons.Add($"{skill.Name}", new Button(800, y + (Button.Height + 17) * i, "улучшить навык"));
+                buttons.Add($"{skill.Name}", new Button(800, y + (Button.Height + 17) * i, "улучшить\nнавык"));
                 i++;
             }
             buttons.Add("Exit", new Button(5, 5, "Назад"));
             return buttons;
-        }
-        public void LabelsUpdate(Label skillsLabel)
-        {
-            foreach (ActiveSkill skill in activeSkills)
-            {
-                skillsLabel.Text += string.Format("{0, 15}: Уровень {1, 2}, Необходимо очков: {2, 2}, Урон: {3, 3},\n "
-                                                   + "Время перезарядки: {4, 2}, Тип урона: {5, 5}\n\n",
-                                                   skill.Name, skill.level, skill.PointsToLearn, skill.damage,
-                                                   skill.CooldownTime, skill.AttackType);
-            }
-            foreach (PassiveSkill skill in passiveSkills)
-            {
-                skillsLabel.Text += string.Format("{0, 15}: Уровень {1, 2}, Необходимо очков: {2, 2},\n "
-                                                   + "{3}\n\n",
-                                                   skill.Name, skill.level, skill.PointsToLearn, skill.Description);
-            }
         }
 
         public Dictionary<string, Button> GenerateUseSkillButtons()
@@ -116,6 +102,23 @@ namespace DungeonGame
             buttons.Add("Strikes", new Button(x, y * i, "Атаковать"));
 
             return buttons;
+        }
+
+        public void LabelsUpdate(Label skillsLabel)
+        {
+            foreach (ActiveSkill skill in activeSkills)
+            {
+                skillsLabel.Text += string.Format("{0, 15}: Уровень {1, 2}, Необходимо очков: {2, 2}, Урон: {3, 3},\n "
+                                                   + "Время перезарядки: {4, 2}, Тип урона: {5, 5}\n\n",
+                                                   skill.Name, skill.level, skill.PointsToLearn, skill.damage,
+                                                   skill.CooldownTime, skill.AttackType);
+            }
+            foreach (PassiveSkill skill in passiveSkills)
+            {
+                skillsLabel.Text += string.Format("{0, 15}: Уровень {1, 2}, Необходимо очков: {2, 2},\n "
+                                                   + "{3}\n\n",
+                                                   skill.Name, skill.level, skill.PointsToLearn, skill.Description);
+            }
         }
 
 

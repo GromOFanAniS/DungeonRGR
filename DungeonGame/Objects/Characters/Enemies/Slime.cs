@@ -22,6 +22,10 @@ namespace DungeonGame
             _health = _maxHealth;
             experience = 10 + 20 * Game1.difficulty;
             Y += Height / 2;
+            _bodyParts = new List<AttackSpots>()
+            {
+                AttackSpots.Body
+            };
             _weakSpots = new List<AttackSpots>()
             {
                 AttackSpots.Body

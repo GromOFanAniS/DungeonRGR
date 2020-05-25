@@ -72,9 +72,21 @@ namespace DungeonGame
         {
             if (player.AnimationPlayer.PlayOnce || enemy.AnimationPlayer.PlayOnce) return;
             enemy.Update(gameTime);
+
+            for(int i = 0; i < 4; i++)
+            {
+                var button = _attackButtons.ElementAt(i);
+                if (enemy.BodyParts.Contains((AttackSpots)Enum.Parse(typeof(AttackSpots), button.Key)))
+                    button.Value.IsActive = true;
+                else
+                    button.Value.IsActive = false;
+            }
+
+
             if (player.Potions <= 0 || player.Health == player.MaxHealth)
                 _attackButtons["Heal"].IsActive = false;
             else _attackButtons["Heal"].IsActive = true;
+
             switch (attackTurn)
             {
                 case AttackTurn.Enemy:
@@ -157,7 +169,7 @@ namespace DungeonGame
             _attackButtons.Add("Legs", new Button(x, y * 4, "Удар по ногам"));
             _attackButtons.Add("Heal", new Button(x, y * 5, "Выпить зелье"));
             _attackButtons.Add("Flee", new Button(x, y * 6, "Сбежать"));
-            _attackButtons.Add("Skills", new Button(x, y * 7, "Использовать навык"));
+            _attackButtons.Add("Skills", new Button(x, y * 7, "Использовать\n    навык"));
 
             _skillButtons = player.SkillHandler.GenerateUseSkillButtons();
         }
