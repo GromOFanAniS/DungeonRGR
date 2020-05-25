@@ -190,6 +190,7 @@ namespace DungeonGame
             _playerPosition = new Rectangle((int)X + 50, (int)Y - 1, Width - 100, Height);
             CheckLevel();
             CheckDifficulty();
+            WeaponUpdate();
             WalkingUpdate(gameTime);
             if(_health <= 0)
             {
@@ -423,6 +424,13 @@ namespace DungeonGame
                 Game1.difficulty++;
                 Game1.actions.Text += "Вы нашли дверь, ведущую на более глубокий уровень подземелья.\n"
                                       + "Враги станут сильнее, но и награда больше.\n";
+            }
+        }
+        private void WeaponUpdate()
+        {
+            if(_currentWeapon?.Durability <= 0)
+            {
+                _currentWeapon = null;
             }
         }
         #endregion

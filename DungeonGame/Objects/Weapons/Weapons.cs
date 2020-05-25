@@ -80,7 +80,7 @@ namespace DungeonGame
             _durability = 15;
             _texture = _mSwordTexture;
             _attackType = AttackTypes.Magical;
-            x = (Game1.WindowWidth - Width) / 2 + Width * 10;
+            x = (Game1.WindowWidth - Width) / 2 + Width * 4;
             _hitbox = new Rectangle(x, y, Width, Height);
         }
         public static void Load(ContentManager content)
