@@ -49,6 +49,7 @@
     <Compile Include="Objects\UI\Label.cs" />
     <Compile Include="Objects\Weapons\Weapons.cs" />
     <Compile Include="Objects\Weapons\Weapon.cs" />
+    <Compile Include="Scenes\Background.cs" />
     <Compile Include="Scenes\EnemyScene.cs" />
     <Compile Include="Scenes\GameOverScene.cs" />
     <Compile Include="Scenes\GoldScene.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Objects\UI\TextBox.cs" />
+    <Compile Include="Tech\Keyboard.cs" />
     <Compile Include="Tech\LeaderBoard.cs" />
     <Compile Include="Tech\MusicPlayer.cs" />
     <Compile Include="Tech\SkillHandler.cs" />

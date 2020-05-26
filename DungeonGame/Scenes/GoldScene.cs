@@ -18,7 +18,7 @@ namespace DungeonGame
         {
             DoNewGenerate = false;
             gold = new Gold();
-            door = new Door(Game1.WindowWidth - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
+            door = new Door(Game1.gameWindow.ClientBounds.Width / 2 + 147, Door.closedTexture.Height / 2 + 4);
             Game1.actions.Text += "Вы нашли золото!\n";
             if (Game1.random.Next(101) < 20)
             {
@@ -50,10 +50,10 @@ namespace DungeonGame
         }
         public override void Draw(SpriteBatch s)
         {
+            base.Draw(s);
             gold.Draw(s);
             weapon?.Draw(s);
-            if (!gold.DoDraw)
-                door.Draw(s);
+            door.Draw(s);
         }
 
         public override void Update(GameTime gameTime)

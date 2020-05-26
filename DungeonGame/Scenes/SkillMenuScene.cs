@@ -25,6 +25,7 @@ namespace DungeonGame
 
         public override void Draw(SpriteBatch s)
         {
+            base.Draw(s);
             foreach (var button in _buttons.Values)
                 button.Draw(s);
             _skillPointsLabel.Draw(s);

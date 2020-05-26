@@ -23,8 +23,8 @@ namespace DungeonGame
 
         protected Enemy()
         {
-            Position(Game1.WindowWidth / 2 + 100, Game1.WindowHeight / 2);
-            healthBar = new HealthBar(Game1.WindowWidth / 2 + 80, Game1.WindowHeight / 2  + 125);
+            Position(Game1.WindowWidth / 2 + 100, Game1.WindowHeight / 2 - 26);
+            healthBar = new HealthBar(Game1.WindowWidth / 2 + 80, Game1.WindowHeight / 2  + 99);
         }
         public static Enemy Generate()
         {

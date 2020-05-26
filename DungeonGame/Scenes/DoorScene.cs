@@ -37,8 +37,8 @@ namespace DungeonGame
         {
             _doors = new List<Door>()
             {
-                new Door(50, Door.closedTexture.Height / 2),
-                new Door(Game1.gameWindow.ClientBounds.Width - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2)
+                new Door(182, Door.closedTexture.Height / 2 + 4),
+                new Door(Game1.gameWindow.ClientBounds.Width / 2 + 147, Door.closedTexture.Height / 2 + 4)
             };
         }
 
@@ -65,6 +65,7 @@ namespace DungeonGame
                             break;
                         case "PlayerMenu":
                             DoNewGenerate = true;
+                            player.AnimationPlayer.Play(Animations.Idle);
                             Game1.gameState = GameState.PlayerMenuScene;
                             break;
                         case "Exit":
@@ -78,6 +79,7 @@ namespace DungeonGame
 
         public override void Draw(SpriteBatch s)
         {
+            base.Draw(s);
             _doors[0]?.Draw(s, SpriteEffects.FlipHorizontally);
             _doors[1]?.Draw(s);
 

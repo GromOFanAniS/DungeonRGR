@@ -20,7 +20,6 @@ namespace DungeonGame
         private Dictionary<StateDoor, Texture2D> _textures;
         private Vector2 _position;
         private Rectangle _hitbox;
-        private static KeyboardState oldState;
 
         public StateDoor State { get { return _state; } }
 
@@ -43,12 +42,10 @@ namespace DungeonGame
 
         public void Update()
         {
-            KeyboardState newState = Keyboard.GetState();
             if (_hitbox.Intersects(Player.GetPlayer().PlayerPosition))
             {
                 _state = StateDoor.Opened;
-                if (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space)) OpenDoor();
-                oldState = newState;
+                if (KeyboardHandler.HasBeenPressed(Keys.Space)) OpenDoor();
             }
             else
             {

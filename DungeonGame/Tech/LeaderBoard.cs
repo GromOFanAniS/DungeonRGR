@@ -20,7 +20,7 @@ namespace DungeonGame
         private LeaderBoard()
         {
             _board = new List<KeyValuePair<string, int>>();
-            _boardLabel = new Label(20, 20, "");
+            _boardLabel = new Label(160, 20, "");
         }
 
         public void AddToBoard(string name, int score)
@@ -73,7 +73,7 @@ namespace DungeonGame
         private void RefreshLabel()
         {
             _board = _board.OrderByDescending(x => x.Value).ToList();
-            _boardLabel = new Label(20, 20, "");
+            _boardLabel = new Label(160, 20, "");
             _board.ForEach(x => _boardLabel.Text += $"{x.Key}, Счёт: {x.Value}\n");
         }
 

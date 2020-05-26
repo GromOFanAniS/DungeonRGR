@@ -22,6 +22,7 @@ namespace DungeonGame
         {
             Player.Kill();
             player = Player.GetPlayer();
+            player.canWalk = false;
             _buttons.Add("Start", new Button(20, 100, "Новая игра", false));
             _buttons.Add("Load", new Button(20, 200, "Загрузить"));
             _buttons.Add("Leaderboard", new Button(20, 300, "Доска почёта"));
@@ -33,7 +34,7 @@ namespace DungeonGame
 
         public static void Load(ContentManager Content)
         {
-            playerName = new TextBox(Game1.WindowWidth / 2 - 11, playerHeight - 30, "Персонажа зовут", "Fonts/MainMenuFont", Content);
+            playerName = new TextBox(Game1.WindowWidth / 2 - 11, Game1.WindowHeight / 2 - playerHeight + 80, "Персонажа зовут", "Fonts/MainMenuFont", Content);
             Button.Load(Content);
         }
         public override void Update(GameTime gameTime)
@@ -63,11 +64,13 @@ namespace DungeonGame
                                 MusicPlayer.ChangeSong(MusicState.Peaceful);
                             }
                             Game1.difficulty = 1;
+                            player.canWalk = true;
                             DoNewGenerate = true;
                             break;
                         case "Load":
                             Game1.gameState = GameState.DoorScene;
                             Player.SaveLoadSystem.LoadGame();
+                            player.canWalk = true;
                             DoNewGenerate = true;
                             break;
                         case "Leaderboard":
@@ -84,6 +87,7 @@ namespace DungeonGame
         }
         public override void Draw(SpriteBatch s)
         {
+            base.Draw(s);
             playerName.Draw(s);
             foreach (var button in _buttons)
                 button.Value.Draw(s);

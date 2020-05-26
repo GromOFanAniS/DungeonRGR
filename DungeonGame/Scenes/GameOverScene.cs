@@ -22,6 +22,7 @@ namespace DungeonGame
 
         public override void Draw(SpriteBatch s)
         {
+            base.Draw(s);
             label.Draw(s);
             button.Draw(s);
         }

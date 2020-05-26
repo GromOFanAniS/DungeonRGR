@@ -34,7 +34,6 @@ namespace DungeonGame
                 Game1.gameState = GameState.MenuScene;
             }
 
-            Console.WriteLine(Game1.mouseState.ScrollWheelValue + " " + _oldScroll);
             if (Game1.mouseState.ScrollWheelValue > _oldScroll) //вверх
                 _label.Y += _label.Y + 20 <= 20 ? 20 : 0;
             else if (Game1.mouseState.ScrollWheelValue < _oldScroll) //вниз
@@ -44,6 +43,7 @@ namespace DungeonGame
 
         public override void Draw(SpriteBatch s)
         {
+            base.Draw(s);
             _button.Draw(s);
             _label.Draw(s);
         }

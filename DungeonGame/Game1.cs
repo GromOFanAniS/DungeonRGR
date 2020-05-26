@@ -76,6 +76,7 @@ namespace DungeonGame
             // TODO: use this.Content to load your game content here
 
             leaderBoard = LeaderBoard.GetLeaderBoard();
+            Background.Init(Content, spriteBatch);
             MainMenu.Load(Content);
             Door.Load(Content);
             Gold.Load(Content);
@@ -99,7 +100,6 @@ namespace DungeonGame
             // TODO: Unload any non ContentManager content here
         }
 
-        public static KeyboardState keyboardState;
         public static MouseState mouseState;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -108,11 +108,10 @@ namespace DungeonGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            keyboardState = Keyboard.GetState();
+            KeyboardHandler.Update();
             mouseState = Mouse.GetState();
-            if (keyboardState.IsKeyDown(Keys.T)) Console.WriteLine(player.Name);
-            if (keyboardState.IsKeyDown(Keys.Up)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (keyboardState.IsKeyDown(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (KeyboardHandler.IsPressed(Keys.Up)) _camera.Zoom += 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (KeyboardHandler.IsPressed(Keys.Down)) _camera.Zoom -= 1f * (float)gameTime.ElapsedGameTime.TotalSeconds;
             player = Player.GetPlayer();
 
             switch (gameState)
@@ -122,6 +121,8 @@ namespace DungeonGame
                     {
                         scene = new MainMenu();
                     }
+                    player.Update(gameTime);
+                    player.Position((WindowWidth - player.Width) / 2, (WindowHeight - player.Height) / 2 + 24);
                     break;
                 case GameState.DoorScene:
                     if (Scene.DoNewGenerate)
@@ -148,7 +149,7 @@ namespace DungeonGame
                     if (Scene.DoNewGenerate)
                     {
                         player.canWalk = false;
-                        player.Position((Window.ClientBounds.Width - player.Width) / 2, (Window.ClientBounds.Height - player.Height) / 2);
+                        //player.Position((Window.ClientBounds.Width - player.Width) / 2, (Window.ClientBounds.Height - player.Height) / 2);
                         scene = new PlayerMenuScene();
                     }
                     player.Update(gameTime);
@@ -176,6 +177,7 @@ namespace DungeonGame
             scene?.Update(gameTime);
             actions.Update(gameTime);
             MusicPlayer.Update();
+            
             base.Update(gameTime);
         }
 

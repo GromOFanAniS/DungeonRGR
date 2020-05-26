@@ -37,6 +37,7 @@ namespace DungeonGame
 
         public override void Draw(SpriteBatch s)
         {
+            base.Draw(s);
             foreach (var b in _buttons.Values)
                 b.Draw(s);
             statPointsLabel.Draw(s);

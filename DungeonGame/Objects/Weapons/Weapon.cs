@@ -26,8 +26,6 @@ namespace DungeonGame
         protected int y;
         protected bool _enabled;
         protected AttackTypes _attackType;
-        [NonSerialized]
-        private static KeyboardState oldState;
 
         public AttackTypes AttackType => _attackType;
         public string Name => _name;
@@ -68,21 +66,19 @@ namespace DungeonGame
         }
         public void Update()
         {
-            KeyboardState newState = Keyboard.GetState();
             if (_enabled)
             {
                 Rectangle playerPosition = new Rectangle((int)Player.GetPlayer().X, (int)Player.GetPlayer().Y - 1, Player.GetPlayer().Width, Player.GetPlayer().Height);
                 if (_hitbox.Intersects(playerPosition))
                 {
                     Player.GetPlayer().DrawWeaponLabel(this, true);
-                    if (newState.IsKeyDown(Keys.Space) && oldState.IsKeyUp(Keys.Space))
+                    if (KeyboardHandler.HasBeenPressed(Keys.Space))
                     {
                         Player.GetPlayer().DrawWeaponLabel(this, false);
                         Player.GetPlayer().TakeNewWeapon(this);
                         Game1.actions.Text += $"Вы взяли {_name}\n";
                         _enabled = false;
                     }
-                    oldState = newState;
                 }
                 else
                 {

@@ -36,7 +36,7 @@ namespace DungeonGame
             enemyOldState = false;
             DoNewGenerate = false;
             _menuState = MenuState.strike;
-            door = new Door(Game1.WindowWidth - Door.closedTexture.Width - 50, Door.closedTexture.Height / 2);
+            door = new Door(Game1.gameWindow.ClientBounds.Width / 2 + 147, Door.closedTexture.Height / 2 + 4);
             enemy = Enemy.Generate();
             Game1.actions.Text = $"Вам встретился {enemy.Name}\n";
             player.AnimationPlayer.SetAnimation(Animations.Idle);
@@ -45,16 +45,13 @@ namespace DungeonGame
 
         public override void Draw(SpriteBatch s)
         {
-            
-            if(enemy.IsDead)
-            {
-                door.Draw(s);
-            }
-            else
+            base.Draw(s);
+            door.Draw(s);
+            if (!enemy.IsDead)
             {
                 enemy.Draw(s);
                 enemy.DrawHealthBar(s);
-                switch(_menuState)
+                switch (_menuState)
                 {
                     case MenuState.strike:
                         foreach (var button in _attackButtons)
@@ -65,7 +62,7 @@ namespace DungeonGame
                             button.Value.Draw(s);
                         break;
                 }
-                
+
             }
         }
         public override void Update(GameTime gameTime)

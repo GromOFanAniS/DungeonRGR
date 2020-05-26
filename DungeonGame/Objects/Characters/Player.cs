@@ -354,14 +354,14 @@ namespace DungeonGame
         {
             if (canWalk)
             {
-                if (Game1.keyboardState.IsKeyDown(Keys.A))
+                if (KeyboardHandler.IsPressed(Keys.A))
                 {
                     _animationPlayer.SetAnimation(Animations.Walk);
                     _flip = SpriteEffects.FlipHorizontally;
                     if ((X - velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0) return;
                     X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 }
-                else if (Game1.keyboardState.IsKeyDown(Keys.D))
+                else if (KeyboardHandler.IsPressed(Keys.D))
                 {
                     _animationPlayer.SetAnimation(Animations.Walk);
                     _flip = SpriteEffects.None;

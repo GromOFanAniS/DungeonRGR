@@ -72,8 +72,8 @@ namespace DungeonGame
 
         public void Draw(SpriteBatch s)
         {
-            s.DrawString(_font, _label, new Vector2(_position.X - _font.MeasureString(_label).X / 2 + 0.5f, _position.Y - _font.MeasureString(_label).Y), Color.Yellow);
-            s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2, _position.Y), Color.Black);
+            s.DrawString(_font, _label, new Vector2(_position.X - _font.MeasureString(_label).X / 2 + 0.5f, _position.Y - _font.MeasureString(_label).Y), Color.PowderBlue);
+            s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2, _position.Y), Color.Wheat);
         }
     }
 }
