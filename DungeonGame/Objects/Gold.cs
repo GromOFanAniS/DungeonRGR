@@ -29,7 +29,7 @@ namespace DungeonGame
         public Gold()
         {
             _doDraw = true;
-            _amount = Game1.random.Next(101);
+            _amount = Game1.random.Next(101 + 20 * Game1.difficulty);
             _potionAmount = Game1.random.Next(1, 5);
 
             x = (Game1.WindowWidth - Width) / 2;
