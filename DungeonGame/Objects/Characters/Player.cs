@@ -196,6 +196,7 @@ namespace DungeonGame
             {
                 LeaderBoard.GetLeaderBoard().AddToBoard(Name, gold);
                 Game1.gameState = GameState.GameOverScene;
+                Position((Game1.WindowWidth - Width) / 2, (Game1.WindowHeight - Height) / 2 + 24);
                 Scene.DoNewGenerate = true;
             }
             _animationPlayer.Update(gameTime);

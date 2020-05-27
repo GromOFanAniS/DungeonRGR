@@ -32,8 +32,8 @@ namespace DungeonGame
             button.Update();
             if(button.State == StateButton.Press)
             {
-                Game1.gameState = GameState.MenuScene;
                 Player.Kill();
+                Game1.gameState = GameState.MenuScene;
             }
         }
     }
