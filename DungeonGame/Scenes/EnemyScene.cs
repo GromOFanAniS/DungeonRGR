@@ -67,10 +67,11 @@ namespace DungeonGame
         }
         public override void Update(GameTime gameTime)
         {
-            if (player.AnimationPlayer.PlayOnce || enemy.AnimationPlayer.PlayOnce) return;
+            if (player.AnimationPlayer.PlayOnce) return;
             enemy.Update(gameTime);
+            if (enemy.AnimationPlayer.PlayOnce) return;
 
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 var button = _attackButtons.ElementAt(i);
                 if (enemy.BodyParts.Contains((AttackSpots)Enum.Parse(typeof(AttackSpots), button.Key)))

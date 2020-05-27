@@ -20,8 +20,9 @@ namespace DungeonGame
             _durability = 20;
             _attackType = AttackTypes.Physical;
             _texture = _shortSwordTexture;
-            x = (Game1.WindowWidth - Width) / 2 + Width * 5;
-            _hitbox = new Rectangle(x, y, Width, Height);
+            x = (Game1.WindowWidth - Width) / 2 + 100;
+            y += 12;
+            _hitbox = new Rectangle(x + 75, y, Width - 125, Height);
         }
 
         public static void Load(ContentManager content)
@@ -40,8 +41,8 @@ namespace DungeonGame
             _durability = 40;
             _texture = _swordTexture;
             _attackType = AttackTypes.Physical;
-            x = (Game1.WindowWidth - Width) / 2 + Width * 5;
-            _hitbox = new Rectangle(x, y, Width, Height);
+            x = (Game1.WindowWidth - Width) / 2 + 100;
+            _hitbox = new Rectangle(x + 75, y, Width - 125, Height);
         }
         public static void Load(ContentManager content)
         {
@@ -60,8 +61,8 @@ namespace DungeonGame
             _durability = 25;
             _texture = _bowTexture;
             _attackType = AttackTypes.Ranged;
-            x = (Game1.WindowWidth - Width) / 2 + Width * 10;
-            _hitbox = new Rectangle(x, y, Width, Height);
+            x = (Game1.WindowWidth - Width) / 2 + 50;
+            _hitbox = new Rectangle(x + 75, y, Width - 125, Height);
         }
         public static void Load(ContentManager content)
         {
@@ -80,8 +81,9 @@ namespace DungeonGame
             _durability = 15;
             _texture = _mSwordTexture;
             _attackType = AttackTypes.Magical;
-            x = (Game1.WindowWidth - Width) / 2 + Width * 4;
-            _hitbox = new Rectangle(x, y, Width, Height);
+            x = (Game1.WindowWidth - Width) / 2 + 100;
+            y -= 28;
+            _hitbox = new Rectangle(x + 75, y, Width - 125, Height);
         }
         public static void Load(ContentManager content)
         {

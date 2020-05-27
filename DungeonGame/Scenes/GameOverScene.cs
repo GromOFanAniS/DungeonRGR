@@ -17,13 +17,13 @@ namespace DungeonGame
         {
             MusicPlayer.ChangeSong(MusicState.GameOver);
             button = new Button((Game1.WindowWidth - Button.Width) / 2, (Game1.WindowHeight * 2 / 3), "В главное меню");
-            label = new Label(Game1.WindowWidth / 2, (Game1.WindowHeight / 3), $"Вы умерли, ваш счет {Player.GetPlayer().gold}", AlignmentPosition.center);
+            label = new Label(Game1.WindowWidth / 2, (Game1.WindowHeight / 3), $"Ваш счет {Player.GetPlayer().gold}", AlignmentPosition.center);
         }
 
         public override void Draw(SpriteBatch s)
         {
             base.Draw(s);
-            label.Draw(s);
+            label.Draw(s, Color.DarkRed);
             button.Draw(s);
         }
 

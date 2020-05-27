@@ -178,9 +178,9 @@ namespace DungeonGame
         {
             playerInstance = null;
         }
-        public static void Load(ContentManager content)
+        public static void Load()
         {
-            _playerSheetTexture = content.Load<Texture2D>("Player/PlayerSheet");
+            _playerSheetTexture = _content.Load<Texture2D>("Player/PlayerSheet");
         }
         #endregion
 
@@ -331,7 +331,7 @@ namespace DungeonGame
             RegenerateAttacks();
             _skillHandler.RegenerateSkills();
         }
-        private void AnimationInitialize()
+        protected override void AnimationInitialize()
         {
             Animation idleAnimation = new Animation();
             Animation walkAnimation = new Animation();

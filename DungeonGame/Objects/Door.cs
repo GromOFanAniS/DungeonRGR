@@ -20,6 +20,7 @@ namespace DungeonGame
         private Dictionary<StateDoor, Texture2D> _textures;
         private Vector2 _position;
         private Rectangle _hitbox;
+        private readonly Player player = Player.GetPlayer();
 
         public StateDoor State { get { return _state; } }
 
@@ -59,7 +60,7 @@ namespace DungeonGame
         }
 
 
-        private static void OpenDoor()
+        private void OpenDoor()
         {
             if (Game1.gameState == GameState.DoorScene)
             {
@@ -70,6 +71,8 @@ namespace DungeonGame
                 }
                 else
                 {
+                    if (_position.X > Game1.WindowWidth / 2)
+                        player.Position((Game1.WindowWidth - player.Width) / 2 - 230, (Game1.WindowHeight - player.Height) / 2);
                     Game1.gameState = GameState.GoldScene;
                 }
                 Scene.DoNewGenerate = true;

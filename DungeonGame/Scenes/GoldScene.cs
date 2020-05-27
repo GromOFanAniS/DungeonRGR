@@ -51,17 +51,17 @@ namespace DungeonGame
         public override void Draw(SpriteBatch s)
         {
             base.Draw(s);
+            door.Draw(s);
             gold.Draw(s);
             weapon?.Draw(s);
-            door.Draw(s);
         }
 
         public override void Update(GameTime gameTime)
         {
-            gold.Update(gameTime);
-            weapon?.Update();
             if (!gold.DoDraw)
                 door.Update();
+            weapon?.Update();
+            gold.Update(gameTime);
         }
     }
 }

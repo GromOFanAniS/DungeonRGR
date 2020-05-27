@@ -71,6 +71,10 @@ namespace DungeonGame
         protected HealthBar _healthBar;
         [NonSerialized]
         protected AnimationPlayer _animationPlayer = new AnimationPlayer();
+        [NonSerialized]
+        protected Texture2D _texture;
+        [NonSerialized]
+        protected static ContentManager _content;
         protected int _health;
         protected int _maxHealth;
         protected AttackTypes _weakness;
@@ -106,8 +110,14 @@ namespace DungeonGame
         public AttackTypes Weakness => _weakness;
         public AttackTypes Resistance => _resistance;
 
+        protected abstract void AnimationInitialize();
+
         public abstract void Update(GameTime gameTime);
-        public abstract void Draw(SpriteBatch s);
+        public virtual void Draw(SpriteBatch s)
+        {
+            Vector2 topLeftOfSprite = new Vector2(X, Y);
+            _animationPlayer.Draw(s, _texture, topLeftOfSprite, SpriteEffects.None);
+        }
 
         public void Position(int x, int y)
         {
@@ -117,8 +127,8 @@ namespace DungeonGame
 
         public static void LoadCharacters(ContentManager content)
         {
-            Player.Load(content);
-            Slime.Load(content);
+            _content = content;
+            Player.Load();
         }
 
         public void DoAttack(Character target, Attack attack)

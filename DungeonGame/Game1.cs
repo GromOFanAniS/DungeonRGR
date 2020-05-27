@@ -127,7 +127,7 @@ namespace DungeonGame
                 case GameState.DoorScene:
                     if (Scene.DoNewGenerate)
                     {
-                        player.Position((Window.ClientBounds.Width - player.Width) / 2, (Window.ClientBounds.Height - player.Height) / 2);
+                        player.Position((WindowWidth - player.Width) / 2, (WindowHeight - player.Height) / 2);
                         scene = new DoorScene();
                     }
                     player.Update(gameTime);

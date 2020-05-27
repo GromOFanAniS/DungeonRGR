@@ -66,23 +66,25 @@ namespace DungeonGame
             }
         }
 
-        public void Draw(SpriteBatch s)
+        public void Draw(SpriteBatch s, Color? color = null, Color? outline = null)
         {
+            if (color == null) color = Color.White;
+            if (outline == null) outline = Color.Black;
             if (_alignment == AlignmentPosition.center)
             {
-                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y) + new Vector2(1, 1), Color.Black);
-                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y) + new Vector2(1, -1), Color.Black);
-                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y) + new Vector2(-1, 1), Color.Black);
-                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y) + new Vector2(-1, -1), Color.Black);
-                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y), Color.White);
+                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y) + new Vector2(1, 1), (Color)outline);
+                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y) + new Vector2(1, -1), (Color)outline);
+                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y) + new Vector2(-1, 1), (Color)outline);
+                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y) + new Vector2(-1, -1), (Color)outline);
+                s.DrawString(_font, _text, new Vector2(_position.X - _font.MeasureString(_text).X / 2 + 0.5f, _position.Y), (Color)color);
             }
             else
             {
-                s.DrawString(_font, _text, _position + new Vector2(1, 1), Color.Black);
-                s.DrawString(_font, _text, _position + new Vector2(1, -1), Color.Black);
-                s.DrawString(_font, _text, _position + new Vector2(-1, 1), Color.Black);
-                s.DrawString(_font, _text, _position + new Vector2(-1, -1), Color.Black);
-                s.DrawString(_font, _text, _position, Color.White);
+                s.DrawString(_font, _text, _position + new Vector2(1, 1), (Color)outline);
+                s.DrawString(_font, _text, _position + new Vector2(1, -1), (Color)outline);
+                s.DrawString(_font, _text, _position + new Vector2(-1, 1), (Color)outline);
+                s.DrawString(_font, _text, _position + new Vector2(-1, -1), (Color)outline);
+                s.DrawString(_font, _text, _position, (Color)color);
             }
         }
     }

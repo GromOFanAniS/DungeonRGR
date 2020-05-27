@@ -43,7 +43,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Objects\Characters\Character.cs" />
+    <Compile Include="Objects\Characters\Enemies\Demon.cs" />
+    <Compile Include="Objects\Characters\Enemies\Dio.cs" />
+    <Compile Include="Objects\Characters\Enemies\FloatingSkull.cs" />
+    <Compile Include="Objects\Characters\Enemies\Goblin.cs" />
+    <Compile Include="Objects\Characters\Enemies\Hellhound.cs" />
+    <Compile Include="Objects\Characters\Enemies\Imp.cs" />
+    <Compile Include="Objects\Characters\Enemies\Mushroom.cs" />
+    <Compile Include="Objects\Characters\Enemies\Skeleton.cs" />
     <Compile Include="Objects\Characters\Enemies\Slime.cs" />
+    <Compile Include="Objects\Characters\Enemies\Thing.cs" />
     <Compile Include="Objects\Gold.cs" />
     <Compile Include="Objects\UI\HealthBar.cs" />
     <Compile Include="Objects\UI\Label.cs" />

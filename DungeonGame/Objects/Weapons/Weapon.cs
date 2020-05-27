@@ -48,7 +48,7 @@ namespace DungeonGame
         public Weapon()
         {
             _enabled = true;
-            y = 300;
+            y = Game1.WindowHeight / 2 + 6;
         }
 
         public void Draw(SpriteBatch s)

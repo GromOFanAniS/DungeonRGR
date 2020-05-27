@@ -32,7 +32,7 @@ namespace DungeonGame
             _potionAmount = Game1.random.Next(1, 5);
 
             x = (Game1.WindowWidth - Width) / 2;
-            y = 240;
+            y = 280;
 
             _hitbox = new Rectangle(x, y, Width, Height);
         }
@@ -61,7 +61,7 @@ namespace DungeonGame
         {
             if (_doDraw)
             {
-                Vector2 topLeftOfSprite = new Vector2(this.x, this.y);
+                Vector2 topLeftOfSprite = new Vector2(x, y);
                 var sourceRectangle = _animation.CurrentRectangle;
                 s.Draw(_sheetTexture, topLeftOfSprite, null, sourceRectangle);
             }
