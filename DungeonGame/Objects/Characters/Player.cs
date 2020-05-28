@@ -158,10 +158,10 @@ namespace DungeonGame
             _weakness = AttackTypes.None;
             _attacks = new List<Attack>()
             {
-                new Attack(10, 45, AttackTypes.Physical, AttackSpots.Head, "удар по голове"),
-                new Attack(7, 75, AttackTypes.Physical, AttackSpots.Body, "удар по торсу"),
-                new Attack(4, 85, AttackTypes.Physical, AttackSpots.Hands, "удар по рукам"),
-                new Attack(2, 95, AttackTypes.Physical, AttackSpots.Legs, "удар по ногам")
+                new Attack(15, 45, AttackTypes.Physical, AttackSpots.Head, "удар по голове"),
+                new Attack(10, 75, AttackTypes.Physical, AttackSpots.Body, "удар по торсу"),
+                new Attack(7, 85, AttackTypes.Physical, AttackSpots.Hands, "удар по рукам"),
+                new Attack(5, 95, AttackTypes.Physical, AttackSpots.Legs, "удар по ногам")
             };
 
             Initialize();

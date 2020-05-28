@@ -12,9 +12,9 @@ namespace DungeonGame
         public Demon()
         {
             Name = "Демон";
-            _maxHealth = 40 + 20 * Game1.difficulty;//TODO: ребаланс
+            _maxHealth = 80 + 40 * Game1.difficulty;
             _health = _maxHealth;
-            experience = 10 + 20 * Game1.difficulty;//TODO: ребаланс
+            experience = 80 + 20 * Game1.difficulty;
             X += 12;
             Y -= 4;
             _bodyParts = new List<AttackSpots>()
@@ -24,15 +24,17 @@ namespace DungeonGame
                 AttackSpots.Hands,
                 AttackSpots.Legs
             };
-            _weakSpots = new List<AttackSpots>()//TODO: ребаланс
+            _weakSpots = new List<AttackSpots>()
             {
-                AttackSpots.Body
+                AttackSpots.Head,
+                AttackSpots.Hands
             };
-            _weakness = AttackTypes.Physical;//TODO: ребаланс
-            _attacks = new List<Attack>()//TODO: ребаланс
+            _weakness = AttackTypes.Physical;
+            _resistance = AttackTypes.Magical;
+            _attacks = new List<Attack>()
             {
-                new Attack(3 + 1 * Game1.difficulty, 75, AttackTypes.Poison, AttackSpots.Body, "Наскок"),
-                new Attack(6 + 2 * Game1.difficulty, 50, AttackTypes.Poison, AttackSpots.Body, "Поедание")
+                new Attack(10 + 3 * Game1.difficulty, 70, AttackTypes.Physical, AttackSpots.Body, "Удар"),
+                new Attack(15 + 6 * Game1.difficulty, 50, AttackTypes.Magical, AttackSpots.Body, "Проклятие")
             };
 
         }

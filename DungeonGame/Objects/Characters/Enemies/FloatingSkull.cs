@@ -12,23 +12,21 @@ namespace DungeonGame
         public FloatingSkull()
         {
             Name = "Левитирующий череп";
-            _maxHealth = 40 + 20 * Game1.difficulty;//TODO: ребаланс
+            _maxHealth = 20 + 10 * Game1.difficulty;
             _health = _maxHealth;
-            experience = 10 + 20 * Game1.difficulty;//TODO: ребаланс
+            experience = 15 + 25 * Game1.difficulty;
             Y += 6;
             _bodyParts = new List<AttackSpots>()
             {
                 AttackSpots.Head
             };
-            _weakSpots = new List<AttackSpots>()//TODO: ребаланс
+            _weakSpots = new List<AttackSpots>();
+            _weakness = AttackTypes.Physical;
+            _resistance = AttackTypes.Magical;
+            _attacks = new List<Attack>()
             {
-                AttackSpots.Body
-            };
-            _weakness = AttackTypes.Physical;//TODO: ребаланс
-            _attacks = new List<Attack>()//TODO: ребаланс
-            {
-                new Attack(3 + 1 * Game1.difficulty, 75, AttackTypes.Poison, AttackSpots.Body, "Наскок"),
-                new Attack(6 + 2 * Game1.difficulty, 50, AttackTypes.Poison, AttackSpots.Body, "Поедание")
+                new Attack(5 + 2 * Game1.difficulty, 75, AttackTypes.Magical, AttackSpots.Body, "Магическая комета"),
+                new Attack(7 + 3 * Game1.difficulty, 50, AttackTypes.Magical, AttackSpots.Body, "Страх")
             };
 
         }

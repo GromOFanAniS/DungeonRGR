@@ -42,7 +42,7 @@ namespace DungeonGame
                 case 6: return new Goblin();
                 case 7: return new Thing();
                 case 8: return new Hellhound();
-                case 9: return new Dio();
+                //case 9: return new Dio();
                 default: return new Slime();
             }
         }

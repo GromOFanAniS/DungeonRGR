@@ -12,9 +12,9 @@ namespace DungeonGame
         public Goblin()
         {
             Name = "Гоблин";
-            _maxHealth = 40 + 20 * Game1.difficulty;//TODO: ребаланс
+            _maxHealth = 50 + 23 * Game1.difficulty;
             _health = _maxHealth;
-            experience = 10 + 20 * Game1.difficulty;//TODO: ребаланс
+            experience = 20 + 30 * Game1.difficulty;
             X += 12;
             Y += 25;
             _bodyParts = new List<AttackSpots>()
@@ -24,15 +24,18 @@ namespace DungeonGame
                 AttackSpots.Hands,
                 AttackSpots.Legs
             };
-            _weakSpots = new List<AttackSpots>()//TODO: ребаланс
+            _weakSpots = new List<AttackSpots>()
             {
-                AttackSpots.Body
+                AttackSpots.Head,
+                AttackSpots.Hands
             };
-            _weakness = AttackTypes.Physical;//TODO: ребаланс
-            _attacks = new List<Attack>()//TODO: ребаланс
+            _weakness = AttackTypes.Ranged;
+            _resistance = AttackTypes.Poison;
+            _attacks = new List<Attack>()
             {
-                new Attack(3 + 1 * Game1.difficulty, 75, AttackTypes.Poison, AttackSpots.Body, "Наскок"),
-                new Attack(6 + 2 * Game1.difficulty, 50, AttackTypes.Poison, AttackSpots.Body, "Поедание")
+                new Attack(7 + 3 * Game1.difficulty, 65, AttackTypes.Physical, AttackSpots.Body, "Удар"),
+                new Attack(10 + 5 * Game1.difficulty, 50, AttackTypes.Physical, AttackSpots.Body, "Грабёж"),
+                new Attack(2 + 1 * Game1.difficulty, 40, AttackTypes.Physical, AttackSpots.Body, "Слабый приём")
             };
 
         }

@@ -12,9 +12,9 @@ namespace DungeonGame
         public Mushroom()
         {
             Name = "Гриб";
-            _maxHealth = 40 + 20 * Game1.difficulty;//TODO: ребаланс
+            _maxHealth = 60 + 15 * Game1.difficulty;
             _health = _maxHealth;
-            experience = 10 + 20 * Game1.difficulty;//TODO: ребаланс
+            experience = 25 + 20 * Game1.difficulty;
             X += 12;
             Y -= 7;
             _bodyParts = new List<AttackSpots>()
@@ -24,15 +24,18 @@ namespace DungeonGame
                 AttackSpots.Hands,
                 AttackSpots.Legs
             };
-            _weakSpots = new List<AttackSpots>()//TODO: ребаланс
+            _weakSpots = new List<AttackSpots>()
             {
-                AttackSpots.Body
+                AttackSpots.Body,
+                AttackSpots.Head
             };
-            _weakness = AttackTypes.Physical;//TODO: ребаланс
-            _attacks = new List<Attack>()//TODO: ребаланс
+            _weakness = AttackTypes.Physical;
+            _resistance = AttackTypes.Poison;
+            _attacks = new List<Attack>()
             {
-                new Attack(3 + 1 * Game1.difficulty, 75, AttackTypes.Poison, AttackSpots.Body, "Наскок"),
-                new Attack(6 + 2 * Game1.difficulty, 50, AttackTypes.Poison, AttackSpots.Body, "Поедание")
+                new Attack(5 + 2 * Game1.difficulty, 65, AttackTypes.Physical, AttackSpots.Body, "Удар"),
+                new Attack(10 + 3 * Game1.difficulty, 50, AttackTypes.Poison, AttackSpots.Body, "Облако спор"),
+                new Attack(8 + 3 * Game1.difficulty, 55, AttackTypes.Magical, AttackSpots.Body, "Проклятие"),
             };
 
         }

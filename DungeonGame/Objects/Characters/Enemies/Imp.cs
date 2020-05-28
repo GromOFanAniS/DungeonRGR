@@ -12,9 +12,9 @@ namespace DungeonGame
         public Imp()
         {
             Name = "Имп";
-            _maxHealth = 40 + 20 * Game1.difficulty;//TODO: ребаланс
+            _maxHealth = 40 + 15 * Game1.difficulty;
             _health = _maxHealth;
-            experience = 10 + 20 * Game1.difficulty;//TODO: ребаланс
+            experience = 15 + 25 * Game1.difficulty;
             X += 12;
             Y += 10;
             _bodyParts = new List<AttackSpots>()
@@ -24,15 +24,18 @@ namespace DungeonGame
                 AttackSpots.Hands,
                 AttackSpots.Legs
             };
-            _weakSpots = new List<AttackSpots>()//TODO: ребаланс
+            _weakSpots = new List<AttackSpots>()
             {
-                AttackSpots.Body
+                AttackSpots.Head,
+                AttackSpots.Hands
             };
-            _weakness = AttackTypes.Physical;//TODO: ребаланс
-            _attacks = new List<Attack>()//TODO: ребаланс
+            _weakness = AttackTypes.Ranged;
+            _resistance = AttackTypes.Magical;
+            _attacks = new List<Attack>()
             {
-                new Attack(3 + 1 * Game1.difficulty, 75, AttackTypes.Poison, AttackSpots.Body, "Наскок"),
-                new Attack(6 + 2 * Game1.difficulty, 50, AttackTypes.Poison, AttackSpots.Body, "Поедание")
+                new Attack(5 + 2 * Game1.difficulty, 60, AttackTypes.Physical, AttackSpots.Body, "Удар"),
+                new Attack(7 + 3 * Game1.difficulty, 40, AttackTypes.Magical, AttackSpots.Body, "Сгусток аргента"),
+                new Attack(6 + 1 * Game1.difficulty, 55, AttackTypes.Physical, AttackSpots.Body, "Прыжок")
             };
 
         }

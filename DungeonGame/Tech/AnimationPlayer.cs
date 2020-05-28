@@ -54,6 +54,7 @@ namespace DungeonGame
             {
                 _playOnce = false;
                 _isPlaying = false;
+                SetAnimation(Animations.Idle);
             }
         }
     }
