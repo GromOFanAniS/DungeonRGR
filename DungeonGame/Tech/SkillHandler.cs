@@ -76,12 +76,12 @@ namespace DungeonGame
             int i = 0;
             foreach (var skill in activeSkills)
             {
-                buttons.Add($"{skill.Name}", new Button(800, y + (Button.Height + 17) * i, "улучшить\nнавык"));
+                buttons.Add($"{skill.Name}", new Button(800, y + (Button.Height + 17) * i, "Улучшить\nнавык"));
                 i++;
             }
             foreach (var skill in passiveSkills)
             {
-                buttons.Add($"{skill.Name}", new Button(800, y + (Button.Height + 17) * i, "улучшить\nнавык"));
+                buttons.Add($"{skill.Name}", new Button(800, y + (Button.Height + 17) * i, "Улучшить\nнавык"));
                 i++;
             }
             buttons.Add("Exit", new Button(5, 5, "Назад"));
