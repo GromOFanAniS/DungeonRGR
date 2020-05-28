@@ -63,9 +63,20 @@ namespace DungeonGame
             gameOverSong = content.Load<Song>("BattleMusic/11 In Flanders Fields (Soundtrack Version)");
 
             ChangeSong(MusicState.Peaceful);
+            MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
         }
+
+        private static void MediaPlayer_MediaStateChanged(object sender, EventArgs e)
+        {
+            if (DoomMode)
+            {
+                songToPlay = DoomMusic[Game1.random.Next(DoomMusic.Count)];
+            }
+        }
+
         public static void Update()
         {
+            
             if (currentSong == songToPlay)
                 return;
 
@@ -75,6 +86,7 @@ namespace DungeonGame
             }
             else
             {
+                
                 MediaPlayer.Play(songToPlay);
                 currentSong = songToPlay;
                 MediaPlayer.Volume = 0.03f;

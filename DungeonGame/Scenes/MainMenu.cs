@@ -56,7 +56,6 @@ namespace DungeonGame
                             {
                                 MusicPlayer.DoomMode = true;
                                 MusicPlayer.ChangeSong(MusicState.Peaceful);
-                                MediaPlayer.Volume += 0.1f;
                             }
                             else if(MusicPlayer.DoomMode)
                             {

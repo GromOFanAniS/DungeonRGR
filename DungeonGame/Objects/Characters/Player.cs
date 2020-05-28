@@ -263,7 +263,7 @@ namespace DungeonGame
         public void UsePotion()
         {
             Potions--;
-            Health += 15 * Game1.difficulty;
+            Health += 25 * Game1.difficulty;
         }
         public void TakePotions(int value)
         {
