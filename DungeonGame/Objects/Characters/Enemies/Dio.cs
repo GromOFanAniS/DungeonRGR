@@ -39,7 +39,6 @@ namespace DungeonGame
         protected override void AnimationInitialize()
         {
             Animation spawn = new Animation();
-            spawn.AddFrame(new Rectangle(2860 - 260 * 11, 0, 260, 282), TimeSpan.FromSeconds(0.001));
             for (int i = 0; i < 4; i++)
                 spawn.AddFrame(new Rectangle(2860 - 260 * i, 0, 260, 280), TimeSpan.FromSeconds(0.25));
             for (int i = 0; i < 2; i++)

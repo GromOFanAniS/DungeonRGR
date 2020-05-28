@@ -141,32 +141,19 @@ namespace DungeonGame
         #region constructors
         private Player()
         {
-            Name = "Игрок";
-            _level = 1;
-            _experienceToNextLevel = 10;
-            _maxHealth = 100;
-            _health = _maxHealth;
-            _potions = 2;
-            _strength = 0;
-            _agility = 0;
-            _intelligence = 0;
-            _difficulty = Game1.difficulty;
+            StatsInitialize();
 
             _skillHandler = new SkillHandler();
 
             _weakSpots = new List<AttackSpots>();
             _weakness = AttackTypes.None;
-            _attacks = new List<Attack>()
-            {
-                new Attack(15, 45, AttackTypes.Physical, AttackSpots.Head, "удар по голове"),
-                new Attack(10, 75, AttackTypes.Physical, AttackSpots.Body, "удар по торсу"),
-                new Attack(7, 85, AttackTypes.Physical, AttackSpots.Hands, "удар по рукам"),
-                new Attack(5, 95, AttackTypes.Physical, AttackSpots.Legs, "удар по ногам")
-            };
+            AttackInitialize();
 
             Initialize();
         }
+
         #endregion
+
         #region static methods
         public static Player GetPlayer()
         {
@@ -192,13 +179,7 @@ namespace DungeonGame
             CheckDifficulty();
             WeaponUpdate();
             WalkingUpdate(gameTime);
-            if(_health <= 0)
-            {
-                LeaderBoard.GetLeaderBoard().AddToBoard(Name, gold);
-                Game1.gameState = GameState.GameOverScene;
-                Position((Game1.WindowWidth - Width) / 2, (Game1.WindowHeight - Height) / 2 + 24);
-                Scene.DoNewGenerate = true;
-            }
+            CheckDead();
             _animationPlayer.Update(gameTime);
         }
 
@@ -332,6 +313,29 @@ namespace DungeonGame
             RegenerateAttacks();
             _skillHandler.RegenerateSkills();
         }
+        private void StatsInitialize()
+        {
+            Name = "Игрок";
+            _level = 1;
+            _experienceToNextLevel = 10;
+            _maxHealth = 100;
+            _health = _maxHealth;
+            _potions = 2;
+            _strength = 0;
+            _agility = 0;
+            _intelligence = 0;
+            _difficulty = Game1.difficulty;
+        }
+        private void AttackInitialize()
+        {
+            _attacks = new List<Attack>()
+            {
+                new Attack(15, 45, AttackTypes.Physical, AttackSpots.Head, "удар по голове"),
+                new Attack(10, 75, AttackTypes.Physical, AttackSpots.Body, "удар по торсу"),
+                new Attack(7, 85, AttackTypes.Physical, AttackSpots.Hands, "удар по рукам"),
+                new Attack(5, 95, AttackTypes.Physical, AttackSpots.Legs, "удар по ногам")
+            };
+        }
         protected override void AnimationInitialize()
         {
             Animation idleAnimation = new Animation();
@@ -355,19 +359,20 @@ namespace DungeonGame
         {
             if (canWalk)
             {
+                float speed = velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (KeyboardHandler.IsPressed(Keys.A))
                 {
                     _animationPlayer.SetAnimation(Animations.Walk);
                     _flip = SpriteEffects.FlipHorizontally;
-                    if ((X - velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0) return;
-                    X -= velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (X - speed <= 0) return;
+                    X -= speed;
                 }
                 else if (KeyboardHandler.IsPressed(Keys.D))
                 {
                     _animationPlayer.SetAnimation(Animations.Walk);
                     _flip = SpriteEffects.None;
-                    if ((X + velocity * (float)gameTime.ElapsedGameTime.TotalSeconds) >= (Game1.WindowWidth - Width)) return;
-                    X += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if ((X + speed) >= (Game1.WindowWidth - Width)) return;
+                    X += speed;
                 }
                 else _animationPlayer.SetAnimation(Animations.Idle);
             }
@@ -376,7 +381,17 @@ namespace DungeonGame
                 _flip = SpriteEffects.None;
                 Position(Game1.WindowWidth / 2 - 100 - Width, (int)Y);
             }
-        }        
+        }
+        private void CheckDead()
+        {
+            if (_health <= 0)
+            {
+                LeaderBoard.GetLeaderBoard().AddToBoard(Name, gold);
+                Game1.gameState = GameState.GameOverScene;
+                Position((Game1.WindowWidth - Width) / 2, (Game1.WindowHeight - Height) / 2 + 24);
+                Scene.DoNewGenerate = true;
+            }
+        }
         private void CheckLevel()
         {
             if(Experience >= _experienceToNextLevel)
