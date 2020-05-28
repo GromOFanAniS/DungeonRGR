@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Audio;
 
 namespace DungeonGame
 {
@@ -55,7 +52,7 @@ namespace DungeonGame
                 _state = StateButton.Hover;
                 return;
             }
-            if (Hitbox.Contains(Game1.mouseState.X, Game1.mouseState.Y))
+            if (Hitbox.Contains(GameClass.mouseState.X, GameClass.mouseState.Y))
             {
                 MouseState newState = Mouse.GetState();
                 if (newState.LeftButton == ButtonState.Pressed && oldState.LeftButton == ButtonState.Released)

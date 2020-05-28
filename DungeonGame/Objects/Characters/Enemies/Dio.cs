@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -12,9 +9,9 @@ namespace DungeonGame
         public Dio()
         {
             Name = "Дио";
-            _maxHealth = 100 + 35 * Game1.difficulty;
+            _maxHealth = 100 + 35 * GameClass.difficulty;
             _health = _maxHealth;
-            experience = 100 + 200 * Game1.difficulty;
+            experience = 100 + 200 * GameClass.difficulty;
             X -= 100;
             Y -= 62;
             _bodyParts = new List<AttackSpots>()
@@ -29,9 +26,9 @@ namespace DungeonGame
             _resistance = AttackTypes.Physical;
             _attacks = new List<Attack>()
             {
-                new Attack(20 + 5 * Game1.difficulty, 55, AttackTypes.Magical, AttackSpots.Body, "Удар the World"),
-                new Attack(50 + 8 * Game1.difficulty, 20, AttackTypes.Special, AttackSpots.Body, "Остановка времени"),
-                new Attack(15 + 3 * Game1.difficulty, 80, AttackTypes.Physical, AttackSpots.Body, "Удар вампира")
+                new Attack(20 + 5 * GameClass.difficulty, 55, AttackTypes.Magical, AttackSpots.Body, "Удар the World"),
+                new Attack(50 + 8 * GameClass.difficulty, 20, AttackTypes.Special, AttackSpots.Body, "Остановка времени"),
+                new Attack(15 + 3 * GameClass.difficulty, 80, AttackTypes.Physical, AttackSpots.Body, "Удар вампира")
             };
 
         }

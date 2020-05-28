@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -36,9 +34,9 @@ namespace DungeonGame
             enemyOldState = false;
             DoNewGenerate = false;
             _menuState = MenuState.strike;
-            door = new Door(Game1.gameWindow.ClientBounds.Width / 2 + 147, Door.closedTexture.Height / 2 + 4);
+            door = new Door(GameClass.gameWindow.ClientBounds.Width / 2 + 147, Door.closedTexture.Height / 2 + 4);
             enemy = Enemy.Generate();
-            Game1.actions.Text = $"Вам встретился {enemy.Name}\n";
+            GameClass.actions.Text = $"Вам встретился {enemy.Name}\n";
             player.AnimationPlayer.SetAnimation(Animations.Idle);
             SetButtons();
         }
@@ -93,7 +91,7 @@ namespace DungeonGame
                         door.Update();
                         if (!enemyOldState)
                         {
-                            Game1.actions.Text += $"Вы победили {enemy.Name}\n";
+                            GameClass.actions.Text += $"Вы победили {enemy.Name}\n";
                             player.Experience += enemy.experience;
                             player.canWalk = true;
                             enemyOldState = true;
@@ -122,7 +120,7 @@ namespace DungeonGame
                                             _menuState = MenuState.skill;
                                             break;
                                         default:
-                                            Game1.actions.Text = "";
+                                            GameClass.actions.Text = "";
                                             player.AttackAction(button.Key, enemy);
                                             attackTurn = AttackTurn.Enemy;
                                             break;
@@ -158,8 +156,8 @@ namespace DungeonGame
 
         private void SetButtons()
         {
-            int x = Game1.WindowWidth / 5 * 4;
-            int y = Game1.WindowHeight / 8;
+            int x = GameClass.WindowWidth / 5 * 4;
+            int y = GameClass.WindowHeight / 8;
             
             _attackButtons.Add("Head", new Button(x, y, "Удар по голове"));
             _attackButtons.Add("Body", new Button(x, y * 2, "Удар по торсу"));

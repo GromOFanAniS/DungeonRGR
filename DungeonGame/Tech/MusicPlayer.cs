@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Content;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -70,7 +67,7 @@ namespace DungeonGame
         {
             if (DoomMode)
             {
-                songToPlay = DoomMusic[Game1.random.Next(DoomMusic.Count)];
+                songToPlay = DoomMusic[GameClass.random.Next(DoomMusic.Count)];
             }
         }
 
@@ -100,19 +97,19 @@ namespace DungeonGame
             switch(state)
             {
                 case MusicState.Battle:
-                    songToPlay = BattleMusic[Game1.random.Next(BattleMusic.Count)];
+                    songToPlay = BattleMusic[GameClass.random.Next(BattleMusic.Count)];
                     break;
                 case MusicState.GameOver:
                     songToPlay = gameOverSong;
                     break;
                 case MusicState.Peaceful:
-                    songToPlay = MenuMusic[Game1.random.Next(MenuMusic.Count)];
+                    songToPlay = MenuMusic[GameClass.random.Next(MenuMusic.Count)];
                     break;
                 case MusicState.DoomMenu:
                     songToPlay = doomMenuSong;
                     break;
                 case MusicState.Doom:
-                    songToPlay = DoomMusic[Game1.random.Next(DoomMusic.Count)];
+                    songToPlay = DoomMusic[GameClass.random.Next(DoomMusic.Count)];
                     break;
             }
         }

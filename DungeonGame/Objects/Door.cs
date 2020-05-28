@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -62,26 +61,26 @@ namespace DungeonGame
 
         private void OpenDoor()
         {
-            if (Game1.gameState == GameState.DoorScene)
+            if (GameClass.gameState == GameState.DoorScene)
             {
-                if (Game1.random.Next(100) <= 50)
+                if (GameClass.random.Next(100) <= 50)
                 {
-                    Game1.gameState = GameState.EnemyScene;
+                    GameClass.gameState = GameState.EnemyScene;
                     MusicPlayer.ChangeSong(MusicState.Battle);
                 }
                 else
                 {
-                    if (_position.X > Game1.WindowWidth / 2)
-                        player.Position((Game1.WindowWidth - player.Width) / 2 - 230, (Game1.WindowHeight - player.Height) / 2);
-                    Game1.gameState = GameState.GoldScene;
+                    if (_position.X > GameClass.WindowWidth / 2)
+                        player.Position((GameClass.WindowWidth - player.Width) / 2 - 230, (GameClass.WindowHeight - player.Height) / 2);
+                    GameClass.gameState = GameState.GoldScene;
                 }
                 Scene.DoNewGenerate = true;
             }
-            else if (Game1.gameState == GameState.EnemyScene || Game1.gameState == GameState.GoldScene)
+            else if (GameClass.gameState == GameState.EnemyScene || GameClass.gameState == GameState.GoldScene)
             {
-                if (Game1.gameState == GameState.EnemyScene) 
+                if (GameClass.gameState == GameState.EnemyScene) 
                     MusicPlayer.ChangeSong(MusicState.Peaceful);
-                Game1.gameState = GameState.DoorScene;
+                GameClass.gameState = GameState.DoorScene;
                 Scene.DoNewGenerate = true;
             }
         }

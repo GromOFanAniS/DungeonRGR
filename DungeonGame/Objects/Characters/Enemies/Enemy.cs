@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace DungeonGame
 {
@@ -26,17 +19,17 @@ namespace DungeonGame
         {
             _texture = _content.Load<Texture2D>("Enemies/" + GetType().Name.ToString());
             AnimationInitialize();
-            Position(Game1.WindowWidth / 2 + 100, (Game1.WindowHeight - Height) / 2);
-            healthBar = new HealthBar(Game1.WindowWidth / 2 + 80, Game1.WindowHeight / 2  + 99);
+            Position(GameClass.WindowWidth / 2 + 100, (GameClass.WindowHeight - Height) / 2);
+            healthBar = new HealthBar(GameClass.WindowWidth / 2 + 80, GameClass.WindowHeight / 2  + 99);
         }
         public static Enemy Generate()
         {
             if (Player.GetPlayer().Level > 15 && !isDioDead)
             {
-                Game1.actions.Text += "Ты думал, что тут будет финальный босс\n но это я - Дио!";
+                GameClass.actions.Text += "Ты думал, что тут будет финальный босс\n но это я - Дио!";
                 return new Dio();
             }
-            switch (Game1.random.Next(0, 9))
+            switch (GameClass.random.Next(0, 9))
             {
                 case 0: return new Slime();
                 case 1: return new Skeleton();
@@ -53,7 +46,7 @@ namespace DungeonGame
 
         public void AttackPlayer()
         {
-            Attack usedAttack = _attacks[Game1.random.Next(_attacks.Count)];
+            Attack usedAttack = _attacks[GameClass.random.Next(_attacks.Count)];
             DoAttack(Player.GetPlayer(), usedAttack);
         }
 

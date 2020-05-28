@@ -1,12 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Audio;
 
 namespace DungeonGame
 {
@@ -34,7 +29,7 @@ namespace DungeonGame
 
         public static void Load(ContentManager Content)
         {
-            playerName = new TextBox(Game1.WindowWidth / 2 - 11, Game1.WindowHeight / 2 - playerHeight + 80, "Персонажа зовут", "Fonts/MainMenuFont", Content);
+            playerName = new TextBox(GameClass.WindowWidth / 2 - 11, GameClass.WindowHeight / 2 - playerHeight + 80, "Персонажа зовут", "Fonts/MainMenuFont", Content);
             Button.Load(Content);
         }
         public override void Update(GameTime gameTime)
@@ -50,7 +45,7 @@ namespace DungeonGame
                     switch (button.Key)
                     {
                         case "Start":
-                            Game1.gameState = GameState.DoorScene;
+                            GameClass.gameState = GameState.DoorScene;
                             player.Name = playerName.Text;
                             if (player.Name == "Doom Slayer")
                             {
@@ -62,22 +57,22 @@ namespace DungeonGame
                                 MusicPlayer.DoomMode = false;
                                 MusicPlayer.ChangeSong(MusicState.Peaceful);
                             }
-                            Game1.difficulty = 1;
+                            GameClass.difficulty = 1;
                             player.canWalk = true;
                             DoNewGenerate = true;
                             break;
                         case "Load":
-                            Game1.gameState = GameState.DoorScene;
+                            GameClass.gameState = GameState.DoorScene;
                             Player.SaveLoadSystem.LoadGame();
                             player.canWalk = true;
                             DoNewGenerate = true;
                             break;
                         case "Leaderboard":
-                            Game1.gameState = GameState.LeaderboardScene;
+                            GameClass.gameState = GameState.LeaderboardScene;
                             DoNewGenerate = true;
                             break;
                         case "Exit":
-                            Game1.gameState = GameState.Exit;
+                            GameClass.gameState = GameState.Exit;
                             break;
                     }
                     playerName.isFocused = false;

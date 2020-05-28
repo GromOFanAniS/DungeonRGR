@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -12,9 +9,9 @@ namespace DungeonGame
         public Hellhound()
         {
             Name = "Адская Гончая";
-            _maxHealth = 30 + 10 * Game1.difficulty;
+            _maxHealth = 30 + 10 * GameClass.difficulty;
             _health = _maxHealth;
-            experience = 20 + 30 * Game1.difficulty;
+            experience = 20 + 30 * GameClass.difficulty;
             X -= 12;
             Y +=6;
             _bodyParts = new List<AttackSpots>()
@@ -32,9 +29,9 @@ namespace DungeonGame
             _resistance = AttackTypes.Physical;
             _attacks = new List<Attack>()
             {
-                new Attack(7 + 3 * Game1.difficulty, 55, AttackTypes.Physical, AttackSpots.Body, "Наскок"),
-                new Attack(15 + 7 * Game1.difficulty, 40, AttackTypes.Physical, AttackSpots.Body, "Хват за шею"),
-                new Attack(5 + 2 * Game1.difficulty, 60, AttackTypes.Physical, AttackSpots.Body, "Укус")
+                new Attack(7 + 3 * GameClass.difficulty, 55, AttackTypes.Physical, AttackSpots.Body, "Наскок"),
+                new Attack(15 + 7 * GameClass.difficulty, 40, AttackTypes.Physical, AttackSpots.Body, "Хват за шею"),
+                new Attack(5 + 2 * GameClass.difficulty, 60, AttackTypes.Physical, AttackSpots.Body, "Укус")
             };
 
         }

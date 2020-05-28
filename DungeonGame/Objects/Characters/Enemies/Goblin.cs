@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -12,9 +9,9 @@ namespace DungeonGame
         public Goblin()
         {
             Name = "Гоблин";
-            _maxHealth = 50 + 23 * Game1.difficulty;
+            _maxHealth = 50 + 23 * GameClass.difficulty;
             _health = _maxHealth;
-            experience = 20 + 30 * Game1.difficulty;
+            experience = 20 + 30 * GameClass.difficulty;
             X += 12;
             Y += 25;
             _bodyParts = new List<AttackSpots>()
@@ -33,9 +30,9 @@ namespace DungeonGame
             _resistance = AttackTypes.Poison;
             _attacks = new List<Attack>()
             {
-                new Attack(7 + 3 * Game1.difficulty, 65, AttackTypes.Physical, AttackSpots.Body, "Удар"),
-                new Attack(10 + 5 * Game1.difficulty, 50, AttackTypes.Physical, AttackSpots.Body, "Грабёж"),
-                new Attack(2 + 1 * Game1.difficulty, 40, AttackTypes.Physical, AttackSpots.Body, "Слабый приём")
+                new Attack(7 + 3 * GameClass.difficulty, 65, AttackTypes.Physical, AttackSpots.Body, "Удар"),
+                new Attack(10 + 5 * GameClass.difficulty, 50, AttackTypes.Physical, AttackSpots.Body, "Грабёж"),
+                new Attack(2 + 1 * GameClass.difficulty, 40, AttackTypes.Physical, AttackSpots.Body, "Слабый приём")
             };
 
         }

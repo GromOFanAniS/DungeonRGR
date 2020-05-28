@@ -2,10 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -48,7 +44,7 @@ namespace DungeonGame
         public Weapon()
         {
             _enabled = true;
-            y = Game1.WindowHeight / 2 + 6;
+            y = GameClass.WindowHeight / 2 + 6;
         }
 
         public void Draw(SpriteBatch s)
@@ -76,7 +72,7 @@ namespace DungeonGame
                     {
                         Player.GetPlayer().DrawWeaponLabel(this, false);
                         Player.GetPlayer().TakeNewWeapon(this);
-                        Game1.actions.Text += $"Вы взяли {_name}\n";
+                        GameClass.actions.Text += $"Вы взяли {_name}\n";
                         _enabled = false;
                     }
                 }

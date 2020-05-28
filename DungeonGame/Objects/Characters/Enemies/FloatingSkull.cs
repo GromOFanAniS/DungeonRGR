@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -12,9 +9,9 @@ namespace DungeonGame
         public FloatingSkull()
         {
             Name = "Левитирующий череп";
-            _maxHealth = 20 + 10 * Game1.difficulty;
+            _maxHealth = 20 + 10 * GameClass.difficulty;
             _health = _maxHealth;
-            experience = 15 + 25 * Game1.difficulty;
+            experience = 15 + 25 * GameClass.difficulty;
             Y += 6;
             _bodyParts = new List<AttackSpots>()
             {
@@ -25,8 +22,8 @@ namespace DungeonGame
             _resistance = AttackTypes.Magical;
             _attacks = new List<Attack>()
             {
-                new Attack(5 + 2 * Game1.difficulty, 75, AttackTypes.Magical, AttackSpots.Body, "Магическая комета"),
-                new Attack(7 + 3 * Game1.difficulty, 50, AttackTypes.Magical, AttackSpots.Body, "Страх")
+                new Attack(5 + 2 * GameClass.difficulty, 75, AttackTypes.Magical, AttackSpots.Body, "Магическая комета"),
+                new Attack(7 + 3 * GameClass.difficulty, 50, AttackTypes.Magical, AttackSpots.Body, "Страх")
             };
 
         }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
@@ -29,12 +27,12 @@ namespace DungeonGame
 
         void RegisterFocusedButtonForTextInput(System.EventHandler<TextInputEventArgs> method)
         {
-            Game1.gameWindow.TextInput += method;
+            GameClass.gameWindow.TextInput += method;
         }
 
         void UnRegisterFocusedButtonForTextInput(System.EventHandler<TextInputEventArgs> method)
         {
-            Game1.gameWindow.TextInput -= method;
+            GameClass.gameWindow.TextInput -= method;
         }
 
         void OnInput(object sender, TextInputEventArgs e)
@@ -57,8 +55,8 @@ namespace DungeonGame
         MouseState lastMouseState = new MouseState();
         public void CheckClick()
         {
-            MouseState currentMouseState = Game1.mouseState;
-            if (_hitbox.Contains(Game1.mouseState.Position) &&
+            MouseState currentMouseState = GameClass.mouseState;
+            if (_hitbox.Contains(GameClass.mouseState.Position) &&
                 currentMouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
             {
                 isFocused = !isFocused;

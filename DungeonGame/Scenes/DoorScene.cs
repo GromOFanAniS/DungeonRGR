@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using System;
 
 namespace DungeonGame
 {
@@ -22,8 +19,8 @@ namespace DungeonGame
 
         private void GenerateButtons()
         {
-            int x = Game1.WindowWidth;
-            int y = Game1.WindowHeight;
+            int x = GameClass.WindowWidth;
+            int y = GameClass.WindowHeight;
             _buttons = new Dictionary<string, Button>()
             {
                 {"Save", new Button( x/2 + 5 , y - Button.Height - 10, "Сохранить") },
@@ -38,7 +35,7 @@ namespace DungeonGame
             _doors = new List<Door>()
             {
                 new Door(182, Door.closedTexture.Height / 2 + 4),
-                new Door(Game1.gameWindow.ClientBounds.Width / 2 + 147, Door.closedTexture.Height / 2 + 4)
+                new Door(GameClass.gameWindow.ClientBounds.Width / 2 + 147, Door.closedTexture.Height / 2 + 4)
             };
         }
 
@@ -66,11 +63,11 @@ namespace DungeonGame
                         case "PlayerMenu":
                             DoNewGenerate = true;
                             player.AnimationPlayer.Play(Animations.Idle);
-                            Game1.gameState = GameState.PlayerMenuScene;
+                            GameClass.gameState = GameState.PlayerMenuScene;
                             break;
                         case "Exit":
                             DoNewGenerate = true;
-                            Game1.gameState = GameState.MenuScene;
+                            GameClass.gameState = GameState.MenuScene;
                             break;
                     }
                 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -99,7 +95,7 @@ namespace DungeonGame
                 dmg = (int)(dmg / 1.5);
             }
             target.Health -= dmg;
-            Game1.actions.Text += $"Вы нанесли {dmg} урона с помощью {_name}\n";
+            GameClass.actions.Text += $"Вы нанесли {dmg} урона с помощью {_name}\n";
             Player.GetPlayer().SkillHandler.CooldownTick();
             Cooldown = CooldownTime;
         }

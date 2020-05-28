@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Runtime.Serialization;
@@ -22,7 +20,7 @@ namespace DungeonGame
                 BinaryFormatter formatter = new BinaryFormatter();
                 using (FileStream fs = new FileStream(@"saves/save.dat", FileMode.OpenOrCreate))
                 {
-                    playerInstance._difficulty = Game1.difficulty;
+                    playerInstance._difficulty = GameClass.difficulty;
                     formatter.Serialize(fs, playerInstance);
                 }
             }
@@ -36,7 +34,7 @@ namespace DungeonGame
                         Player player = (Player)formatter.Deserialize(fs);
                         player.Initialize();
                         playerInstance = player;
-                        Game1.difficulty = player._difficulty;
+                        GameClass.difficulty = player._difficulty;
                     }
                 }
                 catch (IOException /*e*/)
@@ -203,16 +201,16 @@ namespace DungeonGame
                     UsePotion();
                     break;
                 case "Flee":
-                    if(Game1.random.Next(101) > 90)
+                    if(GameClass.random.Next(101) > 90)
                     {
-                        Game1.actions.Text += "Вам удалось сбежать\n";
+                        GameClass.actions.Text += "Вам удалось сбежать\n";
                         MusicPlayer.ChangeSong(MusicState.Peaceful);
-                        Game1.gameState = GameState.DoorScene;
+                        GameClass.gameState = GameState.DoorScene;
                         canWalk = true;
                         Scene.DoNewGenerate = true;
                     }
                     else
-                        Game1.actions.Text += "Вам не удалось сбежать\n";
+                        GameClass.actions.Text += "Вам не удалось сбежать\n";
                     break;
                 default:
                     _currentWeapon?.DamageWeapon();
@@ -224,14 +222,14 @@ namespace DungeonGame
         public override void Draw(SpriteBatch s)
         {
             _animationPlayer.Draw(s, _playerSheetTexture, new Vector2(X, Y), _flip);
-            if(Game1.gameState != GameState.MenuScene)
+            if(GameClass.gameState != GameState.MenuScene)
                 _healthBar.Draw(s, _health, _maxHealth);
-            if(Game1.gameState != GameState.PlayerMenuScene && Game1.gameState != GameState.MenuScene)
+            if(GameClass.gameState != GameState.PlayerMenuScene && GameClass.gameState != GameState.MenuScene)
             {
                 _goldAndPots.Draw(s);
                 _goldAndPots.Text = $"У вас {gold} золота и {Potions} зелий";
             }
-            else if(Game1.gameState != GameState.MenuScene)
+            else if(GameClass.gameState != GameState.MenuScene)
             {
                 _expLabel.Draw(s);
                 _expLabel.Text = $"Очков опыта: {Experience}. Необходимо: {_experienceToNextLevel}";
@@ -263,7 +261,7 @@ namespace DungeonGame
         public void UsePotion()
         {
             Potions--;
-            Health += 25 * Game1.difficulty;
+            Health += 25 * GameClass.difficulty;
         }
         public void TakePotions(int value)
         {
@@ -290,7 +288,7 @@ namespace DungeonGame
                 case "Exit":
                     RegenerateAttacks();
                     _skillHandler.RegenerateSkills();
-                    Game1.gameState = GameState.DoorScene;
+                    GameClass.gameState = GameState.DoorScene;
                     Scene.DoNewGenerate = true;
                     canWalk = true;
                     break;
@@ -304,12 +302,12 @@ namespace DungeonGame
             _animationPlayer = new AnimationPlayer();
             _healthBar = new HealthBar(5, 10);
             _weaponLabel = new Label(50, 50, "");
-            _goldAndPots = new Label(Game1.WindowWidth / 2, 15);
-            _expLabel = new Label(Game1.WindowWidth / 2, 15);
+            _goldAndPots = new Label(GameClass.WindowWidth / 2, 15);
+            _expLabel = new Label(GameClass.WindowWidth / 2, 15);
             _drawWeaponString = false;
 
             AnimationInitialize();
-            Position((Game1.WindowWidth - Width) / 2, 180);
+            Position((GameClass.WindowWidth - Width) / 2, 180);
             RegenerateAttacks();
             _skillHandler.RegenerateSkills();
         }
@@ -324,7 +322,7 @@ namespace DungeonGame
             _strength = 0;
             _agility = 0;
             _intelligence = 0;
-            _difficulty = Game1.difficulty;
+            _difficulty = GameClass.difficulty;
         }
         private void AttackInitialize()
         {
@@ -371,7 +369,7 @@ namespace DungeonGame
                 {
                     _animationPlayer.SetAnimation(Animations.Walk);
                     _flip = SpriteEffects.None;
-                    if ((X + speed) >= (Game1.WindowWidth - Width)) return;
+                    if ((X + speed) >= (GameClass.WindowWidth - Width)) return;
                     X += speed;
                 }
                 else _animationPlayer.SetAnimation(Animations.Idle);
@@ -379,7 +377,7 @@ namespace DungeonGame
             else
             {
                 _flip = SpriteEffects.None;
-                Position(Game1.WindowWidth / 2 - 100 - Width, (int)Y);
+                Position(GameClass.WindowWidth / 2 - 100 - Width, (int)Y);
             }
         }
         private void CheckDead()
@@ -387,8 +385,8 @@ namespace DungeonGame
             if (_health <= 0)
             {
                 LeaderBoard.GetLeaderBoard().AddToBoard(Name, gold);
-                Game1.gameState = GameState.GameOverScene;
-                Position((Game1.WindowWidth - Width) / 2, (Game1.WindowHeight - Height) / 2 + 24);
+                GameClass.gameState = GameState.GameOverScene;
+                Position((GameClass.WindowWidth - Width) / 2, (GameClass.WindowHeight - Height) / 2 + 24);
                 Scene.DoNewGenerate = true;
             }
         }
@@ -396,7 +394,7 @@ namespace DungeonGame
         {
             if(Experience >= _experienceToNextLevel)
             {
-                Game1.actions.Text += "Новый Уровень!\n";
+                GameClass.actions.Text += "Новый Уровень!\n";
                 StatPoints += 3;
                 _skillHandler.SkillPoints += 2;
                 _level++;
@@ -435,10 +433,10 @@ namespace DungeonGame
         }
         private void CheckDifficulty()
         {
-            if(_level > Game1.difficulty * 3)
+            if(_level > GameClass.difficulty * 3)
             {
-                Game1.difficulty++;
-                Game1.actions.Text += "Вы нашли дверь, ведущую на более глубокий уровень подземелья.\n"
+                GameClass.difficulty++;
+                GameClass.actions.Text += "Вы нашли дверь, ведущую на более глубокий уровень подземелья.\n"
                                       + "Враги станут сильнее, но и награда больше.\n";
             }
         }

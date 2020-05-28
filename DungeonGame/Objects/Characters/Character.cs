@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
 namespace DungeonGame
@@ -133,7 +131,7 @@ namespace DungeonGame
 
         public void DoAttack(Character target, Attack attack)
         {
-            if (Game1.random.Next(0, 100) <= attack.SuccessChance)
+            if (GameClass.random.Next(0, 100) <= attack.SuccessChance)
             {
                 int dmg = attack.Damage;
                 if (attack.Type != AttackTypes.Special)
@@ -150,18 +148,18 @@ namespace DungeonGame
                     {
                         dmg = (int)(dmg / 1.5);
                     }
-                    if (Game1.random.Next(0, 100) < 10)
+                    if (GameClass.random.Next(0, 100) < 10)
                     {
                         dmg *= 2;
-                        Game1.actions.Text += "Крит! ";
+                        GameClass.actions.Text += "Крит! ";
                     }
                 }
-                Game1.actions.Text += string.Format("{0} использовал {1}! Урон: {2}\n", Name, attack.Name, dmg);
+                GameClass.actions.Text += string.Format("{0} использовал {1}! Урон: {2}\n", Name, attack.Name, dmg);
                 target.Health -= dmg;
             }
             else
             {
-                Game1.actions.Text += $"{Name} промахнулся\n";
+                GameClass.actions.Text += $"{Name} промахнулся\n";
             }
         }
     }

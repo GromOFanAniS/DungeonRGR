@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -16,8 +11,8 @@ namespace DungeonGame
         public GameOverScene()
         {
             MusicPlayer.ChangeSong(MusicState.GameOver);
-            button = new Button((Game1.WindowWidth - Button.Width) / 2, (Game1.WindowHeight * 2 / 3), "В главное меню");
-            label = new Label(Game1.WindowWidth / 2, (Game1.WindowHeight / 3), $"Ваш счет {Player.GetPlayer().gold}", AlignmentPosition.center);
+            button = new Button((GameClass.WindowWidth - Button.Width) / 2, (GameClass.WindowHeight * 2 / 3), "В главное меню");
+            label = new Label(GameClass.WindowWidth / 2, (GameClass.WindowHeight / 3), $"Ваш счет {Player.GetPlayer().gold}", AlignmentPosition.center);
         }
 
         public override void Draw(SpriteBatch s)
@@ -33,7 +28,7 @@ namespace DungeonGame
             if(button.State == StateButton.Press)
             {
                 Player.Kill();
-                Game1.gameState = GameState.MenuScene;
+                GameClass.gameState = GameState.MenuScene;
             }
         }
     }

@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -18,7 +14,7 @@ namespace DungeonGame
         public PlayerMenuScene()
         {
             statPointsLabel = new Label(5, 50, "");
-            statsLabel = new Label(Game1.WindowWidth - 250, 100, "");
+            statsLabel = new Label(GameClass.WindowWidth - 250, 100, "");
             GenerateButtons();
         }
 
@@ -26,12 +22,12 @@ namespace DungeonGame
         {
             _buttons = new Dictionary<string, Button>()
             {
-                {"Health", new Button(Game1.WindowWidth / 2  - Button.Width * 3 + 20, Game1.WindowHeight - Button.Height - 10 , "Здоровье +25") },
-                {"Strength", new Button(Game1.WindowWidth / 2  - Button.Width * 2 + 30, Game1.WindowHeight - Button.Height - 10, "Сила +1")},
-                {"Agility", new Button(Game1.WindowWidth / 2 - Button.Width + 40, Game1.WindowHeight - Button.Height - 10, "Ловкость +1") },
-                {"Intellect", new Button(Game1.WindowWidth / 2 + 50, Game1.WindowHeight - Button.Height - 10, "Интеллект +1") },
-                {"Skills", new Button(Game1.WindowWidth / 2 + Button.Width*2 - 20, Game1.WindowHeight - Button.Height * 2 - 20, "Навыки") },
-                {"Exit", new Button(Game1.WindowWidth / 2 + Button.Width*2 - 20, Game1.WindowHeight - Button.Height - 10, "Назад") }
+                {"Health", new Button(GameClass.WindowWidth / 2  - Button.Width * 3 + 20, GameClass.WindowHeight - Button.Height - 10 , "Здоровье +25") },
+                {"Strength", new Button(GameClass.WindowWidth / 2  - Button.Width * 2 + 30, GameClass.WindowHeight - Button.Height - 10, "Сила +1")},
+                {"Agility", new Button(GameClass.WindowWidth / 2 - Button.Width + 40, GameClass.WindowHeight - Button.Height - 10, "Ловкость +1") },
+                {"Intellect", new Button(GameClass.WindowWidth / 2 + 50, GameClass.WindowHeight - Button.Height - 10, "Интеллект +1") },
+                {"Skills", new Button(GameClass.WindowWidth / 2 + Button.Width*2 - 20, GameClass.WindowHeight - Button.Height * 2 - 20, "Навыки") },
+                {"Exit", new Button(GameClass.WindowWidth / 2 + Button.Width*2 - 20, GameClass.WindowHeight - Button.Height - 10, "Назад") }
             };
         }
 
@@ -57,7 +53,7 @@ namespace DungeonGame
                 button.Value.Update();
                 if(button.Value.State == StateButton.Press && button.Key == "Skills")
                 {
-                    Game1.gameState = GameState.SkillMenuScene;
+                    GameClass.gameState = GameState.SkillMenuScene;
                     DoNewGenerate = true;
                     break;
                 }

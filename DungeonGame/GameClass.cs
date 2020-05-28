@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace DungeonGame
 {
@@ -19,10 +18,7 @@ namespace DungeonGame
         Exit
     }
 
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
-    public class Game1 : Game
+    public class GameClass : Game
     {
         public static Random random = new Random();
         public static GameWindow gameWindow;
@@ -39,7 +35,7 @@ namespace DungeonGame
         private Scene scene;
         private LeaderBoard leaderBoard;
 
-        public Game1()
+        public GameClass()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -47,15 +43,9 @@ namespace DungeonGame
             graphics.PreferredBackBufferHeight = 600;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             IsMouseVisible = true;
             gameWindow = Window;
             difficulty = 1;
@@ -65,15 +55,9 @@ namespace DungeonGame
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            // TODO: use this.Content to load your game content here
 
             leaderBoard = LeaderBoard.GetLeaderBoard();
             Background.Init(Content, spriteBatch);
@@ -90,22 +74,14 @@ namespace DungeonGame
             MusicPlayer.Load(Content);
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+
         protected override void UnloadContent()
         {
             leaderBoard.SaveBoard();
-            // TODO: Unload any non ContentManager content here
         }
 
         public static MouseState mouseState;
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
         protected override void Update(GameTime gameTime)
         {
             KeyboardHandler.Update();
@@ -149,7 +125,6 @@ namespace DungeonGame
                     if (Scene.DoNewGenerate)
                     {
                         player.canWalk = false;
-                        //player.Position((Window.ClientBounds.Width - player.Width) / 2, (Window.ClientBounds.Height - player.Height) / 2);
                         scene = new PlayerMenuScene();
                     }
                     player.Update(gameTime);
@@ -181,14 +156,9 @@ namespace DungeonGame
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            // TODO: Add your drawing code here
             var viewMatrix = _camera.GetViewMatrix();
             spriteBatch.Begin(transformMatrix: viewMatrix);
             scene?.Draw(spriteBatch);

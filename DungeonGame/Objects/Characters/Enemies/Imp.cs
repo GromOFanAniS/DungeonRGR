@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -12,9 +9,9 @@ namespace DungeonGame
         public Imp()
         {
             Name = "Имп";
-            _maxHealth = 40 + 15 * Game1.difficulty;
+            _maxHealth = 40 + 15 * GameClass.difficulty;
             _health = _maxHealth;
-            experience = 15 + 25 * Game1.difficulty;
+            experience = 15 + 25 * GameClass.difficulty;
             X += 12;
             Y += 10;
             _bodyParts = new List<AttackSpots>()
@@ -33,9 +30,9 @@ namespace DungeonGame
             _resistance = AttackTypes.Magical;
             _attacks = new List<Attack>()
             {
-                new Attack(5 + 2 * Game1.difficulty, 60, AttackTypes.Physical, AttackSpots.Body, "Удар"),
-                new Attack(7 + 3 * Game1.difficulty, 40, AttackTypes.Magical, AttackSpots.Body, "Сгусток аргента"),
-                new Attack(6 + 1 * Game1.difficulty, 55, AttackTypes.Physical, AttackSpots.Body, "Прыжок")
+                new Attack(5 + 2 * GameClass.difficulty, 60, AttackTypes.Physical, AttackSpots.Body, "Удар"),
+                new Attack(7 + 3 * GameClass.difficulty, 40, AttackTypes.Magical, AttackSpots.Body, "Сгусток аргента"),
+                new Attack(6 + 1 * GameClass.difficulty, 55, AttackTypes.Physical, AttackSpots.Body, "Прыжок")
             };
 
         }

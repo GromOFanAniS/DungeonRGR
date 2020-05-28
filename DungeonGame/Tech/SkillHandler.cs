@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
@@ -72,7 +69,7 @@ namespace DungeonGame
         public Dictionary<string, Button> GenerateUpgradeSkillButtons()
         {
             Dictionary<string, Button> buttons = new Dictionary<string, Button>();
-            int y = Game1.WindowHeight / 7;
+            int y = GameClass.WindowHeight / 7;
             int i = 0;
             foreach (var skill in activeSkills)
             {
@@ -90,8 +87,8 @@ namespace DungeonGame
 
         public Dictionary<string, Button> GenerateUseSkillButtons()
         {
-            int x = Game1.WindowWidth / 5 * 4;
-            int y = Game1.WindowHeight / 8;
+            int x = GameClass.WindowWidth / 5 * 4;
+            int y = GameClass.WindowHeight / 8;
             int i = 1;
             Dictionary<string, Button> buttons = new Dictionary<string, Button>();
             foreach (Skill skill in activeSkills.FindAll(k => k.level > 0))

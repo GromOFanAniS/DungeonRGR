@@ -1,14 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonGame
 {
-     class SkillMenuScene : Scene
+    class SkillMenuScene : Scene
     {
         private readonly Dictionary<string, Button> _buttons;
         private readonly Label _skillPointsLabel;
@@ -45,7 +41,7 @@ namespace DungeonGame
                     switch(button.Key)
                     {
                         case "Exit":
-                            Game1.gameState = GameState.PlayerMenuScene;
+                            GameClass.gameState = GameState.PlayerMenuScene;
                             DoNewGenerate = true;
                             break;
                         default:

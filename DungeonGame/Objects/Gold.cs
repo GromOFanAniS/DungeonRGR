@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -28,10 +26,10 @@ namespace DungeonGame
         public Gold()
         {
             _doDraw = true;
-            _amount = Game1.random.Next(101 + 20 * Game1.difficulty);
-            _potionAmount = Game1.random.Next(1, 5);
+            _amount = GameClass.random.Next(101 + 20 * GameClass.difficulty);
+            _potionAmount = GameClass.random.Next(1, 5);
 
-            x = (Game1.WindowWidth - Width) / 2;
+            x = (GameClass.WindowWidth - Width) / 2;
             y = 280;
 
             _hitbox = new Rectangle(x, y, Width, Height);
@@ -52,7 +50,7 @@ namespace DungeonGame
                 _doDraw = false;
                 player.gold += _amount;
                 player.TakePotions(_potionAmount);
-                Game1.actions.Text = $"Подобрано {_amount} золота и {_potionAmount} зелий\n";
+                GameClass.actions.Text = $"Подобрано {_amount} золота и {_potionAmount} зелий\n";
             }
             _animation.Update(gameTime);
         }
