@@ -14,7 +14,7 @@ namespace DungeonGame
     abstract class Enemy : Character
     {
         private HealthBar healthBar;
-        
+        private static bool isDioDead = false;
         protected List<AttackSpots> _bodyParts;
         protected bool isDead = false;
 
@@ -31,7 +31,12 @@ namespace DungeonGame
         }
         public static Enemy Generate()
         {
-            switch (Game1.random.Next(0, 10))
+            if (Player.GetPlayer().Level > 15 && !isDioDead)
+            {
+                Game1.actions.Text += "Ты думал, что тут будет финальный босс\n но это я - Дио!";
+                return new Dio();
+            }
+            switch (Game1.random.Next(0, 9))
             {
                 case 0: return new Slime();
                 case 1: return new Skeleton();
@@ -42,7 +47,6 @@ namespace DungeonGame
                 case 6: return new Goblin();
                 case 7: return new Thing();
                 case 8: return new Hellhound();
-                //case 9: return new Dio();
                 default: return new Slime();
             }
         }
@@ -55,7 +59,12 @@ namespace DungeonGame
 
         public override void Update(GameTime gameTime)
         {
-            if (_health <= 0) isDead = true;
+            if (_health <= 0)
+            {
+                if (GetType() == typeof(Dio))
+                    isDioDead = true;
+                isDead = true;
+            }
             _animationPlayer.Update(gameTime);
         }
 
