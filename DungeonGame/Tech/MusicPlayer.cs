@@ -83,13 +83,8 @@ namespace DungeonGame
 
         public static void ChangeSong(MusicState state)
         {
-            if(DoomMode && (state != MusicState.DoomMenu || state != MusicState.Doom))
-            {
-                if(state == MusicState.Peaceful)
-                    state = MusicState.DoomMenu;
-                else
-                    state = MusicState.Doom;
-            }
+            if(DoomMode && (state != MusicState.Doom))
+                state = MusicState.Doom;
             switch(state)
             {
                 case MusicState.Battle:

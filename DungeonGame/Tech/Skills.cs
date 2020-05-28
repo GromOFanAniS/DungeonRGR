@@ -111,8 +111,8 @@ namespace DungeonGame
         public CripplingStrike()
         {
             _name = "Критический удар";
-            _baseDamage = 10;
-            _cooldownTime = 3;
+            _baseDamage = 15;
+            _cooldownTime = 2;
             _cooldown = 0;
             _pointsToLearn = 2;
             damage = _baseDamage;
@@ -121,7 +121,7 @@ namespace DungeonGame
         }
         public override void Regenerate()
         {
-            damage = BaseDamage + level * 2 + Player.GetPlayer().Strength * 2;
+            damage = BaseDamage + level * 3 + Player.GetPlayer().Strength * 3;
         }
     }
     [Serializable]
@@ -130,8 +130,8 @@ namespace DungeonGame
         public FireBall()
         {
             _name = "Огненный шар";
-            _baseDamage = 20;
-            _cooldownTime = 5;
+            _baseDamage = 30;
+            _cooldownTime = 4;
             _cooldown = 0;
             _pointsToLearn = 3;
             _attackType = AttackTypes.Magical;
@@ -140,7 +140,7 @@ namespace DungeonGame
         }
         public override void Regenerate()
         {
-            damage = BaseDamage + level * 3 + Player.GetPlayer().Intelligence * 4;
+            damage = BaseDamage + level * 4 + Player.GetPlayer().Intelligence * 5;
         }
     }
 }
