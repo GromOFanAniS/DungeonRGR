@@ -1,0 +1,563 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DungeonGame.GameClass" Collapsed="true">
+    <Position X="33.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAkEABAAACAyMAAAAAAIAAAAAAAAgBCAQgACAAAAQ=</HashCode>
+      <FileName>GameClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Character">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="DungeonGame.Character.Attack">
+        <TypeIdentifier>
+          <NewMemberFileName>Objects\Characters\Character.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>IgQACAAABQEBAoAhAAAAAOQAAAQAAAECACAgAAAIYAA=</HashCode>
+      <FileName>Objects\Characters\Character.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Demon" Collapsed="true">
+    <Position X="10.25" Y="15.25" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="15.765" />
+        <Point X="10.25" Y="15.765" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\Demon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Dio" Collapsed="true">
+    <Position X="6.5" Y="18.75" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="19.125" />
+        <Point X="8" Y="19.125" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\Dio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Enemy" Collapsed="true">
+    <Position X="8.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAAAAAAAAEAAAAACAAEAAAABAAAAABAABAAEAQAAE=</HashCode>
+      <FileName>Objects\Characters\Enemies\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.FloatingSkull" Collapsed="true">
+    <Position X="10.25" Y="17.25" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="17.562" />
+        <Point X="10.25" Y="17.562" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\FloatingSkull.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Goblin" Collapsed="true">
+    <Position X="6.5" Y="17.25" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="17.562" />
+        <Point X="8" Y="17.562" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\Goblin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Hellhound" Collapsed="true">
+    <Position X="4.75" Y="15.25" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="13.564" />
+        <Point X="6.373" Y="13.564" />
+        <Point X="6.373" Y="15.562" />
+        <Point X="6.25" Y="15.562" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\Hellhound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Imp" Collapsed="true">
+    <Position X="12" Y="15.75" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="16.144" />
+        <Point X="11.794" Y="16.144" Type="JumpStart" />
+        <Point X="11.96" Y="16.144" Type="JumpEnd" />
+        <Point X="12" Y="16.144" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\Imp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Mushroom" Collapsed="true">
+    <Position X="10.25" Y="18.75" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="19.125" />
+        <Point X="10.25" Y="19.125" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\Mushroom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Skeleton" Collapsed="true">
+    <Position X="6.5" Y="15.25" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="15.765" />
+        <Point X="8" Y="15.765" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\Skeleton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Slime" Collapsed="true">
+    <Position X="4.75" Y="16.75" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="17.125" />
+        <Point X="6.25" Y="17.125" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\Slime.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Thing" Collapsed="true">
+    <Position X="12" Y="17.25" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Enemy" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="9.062" Y="13.441" />
+        <Point X="9.062" Y="13.564" />
+        <Point X="11.877" Y="13.564" />
+        <Point X="11.877" Y="17.625" />
+        <Point X="12" Y="17.625" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Enemies\Thing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Player">
+    <Position X="17" Y="0.5" Width="2.25" />
+    <NestedTypes>
+      <Class Name="DungeonGame.Player.SaveLoadSystem">
+        <TypeIdentifier>
+          <NewMemberFileName>Objects\Characters\Player.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QAQhqTBICVAAK6AbAEEAAQAgABBACwARiQSwAAxAQCA=</HashCode>
+      <FileName>Objects\Characters\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Door" Collapsed="true">
+    <Position X="28.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAgAAAAQAQAgAAAgAADAAAAAAAAAABAAAAhAAAAAA=</HashCode>
+      <FileName>Objects\Door.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Gold" Collapsed="true">
+    <Position X="35.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAABAAAAkAAAgAAAEAAgAAAAgABCABgAAAAAAA=</HashCode>
+      <FileName>Objects\Gold.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Button" Collapsed="true">
+    <Position X="32" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAABQgEAgAgEBAACEAAAACAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Objects\UI\Button.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.HealthBar" Collapsed="true">
+    <Position X="35.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAgAAQAAAgAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Objects\UI\HealthBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Label" Collapsed="true">
+    <Position X="30.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAEAAAAAgAAAAAAAgAQAACAAQAIAAAAiAAAIAA=</HashCode>
+      <FileName>Objects\UI\Label.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.TextBox" Collapsed="true">
+    <Position X="24.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAIgAAAxAAAAAAgACEAAAIAACAiAAAAAA=</HashCode>
+      <FileName>Objects\UI\TextBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Weapon" Collapsed="true">
+    <Position X="3.75" Y="32.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIADABQAAEgAAAgAAAEQAAAAAAAAQAABgAJAIAAA=</HashCode>
+      <FileName>Objects\Weapons\Weapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.ShortSword" Collapsed="true">
+    <Position X="1" Y="33.5" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.Weapon" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.5" Y="32.812" />
+        <Point X="4.5" Y="33.875" />
+        <Point X="2.5" Y="33.875" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAgAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Weapons\Weapons.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Sword" Collapsed="true">
+    <Position X="1" Y="35.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Weapons\Weapons.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Bow" Collapsed="true">
+    <Position X="6.25" Y="35.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Weapons\Weapons.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.SkyFracture" Collapsed="true">
+    <Position X="6.25" Y="33.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Weapons\Weapons.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Program">
+    <Position X="23.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Background" Collapsed="true">
+    <Position X="33.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAgABAAAAAAAAAAAAAAAAAIACAAAAAAA=</HashCode>
+      <FileName>Scenes\Background.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.DoorScene" Collapsed="true">
+    <Position X="21.5" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgACAAAAAAAAAAABEAABAAAAAAAAQAA=</HashCode>
+      <FileName>Scenes\DoorScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.EnemyScene" Collapsed="true">
+    <Position X="23.75" Y="17" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="DungeonGame.EnemyScene.MenuState">
+        <TypeIdentifier>
+          <NewMemberFileName>Scenes\EnemyScene.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAAEAgAgAAAAACAAgAAAAACEABAAAAAAAAAAI=</HashCode>
+      <FileName>Scenes\EnemyScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.GameOverScene" Collapsed="true">
+    <Position X="26" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scenes\GameOverScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.GoldScene" Collapsed="true">
+    <Position X="26" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAAAAAgAgAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scenes\GoldScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.LeaderBoardScene" Collapsed="true">
+    <Position X="26" Y="22.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAAAAAgAAABAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scenes\LeaderBoardScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.MainMenu" Collapsed="true">
+    <Position X="19.75" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgQAAAAAAAgAAAAEAAAAAAAABAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Scenes\MainMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.PlayerMenuScene" Collapsed="true">
+    <Position X="19.75" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAAAAAAgAAAAAAAAAAAAABAQABAAAAAAAAQAA=</HashCode>
+      <FileName>Scenes\PlayerMenuScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Scene" Collapsed="true">
+    <Position X="22.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAQAAAAgAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scenes\Scene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.SkillMenuScene" Collapsed="true">
+    <Position X="21.5" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAQAAAAAAAIABAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Scenes\SkillMenuScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Animation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAACACAgAAABAEAAAAAAQAAEAAAAAAAAAAABA=</HashCode>
+      <FileName>Tech\Animation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DungeonGame.AnimationFrame" Collapsed="true">
+    <Position X="25.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tech\AnimationFrame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.AnimationPlayer" Collapsed="true">
+    <Position X="26.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAEAAEBABgAAAFAAAAAAgAQAAAAAgAAAgAAgAAA=</HashCode>
+      <FileName>Tech\AnimationPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Camera" Collapsed="true">
+    <Position X="26.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAASAAAAEAAAAEAAAAAAAACAAAAAAAAAAgAwAYAA=</HashCode>
+      <FileName>Tech\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.KeyboardHandler" Collapsed="true">
+    <Position X="28.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAIg=</HashCode>
+      <FileName>Tech\KeyboardHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.LeaderBoard" Collapsed="true">
+    <Position X="30.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQGIAEABAAAAAAABAAAAAAAAQAEAAAAA=</HashCode>
+      <FileName>Tech\LeaderBoard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.MusicPlayer" Collapsed="true">
+    <Position X="32" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQGgAQAIAIAAAAAAAAAAAAABAgBAAAAACAAAAAACAA=</HashCode>
+      <FileName>Tech\MusicPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.SkillHandler" Collapsed="true">
+    <Position X="25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAYABAAEAgAAAIAAAAAGAAICAMABAAgAAAAAABAAAA=</HashCode>
+      <FileName>Tech\SkillHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.Skill" Collapsed="true">
+    <Position X="20.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAIABAAAAAAAAAAAIAAAQAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tech\Skills.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.PassiveSkill" Collapsed="true">
+    <Position X="21.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAEAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tech\Skills.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.ExperienceBuff" Collapsed="true">
+    <Position X="22.75" Y="13.75" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.PassiveSkill" FixedToPoint="true">
+      <Path>
+        <Point X="22.25" Y="12.191" />
+        <Point X="22.25" Y="14.062" />
+        <Point X="22.75" Y="14.062" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tech\Skills.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.StoneSkin" Collapsed="true">
+    <Position X="22.75" Y="13" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.PassiveSkill" FixedToPoint="true">
+      <Path>
+        <Point X="22.25" Y="12.191" />
+        <Point X="22.25" Y="13.375" />
+        <Point X="22.75" Y="13.375" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tech\Skills.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.ActiveSkill" Collapsed="true">
+    <Position X="19.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAIQAAiAAAAAIAAACAAAAEAAIgAAAAAIAIAAA=</HashCode>
+      <FileName>Tech\Skills.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.CripplingStrike" Collapsed="true">
+    <Position X="20.5" Y="13" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.ActiveSkill" FixedToPoint="true">
+      <Path>
+        <Point X="20.25" Y="12.191" />
+        <Point X="20.25" Y="13.375" />
+        <Point X="20.5" Y="13.375" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tech\Skills.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DungeonGame.FireBall" Collapsed="true">
+    <Position X="20.5" Y="13.75" Width="1.5" />
+    <InheritanceLine Type="DungeonGame.ActiveSkill" FixedToPoint="true">
+      <Path>
+        <Point X="20.25" Y="12.191" />
+        <Point X="20.25" Y="14.188" />
+        <Point X="20.5" Y="14.188" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tech\Skills.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="DungeonGame.GameState" Collapsed="true">
+    <Position X="6.5" Y="38.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAhAAAAABAAAAIEAIAIAQAAAAAA=</HashCode>
+      <FileName>GameClass.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DungeonGame.AttackTypes" Collapsed="true">
+    <Position X="4.75" Y="38.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAACCAAAAAAAAAAAAAAAAAIAAAABAAEAAAA=</HashCode>
+      <FileName>Objects\Characters\Character.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DungeonGame.AttackSpots" Collapsed="true">
+    <Position X="4.75" Y="42.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAEAABAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Character.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DungeonGame.Animations" Collapsed="true">
+    <Position X="3" Y="41.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAIAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Characters\Character.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DungeonGame.StateDoor" Collapsed="true">
+    <Position X="6.5" Y="41.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Objects\Door.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DungeonGame.StateButton" Collapsed="true">
+    <Position X="4.75" Y="40.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQQAAAAEAAAA=</HashCode>
+      <FileName>Objects\UI\Button.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DungeonGame.AlignmentPosition" Collapsed="true">
+    <Position X="6.5" Y="42.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Objects\UI\Label.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DungeonGame.AttackTurn" Collapsed="true">
+    <Position X="3" Y="38.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Scenes\EnemyScene.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DungeonGame.MusicState" Collapsed="true">
+    <Position X="3" Y="40" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABwAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Tech\MusicPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
