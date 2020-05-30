@@ -36,7 +36,7 @@ namespace DungeonGame
             _menuState = MenuState.strike;
             door = new Door(GameClass.gameWindow.ClientBounds.Width / 2 + 147, Door.closedTexture.Height / 2 + 4);
             enemy = Enemy.Generate();
-            GameClass.actions.Text = $"Вам встретился {enemy.Name}\n";
+            GameClass.actions.Text += $"Вам встретился {enemy.Name}\n";
             player.AnimationPlayer.SetAnimation(Animations.Idle);
             SetButtons();
         }

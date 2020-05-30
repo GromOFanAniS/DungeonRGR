@@ -174,7 +174,6 @@ namespace DungeonGame
         {
             _playerPosition = new Rectangle((int)X + 50, (int)Y - 1, Width - 100, Height);
             CheckLevel();
-            CheckDifficulty();
             WeaponUpdate();
             WalkingUpdate(gameTime);
             CheckDead();
@@ -400,6 +399,7 @@ namespace DungeonGame
                 _level++;
                 Experience -= _experienceToNextLevel;
                 _experienceToNextLevel += 15 * _level;
+                CheckDifficulty();
             }
         }
         private void RegenerateAttacks()

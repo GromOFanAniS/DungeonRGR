@@ -143,10 +143,12 @@ namespace DungeonGame
                     if (attack.Type == target._weakness)
                     {
                         dmg = (int)(dmg * 1.5);
+                        GameClass.actions.Text += $"{target.Name} уязвим к данному типу урона\n";
                     }
                     else if (attack.Type == target._resistance)
                     {
                         dmg = (int)(dmg / 1.5);
+                        GameClass.actions.Text += $"{target.Name} устойчив к данному типу урона\n";
                     }
                     if (GameClass.random.Next(0, 100) < 10)
                     {

@@ -24,12 +24,11 @@ namespace DungeonGame
         }
         public static Enemy Generate()
         {
-            if (Player.GetPlayer().Level > 15 && !isDioDead)
-            {
-                GameClass.actions.Text += "Ты думал, что тут будет финальный босс\n но это я - Дио!";
-                return new Dio();
-            }
-            switch (GameClass.random.Next(0, 9))
+            int enemyCount = 9;
+            if (Player.GetPlayer().Level >= 15 && !isDioDead)
+                enemyCount += 1;
+
+            switch (GameClass.random.Next(enemyCount))
             {
                 case 0: return new Slime();
                 case 1: return new Skeleton();
@@ -40,6 +39,9 @@ namespace DungeonGame
                 case 6: return new Goblin();
                 case 7: return new Thing();
                 case 8: return new Hellhound();
+                case 9:
+                    GameClass.actions.Text += "Ты думал, что тут будет финальный босс\n но это я - Дио!\n";
+                    return new Dio();
                 default: return new Slime();
             }
         }
